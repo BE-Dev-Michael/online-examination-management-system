@@ -7,15 +7,6 @@ function SignUpItems() {
         <form action="#" autoComplete="off" >
 
           <div className="flex flex-col mb-2">
-            <label className="font-normal mb-2">Name</label>
-            <div className="flex relative ">
-              <input required
-                type="text"
-                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your name" />
-            </div>
-          </div>
-
-          <div className="flex flex-col mb-2">
             <label className="font-normal mb-2">Username</label>
             <div className="flex relative ">
               <input required
