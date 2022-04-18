@@ -1,25 +1,44 @@
-import React from 'react'
+import { useState } from 'react'
 
 function SignUpItems() {
+  const initialValue = {
+    username: '',
+    email: '',
+    password: '',
+    role: ''
+  }
+  const [formData, setFormData] = useState(initialValue)
+
+  const formDataHandler = (e) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+
+  }
+
+  const signUpSubmit = (e) => {
+    e.preventDefault()
+  }
+
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-md px-4">
       <div className="mt-2 w-72">
-        <form action="#" autoComplete="off" >
-
-          <div className="flex flex-col mb-2">
+        <form action="#" autoComplete="off" onSubmit={signUpSubmit} >
+          <div className="flex flex-col mb-6">
             <label className="font-normal mb-2">Username</label>
             <div className="flex relative ">
-              <input required
+              <input value={formData.username}
+                onChange={formDataHandler}
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your username" />
             </div>
           </div>
 
 
-          <div className="flex flex-col mb-2">
+          <div className="flex flex-col mb-6">
             <label className="font-normal mb-2">Email</label>
             <div className="flex relative ">
-              <input required
+              <input value={formData.email}
+                onChange={formDataHandler}
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your email" />
             </div>
@@ -28,7 +47,8 @@ function SignUpItems() {
           <div className="flex flex-col mb-6">
             <label className="font-normal mb-2">Password</label>
             <div className="flex relative ">
-              <input required
+              <input value={formData.password}
+                onChange={formDataHandler}
                 type="password"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your password" />
             </div>
