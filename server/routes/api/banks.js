@@ -1,21 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const { getAllQuestionBanks, addQuestionBank, updateQuestionBank, deleteQuestionBank} = require('../../controllers/banks.controller')
 
-router.get('/', (req, res) => {
-    console.log('GET')
-    res.send('GET')
-})
-router.post('/', (req, res) => {
-    console.log('POST')
-    res.send('POST')
-})
-router.put('/:id', (req, res) => {
-    console.log('PUT')
-    res.send('PUT')
-})
-router.delete('/:id', (req, res) => {
-    console.log('DELETE')
-    res.send('DELETE')
-})
+router.get('/', getAllQuestionBanks)
+router.post('/', addQuestionBank)
+router.put('/:id', updateQuestionBank)
+router.delete('/:id', deleteQuestionBank)
 
 module.exports = router
