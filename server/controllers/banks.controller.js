@@ -26,3 +26,5 @@ const deleteQuestionBank = (req, res) => {
     console.log('DELETE')
     res.send('DELETE')
 }
+
+module.exports = { getAllQuestionBanks, addQuestionBank, updateQuestionBank, deleteQuestionBank }
