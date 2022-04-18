@@ -12,7 +12,8 @@ function Login() {
         <Navbar/>
       </header>
       <main>
-        <BannerImage />
+        {/* //* Modify the src value if maglalagay ng ibang image */}
+        <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg"/>
         <Card>
           <CardHeader className="relative -top-12 bg-indigo-600" text="Welcome Back" />
           <LoginItems/>
