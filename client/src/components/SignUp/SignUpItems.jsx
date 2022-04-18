@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function SignUpItems() {
   const initialValue = {
@@ -9,7 +9,7 @@ function SignUpItems() {
   }
   const [formData, setFormData] = useState(initialValue) //state for handling data fields
   const [formErrors, setFormErrors] = useState({}) // state for handling errors in each fields
-
+  const [isSubmit, setIsSubmit] = useState(false)
 
   // get value in each field
   const formDataHandler = (e) => {
@@ -22,6 +22,8 @@ function SignUpItems() {
   const signUpSubmit = (e) => {
     e.preventDefault()
     setFormErrors(formValidation(formData))
+    setIsSubmit(true)
+
   }
 
   // validate each field
@@ -49,6 +51,13 @@ function SignUpItems() {
     return errors
   }
 
+  // to check if there is no error
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formData)
+    }
+  }, [formErrors])
+
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-md px-4">
       <div className="mt-2 w-72">
@@ -62,7 +71,7 @@ function SignUpItems() {
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your username" />
             </div>
-            <p>{formErrors.username}</p>
+            <p className="text-red-600">{formErrors.username}</p>
           </div>
 
 
@@ -75,7 +84,7 @@ function SignUpItems() {
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your email" />
             </div>
-            <p>{formErrors.email}</p>
+            <p className="text-red-600">{formErrors.email}</p>
           </div>
 
           <div className="flex flex-col mb-6">
@@ -87,7 +96,7 @@ function SignUpItems() {
                 type="password"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your password" />
             </div>
-            <p>{formErrors.password}</p>
+            <p className="text-red-600">{formErrors.password}</p>
           </div>
 
           <div className="flex flex-col mb-6">
@@ -111,7 +120,7 @@ function SignUpItems() {
                 /> Faculty
               </div>
             </div>
-            <p>{formErrors.role}</p>
+            <p className="text-red-600">{formErrors.role}</p>
           </div>
 
           <div className="flex w-full">
