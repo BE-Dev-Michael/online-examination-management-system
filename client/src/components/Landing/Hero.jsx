@@ -4,7 +4,7 @@ function Hero() {
   return (
     <div className="bg-white relative h-screen">
         {/* //* BannerImage is a reusable component */}
-        {/* //* You can change the source of your image by modifying the path on the src value */}
+        {/* //* Modify the src value if maglalagay ng ibang image */}
         <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg"/>
         <div className="container mx-auto px-6 md:px-12 relative z-10 flex items-center py-32 xl:py-40">
             <div className="lg:w-3/5 xl:w-2/5 flex flex-col items-start relative z-10">
