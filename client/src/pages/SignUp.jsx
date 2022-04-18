@@ -9,15 +9,15 @@ function SignUp() {
   return (
     <div>
       <header>
-        <Navbar/>
+        <Navbar />
       </header>
       <main>
         {/* //* BannerImage is a reusable component */}
         {/* //* Modify the src value if maglalagay ng ibang image */}
-        <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg"/>
+        <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg" />
         <Card>
-        <CardHeader className="relative -top-12 bg-indigo-600" text="Welcome" />
-          <SignUpItems/>
+          <CardHeader className="relative -top-12 bg-indigo-600 rounded-full" text="Welcome" />
+          <SignUpItems />
         </Card>
       </main>
       <footer>
