@@ -1,9 +1,9 @@
 import React from 'react'
 
-function BannerImage() {
+function BannerImage(props) {
   return (
     <div>
-      <img src="https://wallpapercave.com/wp/wp4072615.jpg" alt="" className="absolute h-full w-full object-cover"/>
+      <img src={props.src} alt="" className="absolute h-full w-full object-cover"/>
       <div className="inset-0 bg-black opacity-25 absolute"></div>
     </div>
   )

@@ -14,6 +14,7 @@ function Login() {
       <main>
         <BannerImage />
         <Card>
+          <CardHeader className="relative -top-12 bg-indigo-600" text="Welcome Back" />
           <LoginItems/>
         </Card>
       </main>
