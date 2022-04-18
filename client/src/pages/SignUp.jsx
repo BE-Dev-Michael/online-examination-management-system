@@ -12,6 +12,7 @@ function SignUp() {
         <Navbar/>
       </header>
       <main>
+        {/* //* BannerImage is a reusable component */}
         {/* //* Modify the src value if maglalagay ng ibang image */}
         <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg"/>
         <Card>
