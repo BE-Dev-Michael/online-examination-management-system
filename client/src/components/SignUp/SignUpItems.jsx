@@ -40,7 +40,7 @@ function SignUpItems() {
 
     if (!data.password) {
       errors.password = "Password is required!"
-    } else if (!data.password.length < 4) {
+    } else if (data.password.length < 4) {
       errors.password = "Password must be more than 4 characters."
     }
 
