@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai' // import eye icons
 import axios from 'axios'
 
-const SIGNUP_URI = 'http://localhost:7777/api/users/signup'
-const FETCH_ALL_URI = 'http://localhost:7777/api/users'
+const SIGNUP_URI = 'http://localhost:7771/api/users/signup'
+const FETCH_ALL_URI = 'http://localhost:7771/api/users'
 
 function SignUpItems() {
   const initialValue = {
