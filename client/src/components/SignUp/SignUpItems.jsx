@@ -29,12 +29,15 @@ function SignUpItems() {
   // validate each field
   const formValidation = (data) => {
     const errors = {}
+    const validator = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
 
     if (!data.username) {
       errors.username = "Username is required!"
     }
     if (!data.email) {
       errors.email = "Email is required!"
+    } else if (!validator.test(data.email)) {
+      errors.email = "Invalid email format!"
     }
     if (!data.password) {
       errors.password = "Password is required!"
