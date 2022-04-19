@@ -111,8 +111,18 @@ function SignUpItems() {
   // to check if there is no error and submit is clicked
   // this renders every changes is made
   useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
+    if (Object.keys(formErrors).length === 0 && isSubmit && isAlreadyExists === false) {
       console.log(formData)
+      const sendFormData = async () => {
+          try {
+            //* send form data via POST request and save sa database
+            const response = await axios.post(SIGNUP_URI, formData)
+            console.log(response.data)
+          } catch (error) {
+            console.error(error)
+          }
+      }
+      sendFormData()
     }
   }, [formErrors])
 
