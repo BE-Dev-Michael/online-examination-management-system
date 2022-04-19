@@ -23,6 +23,28 @@ function SignUpItems() {
   const formDataHandler = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+    if (name === 'email' || name === 'username') {
+      //* If sa username or email field nagtatype si user call this function
+      checkIfAlreadyExists(name, value)
+    }
+  }
+
+  //* Gagamitin to for real time checking if username or email already exists in database
+  const checkIfAlreadyExists = (fieldName, typedValue) => {
+    const field = fieldName.toString()
+    
+    //* I-filter yung may same email or username sa database
+    const count = fetchUsers.filter(user => user[field] === typedValue)
+    const firstLetter = field.charAt(0).toUpperCase()
+    const titleCaseField = firstLetter.concat(field.substring(1))
+    if (count.length > 0) {
+        const errorMessage = `${titleCaseField} already exists, please login`
+        setIsAlreadyExists(true)
+        setRealTimeErrors({...realTimeErrors, [field.concat('Error')]: errorMessage })
+    } else {
+        setIsAlreadyExists(false)
+        setRealTimeErrors({...realTimeErrors, [field.concat('Error')]: null })
+    }
   }
 
   // form submit button
