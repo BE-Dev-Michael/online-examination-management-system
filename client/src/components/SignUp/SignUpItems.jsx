@@ -63,7 +63,7 @@ function SignUpItems() {
       <div className="mt-2 w-72">
         <form action="#" autoComplete="off" onSubmit={signUpSubmit} >
           <div className="flex flex-col mb-6">
-            <label className="font-normal mb-2">Username</label>
+            <label className="font-medium text-base text-slate-500 mb-1">Username</label>
             <div className="flex relative ">
               <input value={formData.username}
                 onChange={formDataHandler}
@@ -76,7 +76,7 @@ function SignUpItems() {
 
 
           <div className="flex flex-col mb-6">
-            <label className="font-normal mb-2">Email</label>
+            <label className="font-medium text-base text-slate-500 mb-1">Email</label>
             <div className="flex relative ">
               <input value={formData.email}
                 onChange={formDataHandler}
@@ -88,7 +88,7 @@ function SignUpItems() {
           </div>
 
           <div className="flex flex-col mb-6">
-            <label className="font-normal mb-2">Password</label>
+            <label className="font-medium text-base text-slate-500 mb-1">Password</label>
             <div className="flex relative ">
               <input value={formData.password}
                 onChange={formDataHandler}
@@ -100,7 +100,7 @@ function SignUpItems() {
           </div>
 
           <div className="flex flex-col mb-6">
-            <label className="font-normal mb-2">User Role</label>
+            <label className="font-medium text-base text-slate-500 mb-1">User Role</label>
 
             <div className="flex justify-evenly ">
               <div className="font-medium">
