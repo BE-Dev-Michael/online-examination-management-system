@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai' // import eye icons
 
 function SignUpItems() {
   const initialValue = {
@@ -10,6 +11,8 @@ function SignUpItems() {
   const [formData, setFormData] = useState(initialValue) //state for handling data fields
   const [formErrors, setFormErrors] = useState({}) // state for handling errors in each fields
   const [isSubmit, setIsSubmit] = useState(false)
+  const [showEye, setShowEye] = useState(false) // useState for eye icons
+
 
   // get value in each field
   const formDataHandler = (e) => {
@@ -49,6 +52,11 @@ function SignUpItems() {
     }
 
     return errors
+  }
+
+  //toggle eye icons show/hide
+  const toggle = () => {
+    setShowEye(!showEye)
   }
 
   // to check if there is no error
@@ -93,9 +101,16 @@ function SignUpItems() {
               <input value={formData.password}
                 onChange={formDataHandler}
                 name="password"
-                type="password"
+                type={(showEye === false) ? 'password' : 'text'}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your password" />
             </div>
+            {/* this div is to show eye icons */}
+            <div className='text-2xl absolute top-10 right-1'>
+              {(showEye === false) ?
+                <AiOutlineEye onClick={toggle} /> :
+                <AiOutlineEyeInvisible onClick={toggle} />}
+            </div>
+
             <p className="text-red-600 text-sm font-normal ml-1">{formErrors.password}</p>
           </div>
 
