@@ -15,6 +15,9 @@ function SignUpItems() {
   const [formErrors, setFormErrors] = useState({}) // state for handling errors in each fields
   const [isSubmit, setIsSubmit] = useState(false)
   const [showEye, setShowEye] = useState(false) // useState for eye icons
+  const [fetchUsers, setFetchUsers] = useState([])
+  const [realTimeErrors, setRealTimeErrors] = useState({ emailError: null, usernameError: null })
+  const [isAlreadyExists, setIsAlreadyExists] = useState(false)
 
   // get value in each field
   const formDataHandler = (e) => {
