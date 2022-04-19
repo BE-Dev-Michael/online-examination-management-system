@@ -95,7 +95,7 @@ function SignUpItems() {
             <p className="text-red-600 text-sm font-normal ml-1">{formErrors.email}</p>
           </div>
 
-          <div className="flex flex-col mb-6">
+          <div className="flex flex-col mb-6 relative">
             <label className="font-medium text-base text-slate-500 mb-1">Password</label>
             <div className="flex relative ">
               <input value={formData.password}
