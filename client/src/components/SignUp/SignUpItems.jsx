@@ -140,6 +140,7 @@ function SignUpItems() {
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your username" />
             </div>
             <p className="text-red-600 text-sm font-normal ml-1">{formErrors.username}</p>
+            <p className="text-red-600">{realTimeErrors.usernameError}</p>
           </div>
 
 
@@ -153,6 +154,7 @@ function SignUpItems() {
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your email" />
             </div>
             <p className="text-red-600 text-sm font-normal ml-1">{formErrors.email}</p>
+            <p className="text-red-600">{realTimeErrors.emailError}</p>
           </div>
 
           <div className="flex flex-col mb-6 relative">
