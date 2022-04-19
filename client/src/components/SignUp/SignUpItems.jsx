@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai' // import eye icons
+import axios from 'axios'
 
 const SIGNUP_URI = 'http://localhost:7777/api/users/signup'
 const FETCH_ALL_URI = 'http://localhost:7777/api/users'
@@ -83,6 +84,29 @@ function SignUpItems() {
   const toggle = () => {
     setShowEye(!showEye)
   }
+
+  //* Once lang need mag eexecute for fetching all users from database
+  useEffect(() => {
+    //* Must be asynchronous function since magrereturn ng promise si axios
+    const fetchAllUsers = async () => { 
+      try {
+          //* Get all users sa database
+          const users = await axios.get(FETCH_ALL_URI)
+
+          //* Mag-iterate sa lahat ng user objects and return a new copy
+          let fetchedUsers = users.data.map(data => {
+            return { username: data.username, email: data.email }
+          })
+
+          //* Sample data lang for testing purposes
+          fetchedUsers.push({username: 'sample123', email: 'sample@gmail.com'})
+          setFetchUsers(fetchedUsers)
+      } catch (error) {
+          console.error(error)
+      }
+    }
+    fetchAllUsers()
+  }, [])
 
   // to check if there is no error and submit is clicked
   // this renders every changes is made
