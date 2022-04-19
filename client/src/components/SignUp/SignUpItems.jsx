@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai' // import eye icons
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai' // import eye icons
 
 function SignUpItems() {
   const initialValue = {
@@ -105,10 +105,10 @@ function SignUpItems() {
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your password" />
             </div>
             {/* this div is to show eye icons */}
-            <div className='text-2xl absolute top-10 right-1'>
+            <div className='text-2xl absolute top-9 right-2'>
               {(showEye === false) ?
-                <AiOutlineEye onClick={toggle} /> :
-                <AiOutlineEyeInvisible onClick={toggle} />}
+                <AiFillEye onClick={toggle} className="text-slate-500" /> :
+                <AiFillEyeInvisible onClick={toggle} className="text-slate-500" />}
             </div>
 
             <p className="text-red-600 text-sm font-normal ml-1">{formErrors.password}</p>
