@@ -13,12 +13,10 @@ function SignUpItems() {
   const [isSubmit, setIsSubmit] = useState(false)
   const [showEye, setShowEye] = useState(false) // useState for eye icons
 
-
   // get value in each field
   const formDataHandler = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
-
   }
 
   // form submit button
@@ -26,7 +24,6 @@ function SignUpItems() {
     e.preventDefault()
     setFormErrors(formValidation(formData))
     setIsSubmit(true)
-
   }
 
   // validate each field
@@ -36,17 +33,14 @@ function SignUpItems() {
     if (!data.username) {
       errors.username = "Username is required!"
     }
-
     if (!data.email) {
       errors.email = "Email is required!"
     }
-
     if (!data.password) {
       errors.password = "Password is required!"
     } else if (data.password.length < 4) {
       errors.password = "Password must be more than 4 characters."
     }
-
     if (!data.role) {
       errors.role = "Select User type."
     }
@@ -59,7 +53,8 @@ function SignUpItems() {
     setShowEye(!showEye)
   }
 
-  // to check if there is no error
+  // to check if there is no error and submit is clicked
+  // this renders every changes is made
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formData)
@@ -118,7 +113,7 @@ function SignUpItems() {
             <label className="font-medium text-base text-slate-500 mb-1">User Role</label>
 
             <div className="flex justify-evenly ">
-              <div className="font-medium">
+              <div className="font-medium text-slate-600">
                 <input
                   onChange={formDataHandler}
                   type="radio"
@@ -126,7 +121,7 @@ function SignUpItems() {
                   name="role"
                 /> Student
               </div>
-              <div className="font-medium">
+              <div className="font-medium text-slate-600">
                 <input
                   onChange={formDataHandler}
                   type="radio"
