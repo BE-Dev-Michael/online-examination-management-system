@@ -37,7 +37,7 @@ function SignUpItems() {
     if (!data.email) {
       errors.email = "Email is required!"
     } else if (!validator.test(data.email)) {
-      errors.email = "Invalid email format!"
+      errors.email = "This is not a valid email format!"
     }
     if (!data.password) {
       errors.password = "Password is required!"
