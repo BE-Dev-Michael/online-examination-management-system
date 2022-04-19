@@ -71,7 +71,7 @@ function SignUpItems() {
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your username" />
             </div>
-            <p className="text-red-600">{formErrors.username}</p>
+            <p className="text-red-600 text-sm font-normal ml-1">{formErrors.username}</p>
           </div>
 
 
@@ -84,7 +84,7 @@ function SignUpItems() {
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your email" />
             </div>
-            <p className="text-red-600">{formErrors.email}</p>
+            <p className="text-red-600 text-sm font-normal ml-1">{formErrors.email}</p>
           </div>
 
           <div className="flex flex-col mb-6">
@@ -96,7 +96,7 @@ function SignUpItems() {
                 type="password"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your password" />
             </div>
-            <p className="text-red-600">{formErrors.password}</p>
+            <p className="text-red-600 text-sm font-normal ml-1">{formErrors.password}</p>
           </div>
 
           <div className="flex flex-col mb-6">
@@ -120,7 +120,7 @@ function SignUpItems() {
                 /> Faculty
               </div>
             </div>
-            <p className="text-red-600">{formErrors.role}</p>
+            <p className="text-red-600 text-sm font-normal ml-1">{formErrors.role}</p>
           </div>
 
           <div className="flex w-full">
