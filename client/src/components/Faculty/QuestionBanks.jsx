@@ -66,20 +66,20 @@ function QuestionBanks() {
   const [bankCount, setBankCount] = useState(0)
 
   useEffect(() => {
-    const getBanks = async () => {
-        try {
-            const banks = await axios.get(BANKS_URI)
+    // const getBanks = async () => {
+    //     try {
+    //         const banks = await axios.get(BANKS_URI)
             
-            let fetchedBanks = banks.data.map(data => {
-                return { id: data._id, title: data.title }
-            })
+    //         let fetchedBanks = banks.data.map(data => {
+    //             return { id: data._id, title: data.title }
+    //         })
            
-            setBanks(fetchedBanks)
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-    getBanks()
+    //         setBanks(fetchedBanks)
+    //     } catch (error) {
+    //         throw new Error(error)
+    //     }
+    // }
+    // getBanks()
   }, [])
 
   useEffect(() => {
