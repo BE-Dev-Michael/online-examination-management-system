@@ -89,17 +89,17 @@ function QuestionBanks() {
   
   const submitBank = async (e) => {
     e.preventDefault()
-    try {
-      const bank = await axios.post(BANKS_URI, { title: title })
-      console.log(bank.data)
-      setIsCreateMode(false)
-      setTitle('')
-      //* Nagaappend ng new object sa array of objects
-      setBanks(prevState => [...prevState, {id: bank.data._id, title: bank.data.title}])
+    // try {
+    //   const bank = await axios.post(BANKS_URI, { title: title })
+    //   console.log(bank.data)
+    //   setIsCreateMode(false)
+    //   setTitle('')
+    //   //* Nagaappend ng new object sa array of objects
+    //   setBanks(prevState => [...prevState, {id: bank.data._id, title: bank.data.title}])
       
-    } catch (error) {
-       console.error(error)
-    }
+    // } catch (error) {
+    //    console.error(error)
+    // }
   }
 
   const createNewBank = () => {
