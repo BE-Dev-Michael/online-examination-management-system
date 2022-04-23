@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './bg.css'
-import axios from 'axios'
-import { Routes, Route, Router } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../components/Faculty/Dashboard'
 import QuestionBanks from '../components/Faculty/QuestionBanks'
 import Exams from '../components/Faculty/Exams'
