@@ -1,22 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './navbar-style.css';
 
-function NavbarLinks() {
+function NavbarLinks(props) {
   return (
     <div>
       <div className="hidden md:block">
-        <div className="ml-10 flex items-baseline space-x-4">
-          <a className="text-white  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/">
-              HOME
-          </a>
-          <a className="text-white dark:text-white  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
-              ABOUT
-          </a>
-          <Link className="text-white  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" to="/login">
-            LOGIN
+        <div className="nav-menu-container">
+          <Link className={props.navbar ? "nav-links alt" : "nav-links"} to="/">
+            Home
           </Link>
-          {/* Color used: #656780 */}
-          <Link className="bg-[#656780] text-white  hover:bg-[#5a5b72] transition-all ease-linear px-7 py-2 rounded-3xl text-sm font-medium" to="/signup">
+          <Link className={props.navbar ? "nav-links alt" : "nav-links"} to="/#">
+            About
+          </Link>
+          <Link className={props.navbar ? "nav-links alt" : "nav-links"} to="/login">
+            Log In
+          </Link>
+          <Link className={props.navbar ? "sign_up-btn alt" : "sign_up-btn"} to="/signup">
             Sign Up
           </Link>
         </div>
@@ -26,3 +26,5 @@ function NavbarLinks() {
 }
 
 export default NavbarLinks
+
+

@@ -1,37 +1,54 @@
 import React, {useState} from 'react'
 import DropdownMenu from './DropdownMenu'
 import NavbarLinks from './NavbarLinks'
+import './navbar-style.css';
 
 function Navbar() {
     const [collapse, setCollapse] = useState(false)
+    const [navbar, setNavbar] = useState(false)
+    const [open,setOpen]=useState(false);
+    const [click, setClick] = useState(false);
+
+    const handleClick = () => setClick(!click);
+    const changeBackground = (ref) => {
+      if((open==true)){
+        setNavbar(true);
+      }
+      else{
+        if(window.scrollY >= 85){
+          setNavbar(true);
+        } else{
+          setNavbar(false);
+        }
+      }
+      
+    }
 
     const dropdownHandler = () => {
-        console.log('collapse')
         setCollapse(!collapse)
+        setOpen(!open)
+        if(window.scrollY <= 85){
+          setNavbar(!navbar)
+        }
+        handleClick()
     }
+
+    window.addEventListener('scroll', changeBackground)
+
     return (
       <div>
-        <nav className="bg-transparent fixed w-screen z-20">
+        <nav className={navbar ? "navbar active" : "navbar"}>
           <div className="max-w-7xl mx-auto px-8">
             <div className="flex items-center justify-between h-16">
               <div className="w-full justify-between flex items-center">
                 <a className="flex-shrink-0" href="/">
-                  <h1 className='text-white'>Logo</h1>
+                  <img class="h-10 w-22 logo" src={navbar ? "../../images/logo-c.png" : "../../images/logo-w.png"} alt="testdeck-logo"/>
                 </a>
-                <NavbarLinks/>
+                <NavbarLinks navbar={navbar}/>
               </div>
-              <div className="block">
-                <div className="ml-4 flex items-center md:ml-6">
-                </div>
-              </div>
-              <div className="-mr-2 flex md:hidden">
-                <button onClick={dropdownHandler} className="text-gray-800 dark:text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none">
-                  <svg width="20" height="20" fill="currentColor" className="h-8 w-8" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z">
-                    </path>
-                  </svg>
-                </button>
-              </div>
+              <div onClick={dropdownHandler} className='text-3xl absolute right-12 top-6 cursor-pointer md:hidden'>
+                <img class="h-5 w-5" src={navbar ? "../../images/menu-b.png" : "../../images/menu.png"} alt="menu"/>
+              </div> 
             </div>
           </div>
           <DropdownMenu collapse={collapse}/>
