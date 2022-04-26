@@ -6,8 +6,8 @@ import { IoMdArchive } from 'react-icons/io'
 import { FiEdit3 } from 'react-icons/fi'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 
-const BANKS_URI = 'http://localhost:7777/api/banks'
-const BANK_URI = 'http://localhost:7777/api/banks/'
+const BANKS_URI = 'http://localhost:7771/api/banks'
+const BANK_URI = 'http://localhost:7771/api/banks/'
 
 const banksState = atom({
   key: 'banksState',
