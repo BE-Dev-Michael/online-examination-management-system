@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import NavigationBar from '../components/Student/NavigationBar';
 import Dashboard from '../components/Student/Dashboard';
+import Examboard from '../components/Student/Examboard';
 import SideBarProfile from '../components/Student/SideBarProfile';
 
 const Student = () => {
@@ -14,7 +15,7 @@ const Student = () => {
 
                 <Routes>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/exams" exact element={<Board />} />
+                    <Route path="/exams" element={<Examboard />} />
                 </Routes>
             </div>
         </div>
