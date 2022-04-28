@@ -14,7 +14,7 @@ const NavigationBar = () => {
                     <section className="flex items-center space-x-8">
                         <a href="#">
                             <div className="flex items-center space-x-2">
-                                <img src={logo} alt="logo" className="min-w-[50px] object-cover" />
+                                <img src={logo} alt="logo" className="h-10 object-cover" />
                                 <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider"></h2>
                             </div>
                         </a>
