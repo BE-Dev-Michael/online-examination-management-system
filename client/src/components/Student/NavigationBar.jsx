@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BsFillBellFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
+import logo from '../../assets/images/logo-c.png'
 
 const NavigationBar = () => {
     const [showSearch, setShowSearch] = useState(false)
@@ -13,8 +14,8 @@ const NavigationBar = () => {
                     <section className="flex items-center space-x-8">
                         <a href="#">
                             <div className="flex items-center space-x-2">
-                                <img src={img2} alt="logo" className="w-12 rounded object-cover" />
-                                <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider">Online Inc.</h2>
+                                <img src={logo} alt="logo" className="min-w-[50px] object-cover" />
+                                <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider"></h2>
                             </div>
                         </a>
                     </section >
