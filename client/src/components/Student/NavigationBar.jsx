@@ -38,7 +38,7 @@ const NavigationBar = () => {
 
                                 {/* User picture     */}
                                 <li className="sm:hidden block">
-                                    <img src={img1} alt="user" className="w-8 object-cover rounded-full" />
+                                    <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="user" className="w-8 object-cover rounded-full" />
                                 </li>
 
                                 {/* Notification */}
