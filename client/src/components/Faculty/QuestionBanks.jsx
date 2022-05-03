@@ -6,7 +6,6 @@ import { IoMdArchive } from 'react-icons/io'
 import { FiEdit3 } from 'react-icons/fi'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
-import bankDataState from './bankDataAtom'
 
 //* GET and POST method
 //* POST for adding question bank
