@@ -1,3 +1,3 @@
-.button-search > div > .btn-create {
+.button-search > div > .btn-create, .div-add-question .btn-add-questions {
     background-image: linear-gradient(to right, #7B9EBE 0%, #7B9EBE 30%, #FFFFFF 30%, #FFFFFF 100%);
 }
