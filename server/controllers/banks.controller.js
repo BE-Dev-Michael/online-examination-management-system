@@ -1,10 +1,11 @@
 const Banks = require('../models/banks.model');
+const Questions = require('../models/questions.model');
+
 //* HTTP Method => GET
 //* Route endpoint => /api/banks
 const getAllQuestionBanks = async (req, res) => {
     try {
         const bankData = await Banks.find({})
-        // console.log(bankData)
         res.send(bankData)
     } catch (error) {
         throw new Error(error)
@@ -13,10 +14,10 @@ const getAllQuestionBanks = async (req, res) => {
 
 //* HTTP Method => GET
 //* Route endpoint => /api/banks/:id
-const getQuestionBank = async (req, res) => {
+const getQuestions = async (req, res) => {
     try {
-        const bankData = await Banks.findById({_id: req.params.id})
-        // console.log(bankData)
+        const bankData = await Banks.findById({_id: req.params.id}).populate('questions')
+        console.log('getQuestions')
         res.send(bankData)
     } catch (error) {
         console.error(error)
@@ -27,6 +28,45 @@ const getQuestionBank = async (req, res) => {
 }
 
 //* HTTP Method => POST
+//* Route endpoint => /api/banks/question/:id
+const addQuestion = async (req, res) => {
+    const id = req.params.id
+    const { question, a, b, c, d, answer, points } = req.body
+    
+    try {
+        const questionData = await Questions.create({
+            question: question,
+            choiceA: a,
+            choiceB: b,
+            choiceC: c,
+            choiceD: d,
+            answer: answer,
+            points: points
+        })
+        const questionByBank = await Banks.findByIdAndUpdate(id, {
+            //* Push an object to array property in schema
+            $push: {questions: questionData._id}
+        }, {
+            //* Returns the object after successful update
+            new: true
+        })
+        // const deleteObj = await Banks.updateOne({
+        //     title: 'NodeJS'
+        // }, {
+        //     $unset: {
+        //         questions: ''
+        //     }
+        // })
+        
+        res.send(questionData)
+        
+    } catch (error) {
+        res.status(500)
+        throw new Error(error)
+    }
+}
+
+//* HTTP Method => POST
 //* Route endpoint => /api/banks
 const addQuestionBank = async (req, res) => {
     const { title } = req.body
@@ -34,7 +74,7 @@ const addQuestionBank = async (req, res) => {
         const bankData = await Banks.create({
             title: title
         })
-        console.log(bankData)
+    
         res.send(bankData)
     } catch (error) {
         res.status(500)
@@ -47,7 +87,7 @@ const addQuestionBank = async (req, res) => {
 //* Route endpoint => /api/banks/:id
 const updateQuestionBank = async (req, res) => {
     const { title } = req.body
-    // console.log(title)
+   
     try {
         const newTitle = await Banks.findByIdAndUpdate(req.params.id, { title: title })
         res.status(200).send(await Banks.findById(newTitle._id))
@@ -65,4 +105,4 @@ const deleteQuestionBank = (req, res) => {
     res.send('DELETE')
 }
 
-module.exports = { getAllQuestionBanks, getQuestionBank, addQuestionBank, updateQuestionBank, deleteQuestionBank }
+module.exports = { getAllQuestionBanks, getQuestions, addQuestion, addQuestionBank, updateQuestionBank, deleteQuestionBank }
