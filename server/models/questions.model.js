@@ -3,10 +3,7 @@ const Banks = require('./banks.model')
 
 const questionSchema = mongoose.Schema({
     question: String,
-    choiceA: String,
-    choiceB: String,
-    choiceC: String,
-    choiceD: String,
+    choices: [],
     answer: String,
     points: Number,
     bank: {

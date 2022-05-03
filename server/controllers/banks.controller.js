@@ -31,15 +31,12 @@ const getQuestions = async (req, res) => {
 //* Route endpoint => /api/banks/question/:id
 const addQuestion = async (req, res) => {
     const id = req.params.id
-    const { question, a, b, c, d, answer, points } = req.body
+    const { question, choices, answer, points } = req.body
     
     try {
         const questionData = await Questions.create({
             question: question,
-            choiceA: a,
-            choiceB: b,
-            choiceC: c,
-            choiceD: d,
+            choices: choices,
             answer: answer,
             points: points
         })
@@ -51,7 +48,7 @@ const addQuestion = async (req, res) => {
             new: true
         })
         // const deleteObj = await Banks.updateOne({
-        //     title: 'NodeJS'
+        //     title: 'English Grammar'
         // }, {
         //     $unset: {
         //         questions: ''
