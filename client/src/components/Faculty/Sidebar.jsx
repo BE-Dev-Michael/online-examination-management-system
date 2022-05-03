@@ -61,8 +61,8 @@ function Sidebar() {
 
   
   return (
-    <div className={`mobile:fixed mobile:top-0 mobile:-left-[50vw] mobile:z-40 md:block shadow-lg relative overflow-hidden ${showSidebar ? 'w-[20vw] max-w-[250px] min-w-[250px] mobile:-left-[0vw] mobile:ease-in-out mobile:duration-300' : 'w-[7vw] max-w-[100px] min-w-[100px] mobile:translate-x-0'} ease-in-out duration-300`}>
-      <div className={`bg-white h-screen rounded-[26px] py-2 ${showSidebar ? 'px-5' : 'px-0'} ease-in-out duration-300`}>
+    <div className={`mobile:fixed mobile:top-0 mobile:-left-[50vw] mobile:z-40 md:block relative overflow-hidden ${showSidebar ? 'w-[20vw] max-w-[250px] min-w-[250px] mobile:-left-[0vw] mobile:ease-in-out mobile:duration-300' : 'w-[7vw] max-w-[100px] min-w-[100px] mobile:translate-x-0'} ease-in-out duration-300`}>
+      <div className={`bg-white h-[85%] shadow-lg rounded-[26px] py-2 ${showSidebar ? 'px-5' : 'px-0'} ease-in-out duration-300`}>
         <div className="flex flex-wrap items-center justify-center pt-6 mb-12">
           <div className={`flex ${showSidebar ? 'justify-end mr-2' : 'justify-center'} w-full mb-10`}>
             <button onClick={() => setShowSidebar(!showSidebar)}>
