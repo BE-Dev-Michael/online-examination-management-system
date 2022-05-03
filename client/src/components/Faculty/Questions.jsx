@@ -257,7 +257,12 @@ function Questions() {
     const { id }  = useParams()
     const [bankData, setBankData] = useState()
     const setBankId = useSetRecoilState(bankIdState)
+    const [, setIsFormVisible] = useRecoilState(questionFormState)
 
+    useEffect(() => {
+        setIsFormVisible(false)
+    }, [])
+    
     useEffect(() => {
         setBankId(id)
         const fetchBankData = async () => {
