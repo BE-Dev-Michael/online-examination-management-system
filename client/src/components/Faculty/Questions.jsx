@@ -189,6 +189,7 @@ function QuestionChoices(props) {
           <input type="radio" name="choice" /> 
           <label className='text-lg'>
             {props.choice}
+            {props.answer === props.choice ? <span className='ml-4 py-1 px-2 bg-lime-300 text-sm rounded-full'>Correct Answer</span> : ''}
           </label>
         </div>
     </>
@@ -208,7 +209,7 @@ function QuestionCard(props) {
           </div>
           <div className='w-full px-7 pb-7'>
             {props.choices.map(choice => {
-                return <QuestionChoices choice={choice}/>
+                return <QuestionChoices choice={choice} answer={props.answer}/>
             })}
           </div>
         </div>
@@ -233,6 +234,7 @@ function QuestionsMain(props) {
                       question={data.question} 
                       choices={data.choices}
                       points={data.points}
+                      answer={data.answer}
                       />
             })}
             {isFormVisible ? <QuestionForm/> : ''}
