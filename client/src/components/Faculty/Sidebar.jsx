@@ -83,7 +83,7 @@ function Sidebar() {
       </div>
       
       {/* {If mobile screen} */}
-      <div className={`${showSidebar ? 'w-screen -left-[0vw]' : 'w-0'} fixed z-40 -left-[50vw] top-0 block md:hidden ease-in-out duration-300`}>
+      <div className={`${showSidebar ? 'w-screen left-0' : 'w-0 -left-[50vw]'} fixed z-40 top-0 block md:hidden ease-in-out duration-300`}>
         <div className={`bg-white h-screen shadow-lg py-2 ${showSidebar ? 'px-5' : 'px-0'} ease-in-out duration-300`}>
           <div className="flex flex-wrap items-center justify-center pt-6 mb-12">
             <div className={`flex justify-end mr-2 w-full mb-10`}>
