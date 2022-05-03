@@ -222,7 +222,7 @@ function QuestionsMain(props) {
   
    return (
     <div className='relative flex flex-col gap-10 py-5 px-0'>
-      <div className='flex justify-between w-full px-7'>
+      <div className='flex flex-col items-center gap-10 sm:flex-row justify-between w-full px-7'>
         <h1 className='text-white text-2xl font-bold my-auto'>{ props.bankData.title }</h1>
         <div className='lg:w-[260px] div-add-question'> 
           <button onClick={() => setIsFormVisible(!isFormVisible)} className='btn-add-question relative flex mx-auto justify-center items-center shadow-lg rounded-2xl px-7 py-4 font-semibold min-w-[260px]'>
@@ -231,7 +231,7 @@ function QuestionsMain(props) {
           </button>
         </div>
       </div>
-      <div className='w-full px-5 flex flex-col'>
+      <div className='w-full px-0 md:px-5 flex flex-col'>
         
         <div className='min-h-[80px] px-3 py-5 border-b-slate-300 border-b mb-10'>
           {props.bankData.questions.length === 0 && isFormVisible === false ? 
