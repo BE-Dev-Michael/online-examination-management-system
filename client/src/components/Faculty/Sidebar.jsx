@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { CgMenuLeft } from 'react-icons/cg'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -27,6 +27,7 @@ function SidebarMenus(props) {
       </div>
   )
 }
+
 function Sidebar() {
   const [activeLink, setActiveLink] = useState({ isActive: false, index: 0})
   const [showSidebar, setShowSidebar] = useRecoilState(sidebarState)
@@ -54,28 +55,51 @@ function Sidebar() {
       },
   ]
 
-  const activeLinkHandler = (isActive, index) => {
+  const activeLinkHandler = (isActive, index, isMobile) => {
       const keys = Object.keys(activeLink)
       setActiveLink({...activeLink, [keys[0]]: isActive, [keys[1]]: index})
+      if (isMobile === true) {
+          setShowSidebar(false)
+      }
   }
-
   
   return (
-    <div className={`mobile:fixed mobile:top-0 mobile:-left-[50vw] mobile:z-40 md:block relative overflow-hidden ${showSidebar ? 'w-[20vw] max-w-[250px] min-w-[250px] mobile:-left-[0vw] mobile:ease-in-out mobile:duration-300' : 'w-[7vw] max-w-[100px] min-w-[100px] mobile:translate-x-0'} ease-in-out duration-300`}>
-      <div className={`bg-white h-[85%] shadow-lg rounded-[26px] py-2 ${showSidebar ? 'px-5' : 'px-0'} ease-in-out duration-300`}>
-        <div className="flex flex-wrap items-center justify-center pt-6 mb-12">
-          <div className={`flex ${showSidebar ? 'justify-end mr-2' : 'justify-center'} w-full mb-10`}>
-            <button onClick={() => setShowSidebar(!showSidebar)}>
-              <CgMenuLeft className='text-3xl cursor-pointer hover:text-[#7B9EBE] transition-all ease-linear'/>
-            </button>
+    // `mobile:fixed mobile:top-0 mobile:-left-[50vw] mobile:z-40 md:block relative overflow-hidden ${showSidebar ? 'w-[20vw] max-w-[250px] min-w-[250px] mobile:-left-[0vw] mobile:ease-in-out mobile:duration-300' : 'w-[7vw] max-w-[100px] min-w-[100px] mobile:translate-x-0'} ease-in-out duration-300`
+    <>
+      <div className={`${showSidebar ? 'w-[20vw] max-w-[300px] min-w-[300px]' : 'w-[7vw] max-w-[100px] min-w-[100px]'} hidden md:block ease-in-out duration-300`}>
+        <div className={`bg-white h-[85%] shadow-lg rounded-[26px] py-2 ${showSidebar ? 'px-5' : 'px-0'} ease-in-out duration-300`}>
+          <div className="flex flex-wrap items-center justify-center pt-6 mb-12">
+            <div className={`flex ${showSidebar ? 'justify-end mr-2' : 'justify-center'} w-full mb-10`}>
+              <button onClick={() => setShowSidebar(!showSidebar)}>
+                <CgMenuLeft className='text-3xl cursor-pointer hover:text-[#7B9EBE] transition-all ease-linear'/>
+              </button>
+            </div>
+            <img className="min-w-[50px]" src={logo} alt="logo" width={80} />
           </div>
-          <img className="min-w-[50px]" src={logo} alt="logo" width={80} />
+          {sidebar.map((prop, index) => {
+              return <SidebarMenus elemIndex={index} activeIndex={activeLink.index} isActive={activeLink.isActive} active={() => activeLinkHandler(true, index, false)} key={index} menuName={prop.menuName} endPoint={prop.endPoint} icon={prop.icon}/>
+          })}
         </div>
-        {sidebar.map((prop, index) => {
-            return <SidebarMenus elemIndex={index} activeIndex={activeLink.index} isActive={activeLink.isActive} active={() => activeLinkHandler(true, index)} key={index} menuName={prop.menuName} endPoint={prop.endPoint} icon={prop.icon}/>
-        })}
       </div>
-    </div>
+      
+      {/* {If mobile screen} */}
+      <div className={`${showSidebar ? 'w-screen -left-0' : 'w-0'} fixed z-40 -left-[50vw] top-0 block md:hidden ease-in-out duration-300`}>
+        <div className={`bg-white h-screen shadow-lg py-2 ${showSidebar ? 'px-5' : 'px-0'} ease-in-out duration-300`}>
+          <div className="flex flex-wrap items-center justify-center pt-6 mb-12">
+            <div className={`flex justify-end mr-2 w-full mb-10`}>
+              <button onClick={() => setShowSidebar(!showSidebar)}>
+                <CgMenuLeft className='text-3xl cursor-pointer hover:text-[#7B9EBE] transition-all ease-linear'/>
+              </button>
+            </div>
+            <img className="min-w-[50px]" src={logo} alt="logo" width={80} />
+          </div>
+          {sidebar.map((prop, index) => {
+              return <SidebarMenus elemIndex={index} activeIndex={activeLink.index} isActive={activeLink.isActive} active={() => activeLinkHandler(true, index, true)} key={index} menuName={prop.menuName} endPoint={prop.endPoint} icon={prop.icon}/>
+          })}
+        </div>
+      </div>
+
+    </>
   )
 }
 

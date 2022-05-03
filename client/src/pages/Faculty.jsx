@@ -25,7 +25,7 @@ function Faculty() {
   return (
     <Background>
       <Sidebar/>
-      <main className={`flex flex-col gap-4 main-container w-[100vw] sm:w-[100vw] h-auto ${isSidebarVisible ? 'w-[80vw] mobile:w-[100vw]' : 'w-[100vw]'}`}>
+      <main className={`flex flex-col gap-4 main-container sm:w-[100vw] h-auto ${isSidebarVisible ? 'w-[100vw]' : 'w-[100vw]'}`}>
         <header className='w-full'>
           <Header/>
         </header>

@@ -6,6 +6,7 @@ import { IoMdArchive } from 'react-icons/io'
 import { FiEdit3 } from 'react-icons/fi'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
+import sidebarState from './sidebarAtom'
 
 //* GET and POST method
 //* POST for adding question bank
@@ -270,6 +271,7 @@ function QuestionBanks() {
   const [banks, setBanks] = useRecoilState(banksState)
   const isCreateMode = useRecoilValue(createModeState)
   const navigate = useNavigate()
+  const isSidebarVisible = useRecoilValue(sidebarState)
   
   //* Get all question banks on initial render
   useEffect(() => {
@@ -303,7 +305,7 @@ function QuestionBanks() {
       <div className='w-full px-5'>
         <h1 className='text-white text-2xl font-bold'>Question Banks</h1>
       </div>
-      <div className='button-search flex flex-col gap-4 sm:justify-center items-center md:justify-between md:flex-row w-full px-5'>
+      <div className={`button-search flex flex-col ${isSidebarVisible ? 'md:flex-col' : 'md:flex-row md:justify-between'} gap-4 sm:justify-center lg:justify-between lg:flex-row items-center w-full px-5`}>
         {isCreateMode ? <CreateBankMode/> : <CreateBankButton/>}
         
         <div className="flex relative shadow-lg max-w-[277px] min-h-[56px]">
