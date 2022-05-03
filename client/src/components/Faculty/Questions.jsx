@@ -221,7 +221,7 @@ function QuestionsMain(props) {
   const [isFormVisible, setIsFormVisible] = useRecoilState(questionFormState)
   
    return (
-      <div className='relative flex flex-col gap-10 lg:flex-row lg:gap-0 p-5'>
+    <div className='relative flex flex-col gap-10 lg:flex-row lg:gap-0 py-5 px-0'>
       <div className='w-full lg:w-[80%] px-5 flex flex-col'>
         <h1 className='text-white text-2xl font-bold mb-5'>{ props.bankData.title }</h1>
         <div className='min-h-[80px] px-3 py-5 border-b-slate-300 border-b mb-10'>
