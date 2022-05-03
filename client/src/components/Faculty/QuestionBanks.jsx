@@ -271,7 +271,6 @@ function QuestionBanks() {
   const [banks, setBanks] = useRecoilState(banksState)
   const isCreateMode = useRecoilValue(createModeState)
   const navigate = useNavigate()
-  const [, setBankData] = useRecoilState(bankDataState)
   
   //* Get all question banks on initial render
   useEffect(() => {
@@ -294,9 +293,6 @@ function QuestionBanks() {
   const openBank = async (id) => {
       try {
           const bank = await axios.get(BANK_URI.concat(id))
-          
-          setBankData(bank.data)
-          
           navigate(`/faculty/banks/${bank.data._id}`)
       } catch (error) {
           throw new Error(error)
