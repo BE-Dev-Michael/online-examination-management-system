@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CgMenuLeft } from 'react-icons/cg'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import sidebarState from './sidebarAtom';
-import logo from '../../assets/images/logo-c.png'
+import logo from '../../assets/images/secondary_logo.png'
 import { MdDashboard } from 'react-icons/md'
 import { BsBoxSeam } from 'react-icons/bs'
 import { RiFileList2Line } from 'react-icons/ri'
@@ -69,7 +69,7 @@ function Sidebar() {
               <CgMenuLeft className='text-3xl cursor-pointer hover:text-[#7B9EBE] transition-all ease-linear'/>
             </button>
           </div>
-          <img className="min-w-[50px]" src={logo} alt="logo" width={150} />
+          <img className="min-w-[50px]" src={logo} alt="logo" width={80} />
         </div>
         {sidebar.map((prop, index) => {
             return <SidebarMenus elemIndex={index} activeIndex={activeLink.index} isActive={activeLink.isActive} active={() => activeLinkHandler(true, index)} key={index} menuName={prop.menuName} endPoint={prop.endPoint} icon={prop.icon}/>
