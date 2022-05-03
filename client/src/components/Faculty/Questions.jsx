@@ -4,7 +4,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToMarkdown from 'draftjs-to-markdown';
-import { IoAddCircleOutline } from 'react-icons/io5'
+import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
 import './QuestionBanks.css'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil'
@@ -23,16 +23,17 @@ const richTextState = atom({
 const formDataState = atom({
     key: 'formDataState',
     default: {question: null,
-              a: null, 
-              b: null, 
-              c: null, 
-              d: null,
+              choices: [],
               answer: null,
               points: 0}
 })
 const bankIdState = atom({
   key: 'bankIdState', 
   default: null
+})
+const numOfChoicesState = atom({
+    key: 'numOfChoicesState',
+    default: 4
 })
 
 
@@ -78,12 +79,45 @@ function RichTextEditor() {
         </div>
     )
 }
+function InputChoice(props) {
+    const [numOfChoices, setNumOfChoices] = useRecoilState(numOfChoicesState)
+    const [formData, setFormData] = useRecoilState(formDataState)
+
+    useEffect(() => {
+        console.log(formData.choices);
+    }, [formData.choices])
+    
+   
+    const deleteChoiceHandler = () => {
+        if (numOfChoices === 2) {
+            alert('There should be at least two choices!')
+            return
+        }
+        const choicesCopy = [...formData.choices]
+        const newChoices = choicesCopy.filter((choice, index) => props.index !== index)
+        setFormData({...formData, ['choices']: newChoices})
+        setNumOfChoices(prev => prev - 1)
+    }
+    const choiceIndexHandler = (e) => {
+        const { name, value } = e.target
+        const choicesCopy = [...formData.choices]
+        choicesCopy[props.index] = value
+        setFormData({...formData, [name]: choicesCopy})
+    }
+    return(
+        <div className='flex gap-4'>
+            <input onChange={choiceIndexHandler} className='p-2 border-b focus:outline-[#7B9EBE] w-[95%]' placeholder="Choice" type="text" name='choices' value={formData.choices[props.index]} required/>
+            <button onClick={deleteChoiceHandler} type='button'>{<IoClose/>}</button>
+        </div>
+    )
+}
 function QuestionForm() {
     const richTextValue = useRecoilValue(richTextState)
     const [formData, setFormData] = useRecoilState(formDataState)
     const bankId = useRecoilValue(bankIdState)
     const navigate = useNavigate()
     const [isFormVisible, setIsFormVisible] = useRecoilState(questionFormState)
+    const [numOfChoices, setNumOfChoices] = useRecoilState(numOfChoicesState)
 
     useEffect(() => {
         if (isFormVisible === true) {
@@ -91,10 +125,10 @@ function QuestionForm() {
         }
     }, [isFormVisible])
     
-    
     const formDataHandler = (e) => {
         const { name, value } = e.target
         setFormData({...formData, [name]: value})
+        
         console.log(formData)
     }
     const submitQuestion = (e) => {
@@ -122,21 +156,22 @@ function QuestionForm() {
             <RichTextEditor/>
           </div>
           <div className='w-full p-2 mb-5'>
-            <h1 className='font-bold mb-5'>Choices</h1>
+            <div className='flex justify-between px-1'>
+                <h1 className='font-bold mb-5'>Choices</h1>
+                <a onClick={() => setNumOfChoices(prev => prev + 1)} className='text-[#7B9EBE] cursor-pointer'>+ Add Another Choice</a>
+            </div>
             <div className='flex flex-col gap-4'>
-              <input onChange={formDataHandler} className='p-2 border-b focus:outline-[#7B9EBE]' placeholder="Choice A" type="text" name='a' required/>
-              <input onChange={formDataHandler} className='p-2 border-b focus:outline-[#7B9EBE]' placeholder="Choice B" type="text" name='b' required/>
-              <input onChange={formDataHandler} className='p-2 border-b focus:outline-[#7B9EBE]' placeholder="Choice C" type="text" name='c' required/>
-              <input onChange={formDataHandler} className='p-2 border-b focus:outline-[#7B9EBE]' placeholder="Choice D" type="text" name='d' required/>
+              {[...Array(numOfChoices)].map((value, index) => {
+                  return <InputChoice key={index} index={index}/> 
+              }) }
             </div>
           </div>
           <div className='w-full p-2 mb-5'>
             <h1 className='font-bold mb-5'>Correct Answer</h1>
             <select className='p-2 w-full border' name="answer" id="" onChange={formDataHandler}>
-              <option value={formData.a}>{formData.a}</option>
-              <option value={formData.b}>{formData.b}</option>
-              <option value={formData.c}>{formData.c}</option>
-              <option value={formData.d}>{formData.d}</option>
+              {formData.choices !== 'undefined' ? formData.choices.map(choice => {
+                  return <option value={choice}>{choice}</option>
+              }) : ''}
             </select>
           </div>
           <div className='flex justify-start gap-4 m-5'>
@@ -145,6 +180,18 @@ function QuestionForm() {
           </div>
         </div>
       </form>
+    )
+}
+function QuestionChoices(props) {
+    return(
+    <>
+        <div className='flex items-center gap-1'>
+          <input type="radio" name="choice" /> 
+          <label className='text-lg'>
+            {props.choice}
+          </label>
+        </div>
+    </>
     )
 }
 function QuestionCard(props) {
@@ -160,30 +207,9 @@ function QuestionCard(props) {
             <h1 className='font-semibold'>{props.question}</h1>
           </div>
           <div className='w-full px-7 pb-7'>
-            <div className='flex items-center gap-1'>
-              <input type="radio" value="a" name="choice" /> 
-              <label className='text-lg'>
-                {props.choiceA}
-              </label>
-            </div>
-            <div className='flex items-center gap-1'>
-              <input type="radio" value="b" name="choice" /> 
-              <label className='text-lg'>
-                {props.choiceB}
-              </label>
-            </div>
-            <div className='flex items-center gap-1'>
-              <input type="radio" value="c" name="choice" /> 
-              <label className='text-lg'>
-                {props.choiceC}
-              </label>
-            </div>
-            <div className='flex items-center gap-1'>
-              <input type="radio" value="d" name="choice" /> 
-              <label className='text-lg'>
-                {props.choiceD}
-              </label>
-            </div>
+            {props.choices.map(choice => {
+                return <QuestionChoices choice={choice}/>
+            })}
           </div>
         </div>
       </>
@@ -205,10 +231,7 @@ function QuestionsMain(props) {
               return <QuestionCard 
                       key={data._id}
                       question={data.question} 
-                      choiceA={data.choiceA}
-                      choiceB={data.choiceB}
-                      choiceC={data.choiceC}
-                      choiceD={data.choiceD}
+                      choices={data.choices}
                       points={data.points}
                       />
             })}
