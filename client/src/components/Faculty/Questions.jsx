@@ -8,7 +8,6 @@ import { IoAddCircleOutline } from 'react-icons/io5'
 import './QuestionBanks.css'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil'
-import bankDataState from './bankDataAtom'
 import { useNavigate } from 'react-router-dom'
 
 const BANK_URI = 'http://localhost:7777/api/banks/'
