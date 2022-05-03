@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -35,10 +35,12 @@ const bankIdState = atom({
   default: null
 })
 
+
 function RichTextEditor() {
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
     const [, setRichText] = useRecoilState(richTextState)
     const [question, setQuestion] = useRecoilState(formDataState)
+    
     
     useEffect(() => {
         setRichText(editorState.getCurrentContent().getPlainText())
@@ -64,6 +66,7 @@ function RichTextEditor() {
     return (
         <div className='overflow-hidden'>
           <Editor 
+            editorClassName='question-editor'
             editorState={editorState}
             wrapperStyle={{ backgroundColor: "white", padding: "5px"}}
             editorStyle={{height: "500px"}}
@@ -80,6 +83,14 @@ function QuestionForm() {
     const [formData, setFormData] = useRecoilState(formDataState)
     const bankId = useRecoilValue(bankIdState)
     const navigate = useNavigate()
+    const [isFormVisible, setIsFormVisible] = useRecoilState(questionFormState)
+
+    useEffect(() => {
+        if (isFormVisible === true) {
+            document.getElementById('pointsField').focus()
+        }
+    }, [isFormVisible])
+    
     
     const formDataHandler = (e) => {
         const { name, value } = e.target
@@ -104,9 +115,10 @@ function QuestionForm() {
         <div className='w-full rounded-lg bg-white p-1 shadow-lg'>
           <header className='flex justify-between items-center border-b border-b-slate-400 p-4'>
             <input className='font-bold p-2 bg-transparent w-full break-all max-w-lg' name="question" value={richTextValue}/>
-            <input name="points" onChange={formDataHandler} className="p-2 border-b focus:outline-[#7B9EBE] max-w-[100px] text-right" type="number" placeholder='Points' required/>
+            <input id="pointsField" name="points" onChange={formDataHandler} className="p-2 border-b focus:outline-[#7B9EBE] max-w-[100px] text-right" type="number" placeholder='Points' required/>
           </header>
           <div>
+             <h1 className='font-bold mb-2 ml-3 mt-3'>Question</h1>
             <RichTextEditor/>
           </div>
           <div className='w-full p-2 mb-5'>
@@ -129,7 +141,7 @@ function QuestionForm() {
           </div>
           <div className='flex justify-start gap-4 m-5'>
             <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save question</button>
-            <button type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
+            <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
           </div>
         </div>
       </form>
@@ -179,6 +191,7 @@ function QuestionCard(props) {
 }
 function QuestionsMain(props) {
   const [isFormVisible, setIsFormVisible] = useRecoilState(questionFormState)
+  
    return (
       <div className='relative flex flex-col gap-10 lg:flex-row lg:gap-0 p-5'>
       <div className='w-full lg:w-[80%] px-5 flex flex-col'>
