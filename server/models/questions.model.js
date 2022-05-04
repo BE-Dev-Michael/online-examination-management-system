@@ -9,6 +9,10 @@ const questionSchema = mongoose.Schema({
     bank: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Banks'
+    },
+    exam: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exams'
     }
 })
 
