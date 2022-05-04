@@ -14,7 +14,8 @@ const examSchema = mongoose.Schema({
     groups: [{ //* For adding questions by pulling questions from question bank
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Questions'
-    }]
+    }],
+    isPublished: Boolean
 })
 
 module.exports = mongoose.model('Exams', examSchema)
