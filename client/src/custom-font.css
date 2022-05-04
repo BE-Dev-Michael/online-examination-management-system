@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    font-face{
+        font-family: "Cocon";
+        src: url('/public/fonts/cocon-regular.otf') format('otf');
+    }
+    font-face{
+        font-family: "Quicksand-bold";
+        src: url('/public/fonts/quicksand-bold.ttf') format('ttf');
+    }
+    font-face{
+        font-family: "Quicksand-semibold";
+        src: url('/public/fonts/quicksand-semibold.ttf') format('ttf');
+    }
+    font-face{
+        font-family: "Quicksand-regular";
+        src: url('/public/fonts/quicksand-regular.ttf') format('ttf');
+    }
+}
