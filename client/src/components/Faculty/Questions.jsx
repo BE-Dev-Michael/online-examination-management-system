@@ -221,9 +221,18 @@ function QuestionsMain(props) {
   const [isFormVisible, setIsFormVisible] = useRecoilState(questionFormState)
   
    return (
-    <div className='relative flex flex-col gap-10 lg:flex-row lg:gap-0 py-5 px-0'>
-      <div className='w-full lg:w-[80%] px-5 flex flex-col'>
-        <h1 className='text-white text-2xl font-bold mb-5'>{ props.bankData.title }</h1>
+    <div className='relative flex flex-col gap-10 py-5 px-0'>
+      <div className='flex flex-col items-center gap-10 sm:flex-row justify-between w-full px-7'>
+        <h1 className='text-white text-2xl font-bold my-auto'>{ props.bankData.title }</h1>
+        <div className='lg:w-[260px] div-add-question'> 
+          <button onClick={() => setIsFormVisible(!isFormVisible)} className='btn-add-question relative flex mx-auto justify-center items-center shadow-lg rounded-2xl px-7 py-4 font-semibold min-w-[260px]'>
+            <IoAddCircleOutline className='absolute left-6 text-white text-4xl'/>
+            <span className='ml-20 mr-3'>Add a question</span>
+          </button>
+        </div>
+      </div>
+      <div className='w-full px-0 md:px-5 flex flex-col'>
+        
         <div className='min-h-[80px] px-3 py-5 border-b-slate-300 border-b mb-10'>
           {props.bankData.questions.length === 0 && isFormVisible === false ? 
           <h1 className='text-center text-white text-2xl'>You haven't added questions yet.</h1>
@@ -242,14 +251,14 @@ function QuestionsMain(props) {
           </div>}
         </div>
       </div>
-      <div className='relative w-full h-auto lg:w-[20%] min-w-[263px]'>
+      {/* <div className='relative w-full h-auto lg:w-[20%] min-w-[263px]'>
         <div className='w-full lg:w-[260px] div-add-question mx-auto'> 
           <button onClick={() => setIsFormVisible(!isFormVisible)} className='btn-add-question relative flex mx-auto justify-center items-center shadow-lg rounded-2xl px-7 py-4 font-semibold min-w-[260px]'>
             <IoAddCircleOutline className='absolute left-6 text-white text-4xl'/>
             <span className='ml-20 mr-3'>Add a question</span>
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
    )
 }
