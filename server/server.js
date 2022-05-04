@@ -21,5 +21,6 @@ app.use(express.json())
 //* API routes
 app.use('/api/users', require(path.join(__dirname, 'routes', 'api/users')))
 app.use('/api/banks', require(path.join(__dirname, 'routes', 'api/banks')))
+app.use('/api/exams', require(path.join(__dirname, 'routes', 'api/exams')))
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`))
