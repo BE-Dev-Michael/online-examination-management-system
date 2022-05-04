@@ -6,6 +6,7 @@ const examSchema = mongoose.Schema({
     timeLimit: Number,
     startDate: Date,
     endDate: Date,
+    examCode: String,
     questions: [{ //* For adding questions directly to exam
         //* This is how mongoose sets relationships between collections
        type: mongoose.Schema.Types.ObjectId,
