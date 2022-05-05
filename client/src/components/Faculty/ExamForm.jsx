@@ -14,11 +14,11 @@ import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
 const EXAMS_URI = 'http://localhost:7771/api/exams'
 
 const richTextState = atom({
-    key: 'richTextState',
+    key: 'examRichTextState',
     default: ''
 })
-const formDataState = atom({
-    key: 'formDataState',
+const examFormDataState = atom({
+    key: 'examFormDataState',
     default: {
         title: null,
         desc: null,
@@ -39,7 +39,7 @@ const examFormState = atom({
 function ExamDescriptionRichText() {
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
     const [, setRichText] = useRecoilState(richTextState)
-    const [formData, setFormData] = useRecoilState(formDataState)
+    const [formData, setFormData] = useRecoilState(examFormDataState)
       
       
     useEffect(() => {
@@ -101,7 +101,7 @@ function ExamQuestions() {
 function ExamDetails() {
     const [startDateTime, setStartDateTime] = useState(new Date());
     const [endDateTime, setEndDateTime] = useState(new Date());
-    const [formData, setFormData] = useRecoilState(formDataState)
+    const [formData, setFormData] = useRecoilState(examFormDataState)
 
  
     const formDataHandler = (e) => {
@@ -143,7 +143,7 @@ function ExamDetails() {
     )
 }
 function ExamForm() {
-  const [formData, setFormData] = useRecoilState(formDataState)
+  const [formData, setFormData] = useRecoilState(examFormDataState)
   const [isFormVisible, setIsFormVisible] = useRecoilState(examFormState)
   const [isNextClicked, setIsNextClicked] = useState(false)
  

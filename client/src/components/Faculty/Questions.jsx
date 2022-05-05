@@ -94,6 +94,7 @@ function InputChoice(props) {
             return
         }
         const choicesCopy = [...formData.choices]
+        console.log(choicesCopy);
         const newChoices = choicesCopy.filter((choice, index) => props.index !== index)
         setFormData({...formData, ['choices']: newChoices})
         setNumOfChoices(prev => prev - 1)
@@ -106,8 +107,8 @@ function InputChoice(props) {
     }
     return(
         <div className='flex gap-4'>
-            <input onChange={choiceIndexHandler} className='p-2 border-b focus:outline-[#7B9EBE] w-[95%]' placeholder="Choice" type="text" name='choices' value={formData.choices[props.index]} required/>
-            <button onClick={deleteChoiceHandler} type='button'>{<IoClose/>}</button>
+          <input onChange={choiceIndexHandler} className='p-2 border-b focus:outline-[#7B9EBE] w-[95%]' placeholder="Choice" type="text" name='choices' value={formData.choices?.[props.index]} required/>
+          <button onClick={deleteChoiceHandler} type='button'>{<IoClose/>}</button>
         </div>
     )
 }
