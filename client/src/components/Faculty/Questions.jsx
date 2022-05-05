@@ -170,7 +170,7 @@ function QuestionForm() {
             <h1 className='font-bold mb-5'>Correct Answer</h1>
             <select className='p-2 w-full border' name="answer" id="" onChange={formDataHandler}>
               <option value='' selected disabled>Select the correct answer...</option>
-              {formData.choices !== 'undefined' ? formData.choices.map(choice => {
+              {typeof formData.choices !== 'undefined' ? formData.choices.map(choice => {
                   return <option value={choice}>{choice}</option>
               }) : ''}
             </select>
