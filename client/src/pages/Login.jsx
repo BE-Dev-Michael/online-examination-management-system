@@ -9,19 +9,19 @@ function Login() {
   return (
     <div>
       <header>
-        <Navbar/>
+        <Navbar />
       </header>
       <main>
         {/* //* BannerImage is a reusable component */}
         {/* //* Modify the src value if maglalagay ng ibang image */}
-        <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg"/>
+        <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg" />
         <Card>
-          <CardHeader className="relative -top-12 bg-indigo-600" text="Welcome Back" />
-          <LoginItems/>
+          <CardHeader className="relative -top-12 text-xl font-bold sm:text-2xl text-white bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC]" text="Sign In" />
+          <LoginItems />
         </Card>
       </main>
       <footer>
-    
+
       </footer>
     </div>
   )
