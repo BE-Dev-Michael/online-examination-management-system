@@ -5,6 +5,8 @@ import Dashboard from '../components/Faculty/Dashboard'
 import QuestionBanks from '../components/Faculty/QuestionBanks'
 import Questions from '../components/Faculty/Questions'
 import Exams from '../components/Faculty/Exams'
+import ExamPreview from '../components/Faculty/ExamPreview'
+import ExamForm from '../components/Faculty/ExamForm'
 import Reports from '../components/Faculty/Reports'
 import Sidebar from '../components/Faculty/Sidebar'
 import Background from '../components/Faculty/Background'
@@ -36,6 +38,8 @@ function Faculty() {
             <Route path="banks" element={<QuestionBanks/>} /> 
             <Route path="banks/:id" element={<Questions/>} />
             <Route path="exams" element={<Exams/>} />
+            <Route path="exams/:id" element={<ExamPreview/>} />
+            <Route path="exams/form" element={<ExamForm/>} />
             <Route path="reports" element={<Reports/>} />
           </Routes>
         </Content>

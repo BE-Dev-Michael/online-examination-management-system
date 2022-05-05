@@ -131,11 +131,12 @@ const addExam = async (req, res) => {
     // const { title } = req.body
     try {
         const examData = await Exams.create({
-            title: 'Sample exam',
-            desc: 'Sample desc',
-            timeLimit: 60,
-            startDate: '05/07/22',
-            endDate: '05/08/22',
+            title: 'Sample exam2',
+            desc: 'Sample desc2',
+            timeLimit: 120,
+            startDate: '05/09/22',
+            endDate: '05/11/22',
+            examCode: 'sampleExamCode2'
         })
         
         res.send(examData)
@@ -145,6 +146,18 @@ const addExam = async (req, res) => {
     }
     
 }
+//* HTTP Method => PATCH
+//* Route endpoint => /api/exams/publish/:id
+const publishExam = async (req, res) => {
+    const { isPublished } = req.body
+    try {
+        const newData = await Exams.findByIdAndUpdate(req.params.id, { isPublished: isPublished })
+        res.status(200).send('Published!')
+    } catch (error) {
+        console.error(error)
+        res.status(500)
+    }
+}
 
 //* HTTP Method => PATCH
 //* Route endpoint => /api/exams/:id
@@ -152,8 +165,8 @@ const updateExam = async (req, res) => {
     const { title } = req.body
    
     try {
-        const newTitle = await Banks.findByIdAndUpdate(req.params.id, { title: title })
-        res.status(200).send(await Banks.findById(newTitle._id))
+        const newData = await Exams.findByIdAndUpdate(req.params.id, { examCode: 'sampleExamCode' })
+        res.status(200).send(await Exams.findById(newData.examCode))
     } catch (error) {
         console.error(error)
         res.status(500)
@@ -175,6 +188,7 @@ module.exports = {
     addQuestion, 
     addQuestionGroup, 
     addExam, 
+    publishExam,
     updateExam, 
     deleteExam 
 }
