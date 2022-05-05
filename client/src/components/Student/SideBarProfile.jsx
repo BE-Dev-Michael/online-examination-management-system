@@ -42,7 +42,7 @@ const SideBarProfile = () => {
             <div>
 
                 <div className="mt-8 text-center">
-                    <img src={img1} alt="" className="w-28 h-28 m-auto rounded-full object-cover" />
+                    <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="" className="w-28 h-28 m-auto rounded-full object-cover" />
                     <Link onClick={() => activeLinkHandler(false, 0)} to={'/student/profile'}>
                         <h5 className=" mt-4 text-lg font-semibold text-gray-600 hover:text-cyan-600 hover:underline underline-offset-4">Romeo Gatchalian</h5>
                     </Link>
