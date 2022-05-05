@@ -4,6 +4,7 @@ import NavigationBar from '../components/Student/NavigationBar';
 import Dashboard from '../components/Student/Dashboard';
 import Examboard from '../components/Student/Examboard';
 import SideBarProfile from '../components/Student/SideBarProfile';
+import Profile from '../components/Student/Profile';
 
 const Student = () => {
     return (
@@ -16,6 +17,7 @@ const Student = () => {
                 <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/exams" element={<Examboard />} />
+                    <Route path="/profile/*" element={<Profile />} />
                 </Routes>
             </div>
         </div>
