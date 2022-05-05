@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import img1 from 'https://avatarfiles.alphacoders.com/275/275525.jpg'
+
 
 const UpdatePic = () => {
-    const [picture, setPicture] = useState(img1)
+    const [picture, setPicture] = useState("https://avatarfiles.alphacoders.com/275/275525.jpg")
     const [isSubmit, setIsSubmit] = useState(false)
 
     const getPhotoHandler = (e) => {
