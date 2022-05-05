@@ -2,7 +2,10 @@ import React from 'react'
 import BannerImage from "../Reusable/BannerImage"
 import KeyFeatures from './KeyFeatures';
 import UserFeatures from './UserFeatures';
+import CTA from './CTA';
+import Footer from './Footer';
 import '../../custom-font.css';
+
 
 function Hero() {
   return (
@@ -32,6 +35,10 @@ function Hero() {
         <KeyFeatures/>
 
         <UserFeatures/>
+
+        <CTA/>
+
+        <Footer/>
 
     </div>
     
