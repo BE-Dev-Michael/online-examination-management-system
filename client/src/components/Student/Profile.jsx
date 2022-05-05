@@ -51,7 +51,7 @@ const Profile = () => {
     })
 
     return (
-        <div className="relative h-full w-screen mx-5 rounded-2xl shadow-md bg-white" >
+        <div className="relative h-full w-screen mx-5 rounded-2xl shadow-sm bg-white border" >
             <div className="relative flex">
                 <h3 className="text-lg font-medium m-3" >ACCOUNT INFORMATION</h3>
                 <Dropdown />
