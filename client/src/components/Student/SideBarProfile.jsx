@@ -4,7 +4,7 @@ import { MdDashboard } from 'react-icons/md'
 import { RiFileList2Line } from 'react-icons/ri'
 
 function SidebarMenus(props) {
-    const activeClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-[#7B9EBC] to-[#DBA390]", set2: "-mr-1 font-medium" }
+    const activeClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC]", set2: "-mr-1 font-medium" }
     const inactiveClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group", set2: "group-hover:text-gray-700" }
 
     return (
