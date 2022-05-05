@@ -63,7 +63,7 @@ const ChangePass = (props) => {
     }, [passwordErrors])
 
     return (
-        <div className="my-5 lg:w-10/12 border p-5 rounded-sm">
+        <div className="my-5 lg:w-10/12 border p-5 rounded-sm shadow">
             <form onSubmit={onSubmitChangePassword}>
                 <h3 className="text-lg font-medium mb-5">Change password</h3>
 

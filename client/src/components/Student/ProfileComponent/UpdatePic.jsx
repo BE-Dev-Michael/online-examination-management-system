@@ -27,7 +27,7 @@ const UpdatePic = () => {
     }, [])
 
     return (
-        <div className="mt-4 lg:w-10/12 border p-5 rounded-sm mb-5">
+        <div className="mt-4 lg:w-10/12 border p-5 rounded-sm mb-5 shadow">
             <h3 className="text-lg font-medium mb-5">Profile picture</h3>
             <form onSubmit={changePictureHandler}>
                 <div className="flex justify-center m-5 h-52">
