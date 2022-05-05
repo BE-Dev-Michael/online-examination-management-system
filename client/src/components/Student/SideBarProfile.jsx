@@ -43,10 +43,10 @@ const SideBarProfile = () => {
 
                 <div className="mt-8 text-center">
                     <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="" className="w-28 h-28 m-auto rounded-full object-cover" />
-                    <a href="#">
-                        <h5 className=" mt-4 text-lg font-semibold text-gray-600 ">Romeo Gatchalian</h5>
-                    </a>
-                    <span className=" text-gray-400 ">Student</span>
+                    <Link onClick={() => activeLinkHandler(false, 0)} to={'/student/profile'}>
+                        <h5 className=" mt-4 text-lg font-semibold text-gray-600 hover:text-cyan-600 hover:underline underline-offset-4">Romeo Gatchalian</h5>
+                    </Link>
+                    <span className=" text-gray-400 ">Student | BSIT-4Q</span>
                 </div>
 
                 <div className="space-y-2 tracking-wide mt-8">
