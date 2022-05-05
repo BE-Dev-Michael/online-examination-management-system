@@ -64,7 +64,7 @@ function UserFeatures () {
                     </div>
                 </div>
                 
-                <div className="grid md:grid-cols-2 sm:grid-cols-1 my-5">
+                <div className="grid md:grid-cols-2 sm:grid-cols-1 my-5 mb-32">
                 <div className="grid justify-items-end text-[#414141] lg:ml-40 md:ml-14 sm:mt-5 lg:w-auto md:w-full sm:w-4/5 sm:place-self-center z-20">
                         <h3 className="font-['Cocon'] text-2xl mb-5 mr-5 w-fit col-span-2 text-bottom h-fit md:place-self-start md:self-end sm:place-self-center">
                             Students

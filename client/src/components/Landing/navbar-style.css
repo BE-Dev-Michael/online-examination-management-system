@@ -6,7 +6,7 @@
     background:  transparent; 
     position: fixed; 
     width:  100vw; 
-    z-index:  20;
+    z-index:  30;
 }
 
 .navbar.active{
