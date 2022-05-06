@@ -35,6 +35,10 @@ const examFormState = atom({
     key: 'examFormState',
     default: false
 })
+const createGroupState = atom({
+  key: 'createGroupState',
+  default: false
+})
 
 function ExamDescriptionRichText() {
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
@@ -77,22 +81,43 @@ function ExamDescriptionRichText() {
         </div>
     )
 }
+function ExamQuestionGroup() {
+   return(
+     <div className='mb-5 mt-5'>
+      <div className='flex gap-4'>
+        <input type="text" placeholder='Group Name'/>
+        <input type="number" placeholder='Number of Questions'/>
+      </div>
+      <div className='mt-3'>
+        <a className='cursor-pointer text-[#7B9EBC] underline underline-offset-1'>Select from Question Bank</a>
+      </div>
+     </div>
+   )
+}
+function AddQuestionChoices() {
+  const [isCreateGroup, setIsCreateGroup] = useRecoilState(createGroupState)
+  return(
+    <>
+      <div className='flex flex-col items-center'>
+        <h1 className='font-semibold'>Add a question directly to exam</h1>
+        <a className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>+ Add a Question</a>
+      </div>
+      <div className='flex items-center font-semibold'>
+        or
+      </div>
+      <div className='flex flex-col items-center'>
+        <h1 className='font-semibold'>Add a question from question bank</h1>
+        <a onClick={() => setIsCreateGroup(!isCreateGroup)} className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>+ Create Question Group</a>
+      </div>
+    </>
+  )
+}
 function ExamQuestions() {
+    const isCreateGroup = useRecoilValue(createGroupState)
     return(
       <>
         <div className='flex flex-col gap-4 items-center'>
-          <div className='flex flex-col items-center'>
-            <h1 className='font-semibold'>Add a question directly to exam</h1>
-            <a className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>+ Add a Question</a>
-          </div>
-          <div className='flex items-center font-semibold'>
-            or
-          </div>
-          <div className='flex flex-col items-center'>
-            <h1 className='font-semibold'>Add a question from question bank</h1>
-            <a className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>+ Create Question Group</a>
-          </div>
-          
+          {isCreateGroup ? <ExamQuestionGroup/> : <AddQuestionChoices/>}
         </div>
         <div className='border-b mt-4'></div>
       </>
@@ -146,6 +171,7 @@ function ExamForm() {
   const [formData, setFormData] = useRecoilState(examFormDataState)
   const [isFormVisible, setIsFormVisible] = useRecoilState(examFormState)
   const [isNextClicked, setIsNextClicked] = useState(false)
+  const [isCreateGroup, setIsCreateGroup]= useRecoilState(createGroupState)
  
   const submitExam = (e) => {
     e.preventDefault()
@@ -175,10 +201,14 @@ function ExamForm() {
               <div>
                 <button onClick={() => setIsNextClicked(!isNextClicked)} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Previous</button>
               </div>
-              <div className='flex gap-4'>
+              <div className={`${isCreateGroup === true ? 'hidden' : 'block'} flex gap-4`}>
                 <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
                 <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save</button>
                 <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save & Publish</button>
+              </div>
+              <div className={`${isCreateGroup === true ? 'block' : 'hidden'} flex gap-4`}>
+                <button onClick={() => setIsCreateGroup(!isCreateGroup)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
+                <button type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Create Group</button>
               </div>
             </div>
           </div>
