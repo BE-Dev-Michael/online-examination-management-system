@@ -81,34 +81,36 @@ function Exams() {
   }, [])
 
   return (
-    <div className='flex flex-col gap-4'>
-    <div className='w-full px-5'>
-      <h1 className='text-white text-2xl font-bold'>Exams</h1>
-    </div>
-    <div className={`button-search flex flex-col ${isSidebarVisible ? 'md:flex-col' : 'md:flex-row md:justify-between'} gap-4 sm:justify-center lg:justify-between lg:flex-row items-center w-full px-5`}>
-      <div className='max-w-[700px]'>
-        <button onClick={() => navigate('/faculty/exams/form')} className='relative flex justify-center items-center btn-create shadow-lg rounded-2xl px-7 py-4 font-semibold'>
-          <IoAddCircleOutline className='absolute left-6 text-white text-4xl'/>
-          <span className='ml-20 mr-3'>Create New Exam</span>
-        </button>
-      </div>
+    <>
+      <div className='flex flex-col gap-4'>
+        <div className='w-full px-5'>
+          <h1 className='text-white text-2xl font-bold'>Exams</h1>
+        </div>
+        <div className={`button-search flex flex-col ${isSidebarVisible ? 'md:flex-col' : 'md:flex-row md:justify-between'} gap-4 sm:justify-center lg:justify-between lg:flex-row items-center w-full px-5`}>
+          <div className='max-w-[700px]'>
+            <button onClick={() => navigate('/faculty/exams/form')} className='relative flex justify-center items-center btn-create shadow-lg rounded-2xl px-7 py-4 font-semibold'>
+              <IoAddCircleOutline className='absolute left-6 text-white text-4xl'/>
+              <span className='ml-20 mr-3'>Create New Exam</span>
+            </button>
+          </div>
+            
+          <div className="flex relative shadow-lg max-w-[277px] min-h-[56px]">
+            <input type="text" id="email-with-icon" className=" rounded-l-2xl flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:border-[#e2a591] focus:border-[#DBA390] focus:border-transparent" name="search-exam" placeholder="Search Exam"/>
+            <span className="bg-[#7B9EBE] rounded-r-2xl inline-flex cursor-pointer items-center px-5 text-gray-500 shadow-sm text-sm">
+              <IoSearchOutline className='text-white text-2xl m-0 border-[#7B9EBE]'/>
+            </span>
+          </div>
+        </div>
         
-      <div className="flex relative shadow-lg max-w-[277px] min-h-[56px]">
-        <input type="text" id="email-with-icon" className=" rounded-l-2xl flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:border-[#e2a591] focus:border-[#DBA390] focus:border-transparent" name="search-exam" placeholder="Search Exam"/>
-        <span className="bg-[#7B9EBE] rounded-r-2xl inline-flex cursor-pointer items-center px-5 text-gray-500 shadow-sm text-sm">
-          <IoSearchOutline className='text-white text-2xl m-0 border-[#7B9EBE]'/>
-        </span>
+        <div className="relative w-full h-full p-5 mb-24">
+          <div className="grid grid-rows-2 gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center items-center ease-in-out duration-300">
+          {exams.map(exam => {
+              return <ExamCard _id={exam.id} key={exam.id} title={exam.title} noOfQuestions={exam.questions.length + exam.groups.length} isPublished={exam.isPublished}/>
+          })}
+          </div>
+        </div> 
       </div>
-    </div>
-     
-    <div className="relative w-full h-full p-5 mb-24">
-      <div className="grid grid-rows-2 gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center items-center ease-in-out duration-300">
-      {exams.map(exam => {
-          return <ExamCard _id={exam.id} key={exam.id} title={exam.title} noOfQuestions={exam.questions.length + exam.groups.length} isPublished={exam.isPublished}/>
-      })}
-      </div>
-    </div> 
-  </div>
+    </>
   )
 }
 
