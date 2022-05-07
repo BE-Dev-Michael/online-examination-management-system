@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -12,6 +12,7 @@ import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
 //* POST for adding exam
 //* GET for getting all exams
 const EXAMS_URI = 'http://localhost:7771/api/exams'
+const BANKS_URI = 'http://localhost:7771/api/banks'
 
 const richTextState = atom({
     key: 'examRichTextState',
@@ -38,6 +39,42 @@ const examFormState = atom({
 const createGroupState = atom({
   key: 'createGroupState',
   default: false
+})
+const selectBankModalState = atom({
+  key: 'selectBankModalState',
+  default: false
+})
+const bankListState = atom({
+  key: 'bankListState',
+  default: []
+})
+const selectedBankState = atom({ 
+  key: 'selectedBankState',
+  default: null
+})
+const clickedBankState = atom({ 
+  key: 'clickedBankState',
+  default: null
+})
+const questionGroupState = atom({ 
+  key: 'questionGroupState',
+  default: []
+})
+const questionGroupDataState = atom({ 
+  key: 'questionGroupDataState',
+  default: {
+    groupName: null,
+    noOfQuestions: null,
+    questionBank: null,
+    questions: null
+  }
+})
+const viewQuestionGroupState = atom({
+  key: 'viewQuestionGroupState',
+  default: {
+    isVisible: false,
+    index: null
+  }
 })
 
 function ExamDescriptionRichText() {
@@ -81,17 +118,161 @@ function ExamDescriptionRichText() {
         </div>
     )
 }
-function ExamQuestionGroup() {
+function ModalBankList(props) {
+  const initials = [...props.title].filter(initial => initial === initial.toUpperCase())
+  const [clickedBank, setClickedBank] = useRecoilState(clickedBankState)
+
+  const clickedBankHandler = () => {
+      setClickedBank(props.id)
+  }
    return(
-     <div className='mb-5 mt-5'>
+      <ul className='w-full'>
+        <li onClick={clickedBankHandler} className="flex flex-row">
+          <div className={`select-none cursor-pointer flex flex-1 items-center p-4 shadow border rounded-lg ${clickedBank === props.id ? 'bg-slate-400 hover:bg-slate-400' : 'bg-white hover:bg-slate-100'}`}>
+            <div className="flex flex-col w-10 h-10 justify-center items-center mr-4 rounded-full bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC]">
+              <div className='text-white text-3xl'>
+                {initials.map(value => value).join('').split(' ').join('').substring(0, 2)}
+              </div>
+            </div>
+            <div className="flex-1 pl-1 mr-16">
+              <div className={`font-medium ${clickedBank === props.id ? 'text-white' : 'text-black'}`}>
+                {props.title}
+              </div>
+              <div className={`${clickedBank === props.id ? 'text-white' : 'text-gray-600'} text-sm`}>
+               {props.noOfQuestions === 1 ? `${props.noOfQuestions} Question` : `${props.noOfQuestions} Questions`}
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+   )
+}
+function ExamSelectBankModal() {
+   const [isModalVisible, setIsModalVisible] = useRecoilState(selectBankModalState)
+   const bankList = useRecoilValue(bankListState)
+   const [selectedBank, setSelectedBank] = useRecoilState(selectedBankState)
+   const [clickedBank, setClickedBank] = useRecoilState(clickedBankState)
+   const [questionGroupData, setQuestionGroupData] = useRecoilState(questionGroupDataState)
+
+   const resetModal = () => {
+      setIsModalVisible(false)
+      setClickedBank(null)
+   }
+
+   useEffect(() => {
+     console.log(questionGroupData)
+   }, [isModalVisible])
+   
+
+   const pullQuestionFromBank = async () => {
+      try {
+        const fetchedBanks = await axios.post(EXAMS_URI.concat(`/pull/${clickedBank}`), 
+        {limit: parseInt(questionGroupData.noOfQuestions)})
+        console.log(fetchedBanks.data);
+        setQuestionGroupData({...questionGroupData, ['questionBank']: fetchedBanks.data.title,
+        ['questions']: fetchedBanks.data.questions})
+        setSelectedBank(clickedBank)
+        setIsModalVisible(false)
+      } catch (error) {
+        console.error(error);
+      }
+  }
+   
+   return(
+     <>
+      <div className="fixed inset-0 z-50">
+        <div className='absolute inset-0 bg-black opacity-50 h-screen w-screen'/>
+        <div className="relative px-4 h-screen flex items-center justify-center">
+          <div className="relative w-[50%] bg-white rounded-lg p-4 mx-4">
+            <div className="relative flex flex-col mx-auto w-full h-[70vh] max-h-[70vh] items-center justify-center bg-white rounded-lg overflow-auto">
+              <div className='h-full w-full'>
+                {bankList.map(bank => {
+                  return <ModalBankList key={bank.id} id={bank.id} title={bank.title} noOfQuestions={bank.questions.length}/>
+                })}
+              </div>
+            </div>
+            <div className='border my-5'/>
+            <div className='flex justify-end gap-4'>
+              <button onClick={resetModal} className='px-5 py-2 bg-slate-300 rounded-lg shadow-lg'>Cancel</button>
+              <button onClick={pullQuestionFromBank} className='px-5 py-2 bg-[#7B9EBC] text-white rounded-lg shadow-lg'>Select Bank</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+   )
+}
+function ExamQuestionGroup() {
+   const [isModalVisible, setIsModalVisible] = useRecoilState(selectBankModalState)
+   const [bankList, setBankList] = useRecoilState(bankListState)
+   const [selectedBank, setSelectedBank] = useRecoilState(selectedBankState)
+   const [clickedBank, setClickedBank] = useRecoilState(clickedBankState)
+   const [isCreateGroup, setIsCreateGroup]= useRecoilState(createGroupState)
+   const [questionGroupData, setQuestionGroupData] = useRecoilState(questionGroupDataState)
+   const [questionGroup, setQuestionGroup] = useRecoilState(questionGroupState)
+
+   const getBankList = async () => {
+      setIsModalVisible(!isModalVisible)
+      setClickedBank(null)
+      try {
+        const banks = await axios.get(BANKS_URI)
+            
+        let fetchedBanks = banks.data.map(data => {
+            return { id: data._id, title: data.title, questions: data.questions }
+        })
+            
+        setBankList(fetchedBanks)
+      } catch (error) {
+          throw new Error(error)
+      }
+      
+   }
+
+  const cancelCreateGroup = () => {
+    setSelectedBank(null)
+    setIsCreateGroup(!isCreateGroup)
+  }
+
+  useEffect(() => {
+      console.log(questionGroup);
+  }, [questionGroup])
+  
+
+  const questionGroupDataHandler = (e) => {
+    const {name, value} = e.target
+    setQuestionGroupData({...questionGroupData, [name]: value})
+  }
+
+  const createQuestionGroup = () => {
+    setQuestionGroup([...questionGroup, questionGroupData])
+    setSelectedBank(null)
+    setIsCreateGroup(!isCreateGroup)
+  }
+
+   return(
+    <div className='mb-5 mt-5 rounded-lg shadow border p-5'>
       <div className='flex gap-4'>
-        <input type="text" placeholder='Group Name'/>
-        <input type="number" placeholder='Number of Questions'/>
+        <input name='groupName' onChange={questionGroupDataHandler} value={questionGroupData.groupName} type="text" placeholder='Group Name'/>
+        <input name='noOfQuestions' onChange={questionGroupDataHandler} value={questionGroupData.noOfQuestions} type="number" placeholder='Number of Questions'/>
       </div>
       <div className='mt-3'>
-        <a className='cursor-pointer text-[#7B9EBC] underline underline-offset-1'>Select from Question Bank</a>
+        <a onClick={getBankList} className='cursor-pointer text-[#7B9EBC] underline underline-offset-1'>Select from Question Bank</a>
       </div>
-     </div>
+      <div className='mt-2 flex flex-col gap-4'>
+        {selectedBank !== null ? 
+        <span>Questions will be randomly pulled from:  
+          <a className='cursor-pointer text-[#7B9EBC] underline underline-offset-1'>
+            {questionGroupData.questionBank}
+          </a>
+        </span>
+        : ''}
+        
+      </div>
+      <div className={`flex gap-4 mt-2`}>
+        <button onClick={cancelCreateGroup} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
+        <button onClick={createQuestionGroup} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Create Group</button>
+      </div>
+    </div>
    )
 }
 function AddQuestionChoices() {
@@ -112,11 +293,90 @@ function AddQuestionChoices() {
     </>
   )
 }
+function QuestionList(props) {
+  return(
+    <div className='shadow border w-full'>
+      <header className='flex justify-between border-b p-3'>
+        <h1 className='font-bold'>{props.question}</h1>
+        <h1 className='font-bold'>{props.points === 1 ? `${props.points} Point` : `${props.points} Points`}</h1>
+      </header>
+      <div className='flex flex-col gap-1 p-3'>
+        {props.choices.map(choice => {
+          return <div className='flex gap-2'>
+                  <input className='my-auto' type="radio" name="choice" /> 
+                  <label className='text-md'>
+                    {choice}
+                  </label>
+                </div> 
+        })}
+      </div>
+    </div>
+  )
+}
+function ViewQuestionGroup() {
+    const [viewQuestionGroup, setViewQuestionGroup] = useRecoilState(viewQuestionGroupState)
+    const questionGroup = useRecoilValue(questionGroupState)
+ 
+    return(
+      <>
+        <div className="fixed inset-0 z-50">
+          <div className='absolute inset-0 bg-black opacity-50 h-screen w-screen'/>
+          <div className="relative px-4 h-screen flex items-center justify-center">
+            <div className="relative w-[50%] bg-white rounded-lg p-4 mx-4">
+              <div className="relative flex flex-col mx-auto w-full h-[70vh] max-h-[70vh] items-center justify-center bg-white rounded-lg overflow-auto">
+                <div className='h-full w-full'>
+                  {questionGroup[viewQuestionGroup.index]
+                  .questions.map(question => {
+                      return <QuestionList 
+                              key={question._id} 
+                              question={question.question} 
+                              choices={question.choices} 
+                              answer={question.answer}
+                              points={question.points}/>
+                   
+                  })}
+                </div>
+              </div>
+              <div className='border my-5'/>
+              <div className='flex justify-end gap-4'>
+                <button onClick={() => setViewQuestionGroup({...viewQuestionGroup, ['isVisible']: false})} className='px-5 py-2 bg-slate-300 rounded-lg shadow-lg'>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    )
+}
+function QuestionGroupCard(props) {
+    const [viewQuestionGroup, setViewQuestionGroup] = useRecoilState(viewQuestionGroupState)
+    return(
+      <div className='shadow border w-[80%]'>
+        <header className='flex justify-between border-b p-3'>
+          <h1 className='font-bold'>{props.groupName}</h1>
+          <h1 className='font-bold'>{props.noOfQuestions === 1 ? `${props.noOfQuestions} Question` : `${props.noOfQuestions} Questions`}</h1>
+        </header>
+        <div className='w-full p-3 flex justify-between'>
+         <span>Questions will be randomly pulled from: {props.questionBank}</span>
+         <span><a onClick={() => setViewQuestionGroup({...viewQuestionGroup, ['isVisible']: true, ['index']: props.index})} className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>View</a></span>
+        </div>
+      </div>
+    )
+}
 function ExamQuestions() {
     const isCreateGroup = useRecoilValue(createGroupState)
+    const questionGroup = useRecoilValue(questionGroupState)
     return(
       <>
         <div className='flex flex-col gap-4 items-center'>
+          {questionGroup && questionGroup.map((group, index) => {
+            return  <QuestionGroupCard 
+                      key={index}
+                      index={index}
+                      groupName={group.groupName} 
+                      noOfQuestions={group.noOfQuestions}
+                      questionBank={group.questionBank}/>
+          })}
+    
           {isCreateGroup ? <ExamQuestionGroup/> : <AddQuestionChoices/>}
         </div>
         <div className='border-b mt-4'></div>
@@ -171,7 +431,16 @@ function ExamForm() {
   const [formData, setFormData] = useRecoilState(examFormDataState)
   const [isFormVisible, setIsFormVisible] = useRecoilState(examFormState)
   const [isNextClicked, setIsNextClicked] = useState(false)
-  const [isCreateGroup, setIsCreateGroup]= useRecoilState(createGroupState)
+  const [, setSelectedBank] = useRecoilState(selectedBankState)
+  const isModalVisible = useRecoilValue(selectBankModalState)
+  const [isCreateGroup, setIsCreateGroup] = useRecoilState(createGroupState)
+  const [viewQuestionGroup, setViewQuestionGroup] = useRecoilState(viewQuestionGroupState)
+
+  useEffect(() => {
+    setSelectedBank(null)
+    setIsCreateGroup(false)
+  }, [])
+  
  
   const submitExam = (e) => {
     e.preventDefault()
@@ -186,35 +455,40 @@ function ExamForm() {
     }
     sendExamData()
   }
+
   return(
-    <div className='flex flex-col gap-4 mb-56'>
-      <form onSubmit={submitExam}>
-        <div className='flex items-center justify-center'>
-          <div className='w-[80%] rounded-lg bg-white p-3 shadow-lg'>
-            {isNextClicked !== true ? <ExamDetails/> : <ExamQuestions/>}
-            
-            <div className={`${isNextClicked !== true ? 'block' : 'hidden'} flex justify-end m-5 gap-4`}>
-              <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
-              <button onClick={() => setIsNextClicked(!isNextClicked)} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Next</button>
-            </div>
-            <div className={`${isNextClicked !== true ? 'hidden' : 'block'} flex justify-between m-5`}>
-              <div>
-                <button onClick={() => setIsNextClicked(!isNextClicked)} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Previous</button>
-              </div>
-              <div className={`${isCreateGroup === true ? 'hidden' : 'block'} flex gap-4`}>
+    <>
+      <div className='flex flex-col gap-4 mb-56'>
+        <form onSubmit={submitExam}>
+          <div className='flex items-center justify-center'>
+            <div className='w-[80%] rounded-lg bg-white p-3 shadow-lg'>
+              {isNextClicked !== true ? <ExamDetails/> : <ExamQuestions/>}
+              
+              <div className={`${isNextClicked !== true ? 'block' : 'hidden'} flex justify-end m-5 gap-4`}>
                 <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
-                <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save</button>
-                <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save & Publish</button>
+                <button onClick={() => setIsNextClicked(!isNextClicked)} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Next</button>
               </div>
-              <div className={`${isCreateGroup === true ? 'block' : 'hidden'} flex gap-4`}>
-                <button onClick={() => setIsCreateGroup(!isCreateGroup)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
-                <button type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Create Group</button>
+              <div className={`${isNextClicked !== true ? 'hidden' : 'block'} flex justify-between m-5`}>
+                <div>
+                  <button onClick={() => setIsNextClicked(!isNextClicked)} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Previous</button>
+                </div>
+                <div className={`flex gap-4`}>
+                  <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
+                  <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save</button>
+                  <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save & Publish</button>
+                </div>
+                {/* <div className={`flex gap-4`}>
+                  <button onClick={cancelCreateGroup} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
+                  <button type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Create Group</button>
+                </div> */}
               </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+      {isModalVisible ? <ExamSelectBankModal/> : ''}
+      {viewQuestionGroup.isVisible ? <ViewQuestionGroup/> : ''}
+    </>
   )
 }
 

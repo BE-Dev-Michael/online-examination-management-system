@@ -24,36 +24,52 @@ const viewExam = async (req, res) => {
     }
 }
 
+//* Functions for pulling random questions from bank
+const randomIndex = (questions) => {
+    //* For example: if questions length === 12, then this function will return a single random value from 0-12
+    return Math.floor(Math.random() * questions.length)
+}
+const randomizeQuestions = (questions, limit) => {
+    const randQuestions = []
+    const indexes = []
+    let hasDuplicate = false
+   
+    for (let i = 0; i < limit; i++) {
+        //* Do-while loop to determine if there is a duplicate index from questions array
+        do {
+            hasDuplicate = false
+            //* Generated random index from questions array
+            const index = randomIndex(questions)
+            //* Push the generated random index if it doesn't exist on indexes array
+            //* Repeat the generation of random index if it does already exist on indexes array
+            !indexes.includes(index) ? indexes.push(index) : hasDuplicate = true
+        } while (hasDuplicate);
+        console.log(i)
+        randQuestions.push(questions[indexes[i]])
+    }
+        
+    return randQuestions
+}
+
 //* HTTP Method => GET
 //* Route endpoint => /api/exams/pull/:id
 const pullQuestionsFromBank = async (req, res) => {
-    const limit = 3
-    const randomIndex = (questions) => {
-        return Math.floor(Math.random() * questions.length)
-    }
+    const { limit } = req.body
+    console.log(limit)
     try {
         const bankData = await Banks.findById({_id: req.params.id}).populate('questions')
-        const questions = bankData.questions
-        const randQuestions = []
-        const indexes = []
-        let hasDuplicate = false
-        console.log(questions.length)
-        for (let i = 0; i < limit; i++) {
-            do {
-                hasDuplicate = false
-                const index = randomIndex(questions)
-                !indexes.includes(index) ? indexes.push(index) : hasDuplicate = true
-            } while (hasDuplicate);
-            randQuestions.push(questions[indexes[i]])
+        if (limit > bankData.questions.length) {
+            res.send('You have entered number of questions that exceeded the total number of questions from bank')
+        } else {
+            const randQuestions = randomizeQuestions(bankData.questions, limit)
+            bankData.questions = randQuestions
+            res.send(bankData)
         }
-        const questionIds = randQuestions.map(question => question._id)
-        res.send(questionIds)
     } catch (error) {
         console.error(error)
         res.status(500).send(error)
     }
     console.log('GET one bank')
-    
 }
 
 //* HTTP Method => POST

@@ -4,7 +4,7 @@ const { getAllExams, viewExam, pullQuestionsFromBank, addQuestion, addQuestionGr
 
 router.get('/', getAllExams)
 router.get('/:id', viewExam)
-router.get('/pull/:id', pullQuestionsFromBank)
+router.post('/pull/:id', pullQuestionsFromBank)
 router.post('/question/:id', addQuestion)
 router.post('/group/:id', addQuestionGroup)
 router.post('/', addExam)
