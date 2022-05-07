@@ -353,7 +353,7 @@ function QuestionGroupCard(props) {
       <div className='shadow border w-[80%]'>
         <header className='flex justify-between border-b p-3'>
           <h1 className='font-bold'>{props.groupName}</h1>
-          <h1 className='font-bold'>{props.noOfQuestions === 1 ? `${props.noOfQuestions} Question` : `${props.noOfQuestions} Questions`}</h1>
+          <h1 className='font-bold'>{props.noOfQuestions === '1' ? `${props.noOfQuestions} Question` : `${props.noOfQuestions} Questions`}</h1>
         </header>
         <div className='w-full p-3 flex justify-between'>
          <span>Questions will be randomly pulled from: {props.questionBank}</span>
