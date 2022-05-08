@@ -144,15 +144,18 @@ const addQuestionGroup = async (req, res) => {
 //* HTTP Method => POST
 //* Route endpoint => /api/exams
 const addExam = async (req, res) => {
-    // const { title } = req.body
+    const { title, desc, timeLimit, startDate, endDate, examCode, questions, groups, isPublished } = req.body
     try {
         const examData = await Exams.create({
-            title: 'Sample exam2',
-            desc: 'Sample desc2',
-            timeLimit: 120,
-            startDate: '05/09/22',
-            endDate: '05/11/22',
-            examCode: 'sampleExamCode2'
+            title: title,
+            desc: desc,
+            timeLimit: timeLimit,
+            startDate: startDate,
+            endDate: endDate,
+            examCode: examCode,
+            questions: questions,
+            groups: groups,
+            isPublished: isPublished
         })
         
         res.send(examData)

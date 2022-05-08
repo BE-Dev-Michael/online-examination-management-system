@@ -4,8 +4,8 @@ const examSchema = mongoose.Schema({
     title: String,
     desc: String,
     timeLimit: Number,
-    startDate: Date,
-    endDate: Date,
+    startDate: String,
+    endDate: String,
     examCode: String,
     questions: [{ //* For adding questions directly to exam
         //* This is how mongoose sets relationships between collections

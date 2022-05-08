@@ -2,16 +2,18 @@ import React, {useState, useEffect, useCallback} from 'react'
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import axios from 'axios'
 import DateTimePicker from 'react-datetime-picker';
 import './QuestionBanks.css'
 import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
 
 //* GET and POST method
 //* POST for adding exam
 //* GET for getting all exams
 const EXAMS_URI = 'http://localhost:7771/api/exams'
+const EXAM_URI = 'http://localhost:7771/api/exams/'
 const BANKS_URI = 'http://localhost:7771/api/banks'
 
 const richTextState = atom({
@@ -210,6 +212,7 @@ function ExamQuestionGroup() {
    const [isCreateGroup, setIsCreateGroup]= useRecoilState(createGroupState)
    const [questionGroupData, setQuestionGroupData] = useRecoilState(questionGroupDataState)
    const [questionGroup, setQuestionGroup] = useRecoilState(questionGroupState)
+   const [formData, setFormData] = useRecoilState(examFormDataState)
 
    const getBankList = async () => {
       setIsModalVisible(!isModalVisible)
@@ -245,6 +248,8 @@ function ExamQuestionGroup() {
 
   const createQuestionGroup = () => {
     setQuestionGroup([...questionGroup, questionGroupData])
+    let formQuestions = questionGroupData.questions.map(question => question)
+    setFormData({...formData, ['groups']: formQuestions})
     setSelectedBank(null)
     setIsCreateGroup(!isCreateGroup)
   }
@@ -387,18 +392,27 @@ function ExamDetails() {
     const [startDateTime, setStartDateTime] = useState(new Date());
     const [endDateTime, setEndDateTime] = useState(new Date());
     const [formData, setFormData] = useRecoilState(examFormDataState)
+    const dateFormat = {month: 'short', day: 'numeric', weekday: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric'}
 
- 
+    useEffect(() => {
+      let value = new Date(startDateTime).toLocaleString('en-US', dateFormat)
+      setFormData({...formData, ['startDate']: value})
+    }, [startDateTime])
+
+    useEffect(() => {
+      let value = new Date(endDateTime).toLocaleString('en-US', dateFormat)
+      setFormData({...formData, ['endDate']: value})
+    }, [endDateTime])
+    
     const formDataHandler = (e) => {
       const { name, value } = e.target
+      console.log(formData);
       setFormData({...formData, [name]: value})
-      
-      console.log(formData)
     }
     return(
       <>
         <h1 className='font-bold mb-2 ml-3 mt-3'>Exam Title</h1>
-        <input className='p-2 border-b ml-3 focus:outline-[#7B9EBE] w-[70%] mx-auto' type="text" placeholder='Title'/>
+        <input onChange={formDataHandler} value={formData.title} name='title' className='p-2 border-b ml-3 focus:outline-[#7B9EBE] w-[70%] mx-auto' type="text" placeholder='Title'/>
         <div className='flex flex-col'>
           <h1 className='font-bold mb-2 ml-3 mt-3'>Exam Description</h1>
           <ExamDescriptionRichText/>
@@ -408,18 +422,18 @@ function ExamDetails() {
           <div className='flex flex-col gap-4 lg:justify-between lg:flex-row'>
             <div className='w-full lg:w-[33%]'>
               <h1 className='font-bold mb-2'>Time Limit</h1>
-              <input className='p-2 border-b focus:outline-[#7B9EBE]' type="number" placeholder='Minutes'/>
+              <input onChange={formDataHandler} value={formData.timeLimit} name='timeLimit' className='p-2 border-b focus:outline-[#7B9EBE]' type="number" placeholder='Minutes'/>
             </div>
             <div className='w-full lg:w-[33%]'>
               <h1 className='font-bold mb-2'>Available from</h1>
-              <DateTimePicker onChange={setStartDateTime} value={startDateTime} />
+              <DateTimePicker onChange={setStartDateTime} value={startDateTime} name='startDate' />
               <div className='mb-2'></div>
               <h1 className='font-bold mb-2'>Until</h1>
-              <DateTimePicker onChange={setEndDateTime} value={endDateTime} />
+              <DateTimePicker onChange={setEndDateTime} value={endDateTime} name='endDate' />
             </div>
             <div className='w-full lg:w-[33%]'>
               <h1 className='font-bold mb-2'>Exam Code</h1>
-              <input className='p-2 border-b focus:outline-[#7B9EBE] w-full' type="text"/>
+              <input onChange={formDataHandler} value={formData.examCode} name='examCode' className='p-2 border-b focus:outline-[#7B9EBE] w-full' type="text"/>
             </div>
           </div>
         </div>
@@ -435,6 +449,11 @@ function ExamForm() {
   const isModalVisible = useRecoilValue(selectBankModalState)
   const [isCreateGroup, setIsCreateGroup] = useRecoilState(createGroupState)
   const [viewQuestionGroup, setViewQuestionGroup] = useRecoilState(viewQuestionGroupState)
+  const [publish, setPublish] = useState(false)
+  const navigate = useNavigate()
+  const resetExamForm = useResetRecoilState(examFormDataState)
+  const resetQuestionGroup = useResetRecoilState(questionGroupState)
+  const resetQuestionGroupData = useResetRecoilState(questionGroupDataState)
 
   useEffect(() => {
     setSelectedBank(null)
@@ -444,11 +463,19 @@ function ExamForm() {
  
   const submitExam = (e) => {
     e.preventDefault()
+    console.log(formData);
+  
     const sendExamData = async () => {
       try {
         const newExam = await axios.post(EXAMS_URI, formData)
-        console.log(newExam.data)
-        window.location.reload(false);
+        if (publish === true) {
+          await axios.patch(EXAM_URI.concat(`publish/${newExam.data._id}`), { isPublished: true })
+          setPublish(false)
+        }
+        resetExamForm()
+        resetQuestionGroup()
+        resetQuestionGroupData()
+        navigate('/faculty/exams')
       } catch (error) {
         console.error(error)
       }
@@ -475,12 +502,8 @@ function ExamForm() {
                 <div className={`flex gap-4`}>
                   <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
                   <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save</button>
-                  <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save & Publish</button>
+                  <button onClick={() => setPublish(!publish)} type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save & Publish</button>
                 </div>
-                {/* <div className={`flex gap-4`}>
-                  <button onClick={cancelCreateGroup} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
-                  <button type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Create Group</button>
-                </div> */}
               </div>
             </div>
           </div>
