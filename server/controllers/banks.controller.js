@@ -99,14 +99,7 @@ const updateQuestionBank = async (req, res) => {
 
 //* HTTP Method => DELETE
 //* Route endpoint => /api/banks/:id
-const deleteQuestionBank = async (req, res) => {
-    const deleteObj = await Banks.updateOne({
-        title: 'NodeJS'
-    }, {
-        $unset: {
-            questions: ''
-        }
-    })
+const deleteQuestionBank = (req, res) => {
     console.log('DELETE')
     res.send('DELETE')
 }
