@@ -93,7 +93,7 @@ function ExamDescriptionRichText() {
     const textEditorHandler = (e) => {
       setEditorState(e)
       const value = editorState.getCurrentContent().getPlainText()
-      setFormData({...formData, ['desc']: value})
+      setFormData({...formData, desc: value})
     }
      
     function uploadImageCallback(file) {
@@ -171,8 +171,8 @@ function ExamSelectBankModal() {
         const fetchedBanks = await axios.post(EXAMS_URI.concat(`/pull/${clickedBank}`), 
         {limit: parseInt(questionGroupData.noOfQuestions)})
         console.log(fetchedBanks.data);
-        setQuestionGroupData({...questionGroupData, ['questionBank']: fetchedBanks.data.title,
-        ['questions']: fetchedBanks.data.questions})
+        setQuestionGroupData({...questionGroupData, questionBank: fetchedBanks.data.title,
+        questions: fetchedBanks.data.questions})
         setSelectedBank(clickedBank)
         setIsModalVisible(false)
       } catch (error) {
@@ -248,8 +248,10 @@ function ExamQuestionGroup() {
 
   const createQuestionGroup = () => {
     setQuestionGroup([...questionGroup, questionGroupData])
-    let formQuestions = questionGroupData.questions.map(question => question)
-    setFormData({...formData, ['groups']: formQuestions})
+    let formQuestionIds = questionGroupData.questions.map(question => question._id)
+    let groupsCopy = [...formData.groups]
+    groupsCopy.push(...formQuestionIds)
+    setFormData({...formData, groups: groupsCopy})
     setSelectedBank(null)
     setIsCreateGroup(!isCreateGroup)
   }
@@ -362,7 +364,7 @@ function QuestionGroupCard(props) {
         </header>
         <div className='w-full p-3 flex justify-between'>
          <span>Questions will be randomly pulled from: {props.questionBank}</span>
-         <span><a onClick={() => setViewQuestionGroup({...viewQuestionGroup, ['isVisible']: true, ['index']: props.index})} className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>View</a></span>
+         <span><a onClick={() => setViewQuestionGroup({...viewQuestionGroup, isVisible: true, index: props.index})} className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>View</a></span>
         </div>
       </div>
     )
@@ -396,12 +398,12 @@ function ExamDetails() {
 
     useEffect(() => {
       let value = new Date(startDateTime).toLocaleString('en-US', dateFormat)
-      setFormData({...formData, ['startDate']: value})
+      setFormData({...formData, startDate: value})
     }, [startDateTime])
 
     useEffect(() => {
       let value = new Date(endDateTime).toLocaleString('en-US', dateFormat)
-      setFormData({...formData, ['endDate']: value})
+      setFormData({...formData, endDate: value})
     }, [endDateTime])
     
     const formDataHandler = (e) => {
