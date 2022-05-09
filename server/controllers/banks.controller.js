@@ -31,14 +31,16 @@ const getQuestions = async (req, res) => {
 //* Route endpoint => /api/banks/question/:id
 const addQuestion = async (req, res) => {
     const id = req.params.id
-    const { question, choices, answer, points } = req.body
+    const { question, choices, answer, points, kd, cpd } = req.body
     
     try {
         const questionData = await Questions.create({
             question: question,
             choices: choices,
             answer: answer,
-            points: points
+            points: points,
+            kd: kd,
+            cpd: cpd
         })
         const questionByBank = await Banks.findByIdAndUpdate(id, {
             //* Push an object to array property in schema
@@ -97,7 +99,14 @@ const updateQuestionBank = async (req, res) => {
 
 //* HTTP Method => DELETE
 //* Route endpoint => /api/banks/:id
-const deleteQuestionBank = (req, res) => {
+const deleteQuestionBank = async (req, res) => {
+    const deleteObj = await Banks.updateOne({
+        title: 'NodeJS'
+    }, {
+        $unset: {
+            questions: ''
+        }
+    })
     console.log('DELETE')
     res.send('DELETE')
 }

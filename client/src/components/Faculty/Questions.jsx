@@ -22,10 +22,14 @@ const richTextState = atom({
 })
 const formDataState = atom({
     key: 'formDataState',
-    default: {question: null,
-              choices: [],
-              answer: null,
-              points: 0}
+    default: {
+      question: null,
+      choices: [],
+      answer: null,
+      points: 0,
+      kd: null,
+      cpd: null
+    }
 })
 const bankIdState = atom({
   key: 'bankIdState', 
@@ -96,7 +100,7 @@ function InputChoice(props) {
         const choicesCopy = [...formData.choices]
         console.log(choicesCopy);
         const newChoices = choicesCopy.filter((choice, index) => props.index !== index)
-        setFormData({...formData, ['choices']: newChoices})
+        setFormData({...formData, choices: newChoices})
         setNumOfChoices(prev => prev - 1)
     }
     const choiceIndexHandler = (e) => {
@@ -176,6 +180,28 @@ function QuestionForm() {
               }) : ''}
             </select>
           </div>
+          <div className='w-full p-2 mb-5'>
+            <h1 className='font-bold mb-5'>Knowledge Dimension</h1>
+            <select className='p-2 w-full border' name="kd" onChange={formDataHandler}>
+              <option value='' selected disabled>Select dimension...</option>
+              <option value='A'>Factual</option>
+              <option value='B'>Conceptual</option>
+              <option value='C'>Procedural</option>
+              <option value='D'>Metacognitive</option>
+            </select>
+          </div>
+          <div className='w-full p-2 mb-5'>
+            <h1 className='font-bold mb-5'>Cognitive Process Dimension</h1>
+            <select className='p-2 w-full border' name="cpd" onChange={formDataHandler}>
+              <option value='' selected disabled>Select dimension...</option>
+              <option value='1'>Remember</option>
+              <option value='2'>Understand</option>
+              <option value='3'>Apply</option>
+              <option value='4'>Analyze</option>
+              <option value='5'>Evaluate</option>
+              <option value='6'>Create</option>
+            </select>
+          </div>
           <div className='flex justify-start gap-4 m-5'>
             <button type='submit' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Save question</button>
             <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
@@ -189,7 +215,7 @@ function QuestionChoices(props) {
     <>
         <div className='flex items-center gap-1'>
           <input type="radio" name="choice" /> 
-          <label className='text-lg'>
+          <label className='text-md'>
             {props.choice}
             {props.answer === props.choice ? <span className='ml-4 py-1 px-2 bg-lime-300 text-sm rounded-full'>Correct Answer</span> : ''}
           </label>
@@ -198,7 +224,20 @@ function QuestionChoices(props) {
     )
 }
 function QuestionCard(props) {
-    
+    const knowledgeDimensions = {
+      'A': 'Factual',
+      'B': 'Conceptual',
+      'C': 'Procedural',
+      'D': 'Metacognitive'
+    }
+    const cognitiveProcessDimensions = {
+      '1': 'Remember',
+      '2': 'Understand',
+      '3': 'Apply',
+      '4': 'Analyze',
+      '5': 'Evaluate',
+      '6': 'Create'
+    }
     return(
       <>
         <div className='w-full rounded-lg bg-white p-1 shadow-lg'>
@@ -213,6 +252,12 @@ function QuestionCard(props) {
             {props.choices.map(choice => {
                 return <QuestionChoices choice={choice} answer={props.answer}/>
             })}
+          </div>
+          <div className='w-full px-7 pb-7'>
+            <div className='flex justify-end gap-4'>
+              <h1 className='text-sm'>Knowledge Dimension: {knowledgeDimensions[props.kd]}</h1>
+              <h1 className='text-sm'>Cognitive Process Dimension: {cognitiveProcessDimensions[props.cpd]}</h1>
+            </div>
           </div>
         </div>
       </>
@@ -246,6 +291,8 @@ function QuestionsMain(props) {
                       choices={data.choices}
                       points={data.points}
                       answer={data.answer}
+                      kd={data.kd}
+                      cpd={data.cpd}
                       />
             })}
             {isFormVisible ? <QuestionForm/> : ''}
