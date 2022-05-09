@@ -12,13 +12,16 @@
     "draftjs-to-html": "^0.9.1",
     "draftjs-to-markdown": "^0.6.0",
     "react": "^18.0.0",
+    "react-data-table-component": "^7.5.1",
     "react-datetime-picker": "^3.5.0",
     "react-dom": "^18.0.0",
     "react-draft-wysiwyg": "^1.14.7",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+    "react-to-print": "^2.14.7",
     "recoil": "^0.7.2",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
