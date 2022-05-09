@@ -2,6 +2,8 @@ import React, {useState, useEffect, useCallback} from 'react'
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import draftToMarkdown from 'draftjs-to-markdown';
 import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import axios from 'axios'
 import DateTimePicker from 'react-datetime-picker';
@@ -86,13 +88,13 @@ function ExamDescriptionRichText() {
       
       
     useEffect(() => {
-        setRichText(editorState.getCurrentContent().getPlainText())
+        setRichText(draftToHtml(convertToRaw(editorState.getCurrentContent())))
         console.log(formData)
     }, [editorState])
       
     const textEditorHandler = (e) => {
       setEditorState(e)
-      const value = editorState.getCurrentContent().getPlainText()
+      const value = draftToHtml(convertToRaw(editorState.getCurrentContent()))
       setFormData({...formData, desc: value})
     }
      
@@ -111,7 +113,7 @@ function ExamDescriptionRichText() {
             editorClassName='exam-desc-editor'
             editorState={editorState}
             wrapperStyle={{ backgroundColor: "white", padding: "5px"}}
-            editorStyle={{height: "500px"}}
+            editorStyle={{height: "500px", border: '1px solid gray'}}
             onEditorStateChange={textEditorHandler}
             toolbar={{
               image: { uploadEnabled: true, uploadCallback: uploadImageCallback, previewImage: true}
@@ -456,7 +458,7 @@ function ExamForm() {
   const resetExamForm = useResetRecoilState(examFormDataState)
   const resetQuestionGroup = useResetRecoilState(questionGroupState)
   const resetQuestionGroupData = useResetRecoilState(questionGroupDataState)
-
+  
   useEffect(() => {
     setSelectedBank(null)
     setIsCreateGroup(false)

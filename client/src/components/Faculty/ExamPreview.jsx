@@ -70,9 +70,10 @@ function ExamDetails(props) {
         <div className={`bg-white w-[80%] rounded-lg shadow-lg p-5 h-auto ${previewQuestions === true ? 'hidden' : 'block'}`}>
           <h1 className='text-2xl font-bold mb-4'>{props.title}</h1>
           <h1 className='font-bold'>Exam Description</h1>
-          <p className='mb-4'>
-           {props.desc}
-          </p>
+          <div
+            className='mb-4'
+            dangerouslySetInnerHTML={{__html: props.desc}}
+          />
           <div className='flex flex-col mb-4'>
             <h1 className='font-bold'>Questions</h1>
             <p>{mergedQuestions.length}</p>
