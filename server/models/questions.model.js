@@ -13,7 +13,9 @@ const questionSchema = mongoose.Schema({
     exam: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Exams'
-    }
+    },
+    kd: String,
+    cpd: String
 })
 
 module.exports = mongoose.model('Questions', questionSchema)
