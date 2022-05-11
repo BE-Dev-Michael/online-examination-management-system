@@ -1,8 +1,8 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import NavigationBar from '../components/Student/NavigationBar';
-import Dashboard from '../components/Student/Dashboard';
 import Examboard from '../components/Student/Examboard';
+import Activityboard from '../components/Student/Activityboard';
 import SideBarProfile from '../components/Student/SideBarProfile';
 import Profile from '../components/Student/Profile';
 
@@ -15,8 +15,8 @@ const Student = () => {
                 <SideBarProfile />
 
                 <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/exams" element={<Examboard />} />
+                    <Route path="/" element={<Examboard />} />
+                    <Route path="/activity" element={<Activityboard />} />
                     <Route path="/profile/*" element={<Profile />} />
                 </Routes>
             </div>
