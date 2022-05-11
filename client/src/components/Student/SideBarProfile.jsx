@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { MdDashboard } from 'react-icons/md'
-import { RiFileList2Line } from 'react-icons/ri'
+import { FaHistory } from "react-icons/fa";
 
 function SidebarMenus(props) {
     const activeClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC]", set2: "-mr-1 font-medium" }
@@ -21,14 +21,14 @@ const SideBarProfile = () => {
     const [activeLink, setActiveLink] = useState({ isActive: false, index: 0 })
     const sidebar = [
         {
-            menuName: 'Dashboard',
-            endPoint: '/student/',
+            menuName: 'Exams',
+            endPoint: '/student',
             icon: <MdDashboard />
         },
         {
-            menuName: 'Exams',
-            endPoint: '/student/exams',
-            icon: <RiFileList2Line />
+            menuName: 'Activity',
+            endPoint: '/student/activity',
+            icon: <FaHistory />
         }
     ]
 
