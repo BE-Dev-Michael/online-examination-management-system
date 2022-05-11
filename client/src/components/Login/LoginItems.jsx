@@ -40,7 +40,6 @@ function LoginItems() {
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
                 placeholder="Enter your email" />
-
             </div>
           </div>
 
@@ -59,7 +58,12 @@ function LoginItems() {
                 <AiFillEye onClick={toggle} className="text-slate-500" /> :
                 <AiFillEyeInvisible onClick={toggle} className="text-slate-500" />}
             </div>
+
+            <div className="flex flex-row-reverse  mt-2">
+              <a href="#" className='hover:text-sky-400 font-semibold text-base text-slate-500'>forgot password?</a>
+            </div>
           </div>
+
 
           <div className="flex w-full">
             <button
