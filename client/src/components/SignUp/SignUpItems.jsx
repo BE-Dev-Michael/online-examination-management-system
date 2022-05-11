@@ -33,18 +33,18 @@ function SignUpItems() {
   //* Gagamitin to for real time checking if username or email already exists in database
   const checkIfAlreadyExists = (fieldName, typedValue) => {
     const field = fieldName.toString()
-    
+
     //* I-filter yung may same email or username sa database
     const count = fetchUsers.filter(user => user[field] === typedValue)
     const firstLetter = field.charAt(0).toUpperCase()
     const titleCaseField = firstLetter.concat(field.substring(1))
     if (count.length > 0) {
-        const errorMessage = `${titleCaseField} already exists, please login`
-        setIsAlreadyExists(true)
-        setRealTimeErrors({...realTimeErrors, [field.concat('Error')]: errorMessage })
+      const errorMessage = `${ titleCaseField } already exists, please login`
+      setIsAlreadyExists(true)
+      setRealTimeErrors({ ...realTimeErrors, [field.concat('Error')]: errorMessage })
     } else {
-        setIsAlreadyExists(false)
-        setRealTimeErrors({...realTimeErrors, [field.concat('Error')]: null })
+      setIsAlreadyExists(false)
+      setRealTimeErrors({ ...realTimeErrors, [field.concat('Error')]: null })
     }
   }
 
@@ -88,21 +88,21 @@ function SignUpItems() {
   //* Once lang need mag eexecute for fetching all users from database
   useEffect(() => {
     //* Must be asynchronous function since magrereturn ng promise si axios
-    const fetchAllUsers = async () => { 
+    const fetchAllUsers = async () => {
       try {
-          //* Get all users sa database
-          const users = await axios.get(FETCH_ALL_URI)
+        //* Get all users sa database
+        const users = await axios.get(FETCH_ALL_URI)
 
-          //* Mag-iterate sa lahat ng user objects and return a new copy
-          let fetchedUsers = users.data.map(data => {
-            return { username: data.username, email: data.email }
-          })
+        //* Mag-iterate sa lahat ng user objects and return a new copy
+        let fetchedUsers = users.data.map(data => {
+          return { username: data.username, email: data.email }
+        })
 
-          //* Sample data lang for testing purposes
-          fetchedUsers.push({username: 'sample123', email: 'sample@gmail.com'})
-          setFetchUsers(fetchedUsers)
+        //* Sample data lang for testing purposes
+        fetchedUsers.push({ username: 'sample123', email: 'sample@gmail.com' })
+        setFetchUsers(fetchedUsers)
       } catch (error) {
-          console.error(error)
+        console.error(error)
       }
     }
     fetchAllUsers()
@@ -114,13 +114,13 @@ function SignUpItems() {
     if (Object.keys(formErrors).length === 0 && isSubmit && isAlreadyExists === false) {
       console.log(formData)
       const sendFormData = async () => {
-          try {
-            //* send form data via POST request and save sa database
-            const response = await axios.post(SIGNUP_URI, formData)
-            console.log(response.data)
-          } catch (error) {
-            console.error(error)
-          }
+        try {
+          //* send form data via POST request and save sa database
+          const response = await axios.post(SIGNUP_URI, formData)
+          console.log(response.data)
+        } catch (error) {
+          console.error(error)
+        }
       }
       sendFormData()
     }
@@ -137,7 +137,8 @@ function SignUpItems() {
                 onChange={formDataHandler}
                 name="username"
                 type="text"
-                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your username" />
+                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
+                placeholder="Enter your username" />
             </div>
             <p className="text-red-600 text-sm font-normal ml-1">{formErrors.username}</p>
             <p className="text-red-600">{realTimeErrors.usernameError}</p>
@@ -151,7 +152,8 @@ function SignUpItems() {
                 onChange={formDataHandler}
                 name="email"
                 type="text"
-                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your email" />
+                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
+                placeholder="Enter your email" />
             </div>
             <p className="text-red-600 text-sm font-normal ml-1">{formErrors.email}</p>
             <p className="text-red-600">{realTimeErrors.emailError}</p>
@@ -164,7 +166,8 @@ function SignUpItems() {
                 onChange={formDataHandler}
                 name="password"
                 type={(showEye === false) ? 'password' : 'text'}
-                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" placeholder="Your password" />
+                className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
+                placeholder="Enter your password" />
             </div>
             {/* this div is to show eye icons */}
             <div className='text-2xl absolute top-9 right-2'>
