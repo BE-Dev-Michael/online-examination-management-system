@@ -91,7 +91,7 @@ const ChangePass = (props) => {
                     <p className="text-red-600 text-sm font-normal ml-6">{passwordErrors.newPass}</p>
                 </div>
 
-                <div className="flex flex-col mb-7">
+                <div className="flex flex-col mb-3">
                     <label className="font-semibold mb-1 ml-5">Confirm Password</label>
                     <div className="flex relative ">
                         <input
@@ -103,7 +103,7 @@ const ChangePass = (props) => {
                     <p className="text-red-600 text-sm font-normal ml-6">{passwordErrors.confirmPass}</p>
                 </div>
 
-                <div className="flex justify-center pb-4">
+                <div className="flex justify-center py-4">
                     <button
                         type="submit"
                         className={`w-52 py-2 px-4 bg-slate-400 hover:bg-slate-500 focus:ring-slate-500 focus:ring-offset-slate-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full`}>

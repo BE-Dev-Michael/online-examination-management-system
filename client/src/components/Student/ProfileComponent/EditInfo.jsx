@@ -87,7 +87,7 @@ const EditInfo = (props) => {
                     }
                 })}
 
-                <div className="flex justify-center pb-4 ">
+                <div className="flex justify-center py-4">
                     <button
                         type='submit'
                         className={`${ props.toggle ? 'block' : 'hidden' } w-52 py-2 px-4 bg-slate-400 hover:bg-slate-500 focus:ring-slate-500 focus:ring-offset-slate-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full`}>
