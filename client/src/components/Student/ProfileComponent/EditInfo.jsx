@@ -27,13 +27,8 @@ function InputField({ data, formErrors, dataHandler, toggle }) {
 }
 
 const EditInfo = (props) => {
-    const asArray = Object.entries(props.user) // Convert object to array
-    const newData = asArray.filter(([key]) => key != 'password') // To filter the necessarry data
-    const user = Object.fromEntries(newData) // Convert arry to object
 
-    // The object user now has 4 fields name,username,email, and section
-
-    const [formData, setFormData] = useState(user)
+    const [formData, setFormData] = useState(props.user)
     const [formErrors, setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
 
@@ -87,7 +82,9 @@ const EditInfo = (props) => {
                 <h3 className="text-lg font-medium mb-5">Edit Information</h3>
 
                 {Object.entries(formData).map((data, index) => {
-                    return <InputField data={data} key={index} formErrors={formErrors} dataHandler={formDataHandler} toggle={props.toggle} />
+                    if (data[0] !== 'id' && data[0] !== 'password') {
+                        return <InputField data={data} key={index} formErrors={formErrors} dataHandler={formDataHandler} toggle={props.toggle} />
+                    }
                 })}
 
                 <div className="flex justify-center pb-4 ">
