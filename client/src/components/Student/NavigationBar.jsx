@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BsFillBellFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo-c.png'
 
 const NavigationBar = () => {
@@ -39,7 +40,9 @@ const NavigationBar = () => {
 
                                 {/* User picture     */}
                                 <li className="sm:hidden block">
-                                    <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="user" className="w-8 object-cover rounded-full" />
+                                    <Link to={'/student/profile'}>
+                                        <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="user" className="w-8 object-cover rounded-full" />
+                                    </Link>
                                 </li>
 
                                 {/* Notification */}
@@ -68,10 +71,14 @@ const NavigationBar = () => {
                 <section className="w-full">
                     <ul>
                         <li>
-                            <button className="flex px-2 py-1 w-full font-medium text-base text-slate-700 rounded hover:bg-[#6e8eac] hover:text-white">Dashboard</button>
+                            <Link to={'/student'}>
+                                <button className="flex px-2 py-1 w-full font-medium text-base text-slate-700 rounded hover:bg-[#6e8eac] hover:text-white">Exams</button>
+                            </Link>
                         </li>
                         <li>
-                            <button className="flex px-2 py-1 my-1 w-full font-medium text-base text-slate-700 rounded hover:bg-[#6e8eac] hover:text-white">Exams</button>
+                            <Link to={'/student/activity'}>
+                                <button className="flex px-2 py-1 my-1 w-full font-medium text-base text-slate-700 rounded hover:bg-[#6e8eac] hover:text-white">Activity</button>
+                            </Link>
                         </li>
                         <li>
                             <div className="relative flex items-center text-gray-400 focus-within:text-cyan-400">

@@ -43,10 +43,10 @@ function Dropdown() {
 const Profile = () => {
     // This is a sample data
     const [user, setUser] = useState({
+        id: 100,
         name: "Romeo Gatchalian",
         username: "romeo",
         email: "romeo@gmail.com",
-        section: "BSIT-4Q",
         password: "password123"
     })
 
