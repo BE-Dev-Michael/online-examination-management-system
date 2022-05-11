@@ -10,6 +10,7 @@ const Examboard = () => {
     useEffect(() => {
         const fetchExams = async () => {
             try {
+                // change the url with the real examination url
                 const response = await axios.get("http://localhost:3000/examination");
                 setExams(response.data)
             } catch (error) {
@@ -35,6 +36,7 @@ const Examboard = () => {
                     <ExamCard />
                     <ExamCard />
 
+                    {/* This filter is to filter and get the inputed code */}
                     {/* {exams.filter(exam => exam.examCode === examCode).map((exam, index) => {
                         return <ExamCard key={index} id={exam.id} title={exam.title} instruction={exam.instruction} time={exam.limit} question={exam.questions} />
                     })} */}
