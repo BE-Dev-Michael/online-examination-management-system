@@ -10,7 +10,7 @@ function NavbarLinks(props) {
           <Link className={props.navbar ? "nav-links alt" : "nav-links"} to="/">
             Home
           </Link>
-          <Link className={props.navbar ? "nav-links alt" : "nav-links"} to="/#">
+          <Link className={props.navbar ? "nav-links alt" : "nav-links"} to="/About">
             About
           </Link>
           <Link className={props.navbar ? "nav-links alt" : "nav-links"} to="/login">
