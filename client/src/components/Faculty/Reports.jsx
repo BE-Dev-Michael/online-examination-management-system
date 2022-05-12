@@ -6,7 +6,7 @@ import './Reports.css'
 import { useReactToPrint } from 'react-to-print'
 import { ReportTemplate } from './ReportTemplate'
 
-const REPORTS_URI = 'http://localhost:7771/api/reports'
+const REPORTS_URI = `${process.env.BASE_URL}/api/reports`
 
 const examAndQuestionsState = atom({
   key: 'examAndQuestionsState',

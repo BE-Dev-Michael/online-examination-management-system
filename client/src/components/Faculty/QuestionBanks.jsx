@@ -11,13 +11,13 @@ import sidebarState from './sidebarAtom'
 //* GET and POST method
 //* POST for adding question bank
 //* GET for getting all question banks
-const BANKS_URI = 'http://localhost:7771/api/banks'
+const BANKS_URI = `${process.env.BASE_URL}/api/banks`
 
 //* GET, PATCH, and POST
 //* GET for getting questions inside a bank
 //* PATCH for updating bank title
 //* POST for adding questions in a bank
-const BANK_URI = 'http://localhost:7771/api/banks/'
+const BANK_URI = `${process.env.BASE_URL}/api/banks/`
 
 const banksState = atom({
   key: 'banksState',

@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom'
 //* GET and POST method
 //* POST for adding exam
 //* GET for getting all exams
-const EXAMS_URI = 'http://localhost:7771/api/exams'
-const EXAM_URI = 'http://localhost:7771/api/exams/'
+const EXAMS_URI = `${process.env.BASE_URL}/api/exams`
+const EXAM_URI = `${process.env.BASE_URL}/api/exams/`
 
 const examsState = atom({
   key: 'examsState',
