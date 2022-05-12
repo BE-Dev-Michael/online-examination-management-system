@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 
-const EXAM_URI = `${process.env.BASE_URL}/api/exams/`
+const EXAM_URI = `${process.env.REACT_APP_BASE_URL}/api/exams/`
 
 const previewQuestionsState = atom({
   key: 'previewQuestionsState',

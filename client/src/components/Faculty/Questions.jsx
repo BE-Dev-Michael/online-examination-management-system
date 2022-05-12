@@ -10,7 +10,7 @@ import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil'
 import { useNavigate } from 'react-router-dom'
 
-const BANK_URI = `${process.env.BASE_URL}/api/banks/`
+const BANK_URI = `${process.env.REACT_APP_BASE_URL}/api/banks/`
 
 const questionFormState = atom({
    key: 'questionFormState',
