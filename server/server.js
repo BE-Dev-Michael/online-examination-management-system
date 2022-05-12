@@ -17,6 +17,7 @@ connectDatabase()
 //* Middleware
 app.use(cors)
 app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 //* API routes
 app.use('/api/users', require(path.join(__dirname, 'routes', 'api/users')))
