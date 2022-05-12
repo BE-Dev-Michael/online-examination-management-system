@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const Users = require('../models/users.model')
 const RegisterToken = require('../models/token.model')
 const sendEmail = require('../utils/sendEmail');
+const jwt = require("jsonwebtoken");
 
 //* HTTP Method => GET
 //* Route endpoint => /api/users/:id
@@ -77,9 +78,32 @@ const verifyUser = async (req, res) => {
 
 //* HTTP Method => POST
 //* Route endpoint => /api/users/login
-const loginUser = (req, res) => {
-    console.log('Login user')
-    res.send('Login')
+const loginUser = async (req, res) => {
+    const { email, password } = req.body
+    try {
+        const user = await Users.findOne({ email: email });
+        if (!user) {
+           return res.status(400).send("Email or password is incorrect")
+        }
+
+        const isValid = await argon2.verify(user.password, password)
+        if(!isValid) {
+           return res.status(400).send("Email or password is incorrect")
+        }
+            
+        //* If user account is not yet verified
+        if (!user.isVerified) {
+            return res.status(400).send("Please verify your account first!")
+        }
+
+        //* If credentials are valid and account is verified, generate a jwt
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
+            expiresIn: "7d",
+        });
+        res.status(200).send({token: token, user: user});
+    } catch (err) {
+        console.error(err)
+    }
 }
 
 

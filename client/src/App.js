@@ -9,6 +9,9 @@ import { Routes, Route } from 'react-router-dom';
 import { RecoilRoot } from 'recoil'
 
 function App() {
+  // localStorage.removeItem("token");
+  const user = localStorage.getItem("token");
+  console.log(user)
   return (
     <RecoilRoot>
       <Routes>

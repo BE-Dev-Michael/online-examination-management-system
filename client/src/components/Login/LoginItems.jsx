@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
+const LOGIN_URI = `${process.env.REACT_APP_BASE_URL}/api/users/login`
 
 function LoginItems() {
   const initialValue = {
@@ -8,7 +12,9 @@ function LoginItems() {
   }
 
   const [formData, setFormData] = useState(initialValue)
+  const [formError, setFormError] = useState('')
   const [showEye, setShowEye] = useState(false)
+  const navigate = useNavigate()
 
   const formDataHandler = (e) => {
     const { name, value } = e.target
@@ -22,15 +28,34 @@ function LoginItems() {
     setShowEye(!showEye)
   }
 
-  const SignInHandler = (e) => {
+  const signInHandler = async (e) => {
     e.preventDefault()
+    try {
+      const response = await axios.post(LOGIN_URI, formData)
+      console.log(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      // localStorage.setItem("user", response.data.user._id);
+      if (response.data.user.role === 'Faculty') {
+        navigate('/faculty')
+      } else {
+        console.log('Student');
+      }
+      
+    } catch (err) {
+      console.error(err.response.data)
+      setFormError(err.response.data)
+    }
   }
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-md px-4">
       <div className=" w-72">
-        <form action="#" autoComplete="off" onSubmit={SignInHandler}>
-
+        <form action="#" autoComplete="off" onSubmit={signInHandler}>
+          {formError !== '' ? <div class="bg-red-200 border-red-600 text-red-600 border-l-4 p-4 mb-2" role="alert">
+            <p class="font-bold">
+                {formError}
+            </p>
+          </div> : ''}
           <div className="flex flex-col mb-6">
             <label className="font-medium text-base text-slate-500 mb-1">Email</label>
             <div className="flex relative ">
