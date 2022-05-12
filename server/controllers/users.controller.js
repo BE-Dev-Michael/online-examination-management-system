@@ -12,7 +12,7 @@ const getUser = (req, res) => {
 }
 
 //* HTTP Method => GET
-//* Route endpoint => /api/users/all
+//* Route endpoint => /api/users
 const getAllUsers = async (req, res) => {
     try {
         const allUsers = await Users.find({}, 'email username')
@@ -46,9 +46,9 @@ const signUpUser = async (req, res) => {
         //* Url for verifying user account
         const verificationUrl = `${process.env.BASE_URL}/api/users/${userData.id}/verify/${token.token}`;
         //* Function for sending email verification
-        await sendEmail(userData.email, 'Verify your email', verificationUrl)
+        sendEmail(userData.email, 'Verify your email', verificationUrl, userData.username)
 
-        res.send('A verification email was sent to your email address.')
+        res.send(userData)
         
     } catch (error) {
         console.error(error)

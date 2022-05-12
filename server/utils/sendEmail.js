@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendEmail = async (email, subject, text) => {
+const sendEmail = async (email, subject, url, uname) => {
     console.log(process.env.APP_UNAME)
     try {
         const transporter = nodemailer.createTransport({
@@ -17,7 +17,10 @@ const sendEmail = async (email, subject, text) => {
             from: process.env.APP_UNAME,
             to: email,
             subject: subject,
-            text: text,
+            html: `<h1>Hello ${uname}!</h1>
+                <p>Thank you for signing up on Test Deck! Please verify your email by clicking the link below</p>
+                <a href=${url}> Click here</a>
+                </div>`
         });
         console.log("email sent successfully");
     } catch (error) {
