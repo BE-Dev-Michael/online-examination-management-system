@@ -1,19 +1,23 @@
 import React, { useEffect, useRef } from 'react'
 import DataTable from 'react-data-table-component';
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import axios from 'axios'
 import './Reports.css'
 import { useReactToPrint } from 'react-to-print'
-import {TOSTemplate} from './TOSTemplate'
+import { ReportTemplate } from './ReportTemplate'
 
-//* GET and POST method
-//* POST for adding exam
-//* GET for getting all exams
-const EXAMS_URI = 'http://localhost:7771/api/exams'
+const REPORTS_URI = 'http://localhost:7771/api/reports'
 
-const examsState = atom({
-  key: 'reportsExamsState',
+const examAndQuestionsState = atom({
+  key: 'examAndQuestionsState',
   default: []
+})
+const reportDetailsState = atom({
+  key: 'reportDetailsState',
+  default: {
+    title: null,
+    questions: []
+  }
 })
 
 const customStyles = {
@@ -32,10 +36,15 @@ const customStyles = {
 
 
 function ReportsDataTable() {
-  const examData = useRecoilValue(examsState)
+  const examData = useRecoilValue(examAndQuestionsState)
+  const [reportDetails, setReportDetails] = useRecoilState(reportDetailsState)
+  const resetReportDetails = useResetRecoilState(reportDetailsState)
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current
+    content: () => componentRef.current,
+    onAfterPrint: () => resetReportDetails(),
+    pageStyle: "@page {  margin: 20mm; }",
+    documentTitle: reportDetails.title
   })
 
   const columns = [
@@ -54,21 +63,25 @@ function ReportsDataTable() {
     },
     {
       name: 'Action',
-      cell: (row) => <button className='bg-[#7B9EBC] py-1 px-5 rounded-full text-white w-[150px]' onClick={generate2dTOS} id={row.id}>Generate 2D TOS</button>,
+      cell: (row) => <button className='bg-[#7B9EBC] py-1 px-5 rounded-full text-white w-[150px]' onClick={() => generateExam(row.title, row.questions)}>Generate Exam</button>,
       button: true,
     },
   ];
 
-  const generate2dTOS = (state) => {
-    console.log('generate!', state.target.id);
-    console.log(examData);
-    handlePrint()
+  useEffect(() => {
+    if (reportDetails.title !== null) {
+      handlePrint()
+    }
+  }, [reportDetails])
+  
+
+  const generateExam = (title, questions) => {
+    setReportDetails({...reportDetails, title: title, questions: questions})
   }
   
   return(
     <>
       <DataTable  
-        title='Exam List'
         columns={columns}
         data={examData}
         direction="ltr"
@@ -77,19 +90,19 @@ function ReportsDataTable() {
         responsive
       />
       <div style={{ display: "none" }}>
-        <TOSTemplate ref={componentRef}/>
+        <ReportTemplate details={reportDetails} ref={componentRef}/>
       </div>
     </>
   )
 }
 function Reports() {
-  const [exams, setExams] = useRecoilState(examsState)
+  const [examAndQuestions, setExamAndQuestions] = useRecoilState(examAndQuestionsState)
 
   //* Get all exams on initial render
   useEffect(() => {
-    const getExams = async () => {
+    const getExamAndQuestions = async () => {
         try {
-            const exams = await axios.get(EXAMS_URI)
+            const exams = await axios.get(REPORTS_URI)
             
             let fetchedExams = exams.data.map(data => {
                 return { 
@@ -101,12 +114,12 @@ function Reports() {
                 }
             })
             
-            setExams(fetchedExams)
+            setExamAndQuestions(fetchedExams)
         } catch (error) {
             throw new Error(error)
         }
     }
-    getExams()
+    getExamAndQuestions()
   }, [])
 
   return (

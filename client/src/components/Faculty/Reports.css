@@ -2,3 +2,12 @@ table, td, th {
     border: 1px solid black;
     text-align: center;
 }
+td {
+    max-width: 70px;
+    min-width: 70px;
+    word-break: break-all;
+}
+.tos-div {
+    display: block;
+    page-break-before: always;
+}

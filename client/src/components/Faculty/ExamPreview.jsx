@@ -23,21 +23,41 @@ function ExamQuestionChoices(props) {
     )
 }
 function ExamQuestions(props) {
+    const knowledgeDimensions = {
+      'A': 'Factual',
+      'B': 'Conceptual',
+      'C': 'Procedural',
+      'D': 'Metacognitive'
+    }
+    const cognitiveProcessDimensions = {
+      '1': 'Remember',
+      '2': 'Understand',
+      '3': 'Apply',
+      '4': 'Analyze',
+      '5': 'Evaluate',
+      '6': 'Create'
+    }
     return(
         <>
         <div className='w-[80%] rounded-lg bg-white p-1 shadow-lg'>
-            <header className='flex justify-between border-b border-b-slate-400 p-4'>
-                <h1 className='font-bold'>Question</h1>
-                <h1 className='font-semibold'>{props.points === 1 ? `${props.points}pt` : `${props.points}pts`}</h1>
-            </header>
-            <div className='w-full pl-4 py-8'>
-                <h1 className='font-semibold'>{props.question}</h1>
+          <header className='flex justify-between border-b border-b-slate-400 p-4'>
+              <h1 className='font-bold'>Question {props.no}</h1>
+              <h1 className='font-semibold'>{props.points === 1 ? `${props.points}pt` : `${props.points}pts`}</h1>
+          </header>
+          <div className='w-full pl-4 py-8'>
+              <h1 className='font-semibold'>{props.question}</h1>
+          </div>
+          <div className='w-full px-7 pb-7'>
+              {props.choices.map(choice => {
+                  return <ExamQuestionChoices choice={choice} answer={props.answer}/>
+              })}
+          </div>
+          <div className='w-full px-7 pb-7'>
+            <div className='flex justify-end gap-4'>
+              <h1 className='text-sm'>Knowledge Dimension: {knowledgeDimensions[props.kd]}</h1>
+              <h1 className='text-sm'>Cognitive Process Dimension: {cognitiveProcessDimensions[props.cpd]}</h1>
             </div>
-            <div className='w-full px-7 pb-7'>
-                {props.choices.map(choice => {
-                    return <ExamQuestionChoices choice={choice} answer={props.answer}/>
-                })}
-            </div>
+          </div>
         </div>
       </>
     )
@@ -110,8 +130,8 @@ function ExamDetails(props) {
           </div>
         </div>
          {/* //* Merging questions directly from exam and from pulling questions from bank */}
-         {previewQuestions === true ? props.questions.concat(props.groups).map(data => {
-             return <ExamQuestions question={data.question} choices={data.choices} points={data.points} answer={data.answer}/>
+         {previewQuestions === true ? props.questions.concat(props.groups).map((data, index) => {
+             return <ExamQuestions question={data.question} no={index+1} choices={data.choices} points={data.points} answer={data.answer} kd={data.kd} cpd={data.cpd}/>
          }) : ''}
       </div>
     )
