@@ -38,7 +38,7 @@ function Instruction({ exam }) {
 
 const ExamDescription = () => {
     // const [exam, setExam] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false) // true dapat to sa una
     // const params = useParams()
 
     // useEffect(() => {
