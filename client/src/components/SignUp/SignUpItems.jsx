@@ -120,8 +120,8 @@ function SignUpItems() {
           //* send form data via POST request and save sa database
           const response = await axios.post(SIGNUP_URI, formData)
           console.log(response.data)
-          
-          navigate(`/signup/verify/${response.data.email}`)
+
+          navigate(`/signup/verify/${ response.data.email }`)
 
         } catch (error) {
           console.error(error)
@@ -213,7 +213,7 @@ function SignUpItems() {
               <button
                 type="submit"
                 className="py-2 px-4  bg-slate-400 hover:bg-slate-500 focus:ring-slate-500 focus:ring-offset-slate-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full ">
-                Sign Up
+                Submit
               </button>
             </div>
           </form>
@@ -224,7 +224,7 @@ function SignUpItems() {
             Already have an account?
           </span>
           <a href="#" className="inline-flex items-center text-md font-light text-center ml-1 text-gray-500 hover:text-sky-400" >
-            Signin
+            Sign In
           </a>
         </div>
       </div>
