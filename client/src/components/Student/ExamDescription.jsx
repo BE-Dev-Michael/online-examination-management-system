@@ -8,14 +8,14 @@ function Instruction({ exam }) {
         <div className="relative lg:flex justify-center w-10/12 lg:w-8/12">
             <div className="flex flex-col my-5 lg:w-11/12 border p-5 rounded-lg shadow-md">
                 <div className="flex flex-col" >
-                    <p className="font-semibold text-2xl mb-2 flex self-center">Exam Title</p>
+                    <p className="font-semibold text-2xl mb-2 flex self-center"> Midterm Examination in Programming 1</p>
                     <p><strong>Number of questions: </strong>Exam number of question</p>
                     <p><strong>Total points: </strong>Exam total points</p>
                     <p><strong>Time limt: </strong>1:30:00</p>
                     <p><strong>Availability: </strong>May 13, 2022 8:00 AM to May 15, 2022 8:00 PM</p>
 
                     <p className="leading-6 tracking-tight whitespace-pre-line mt-3"><strong>Instruction</strong><br />
-                        Exam Description
+                        You’ve been coding for a while now and know your way around a CSS file. You’re certainly no master, but with enough fiddling you can get where you want to go.
                     </p>
                 </div>
 
@@ -37,28 +37,29 @@ function Instruction({ exam }) {
 }
 
 const ExamDescription = () => {
-    const [exam, setExam] = useState([])
-    const [loading, setLoading] = useState(true)
-    const params = useParams()
+    // const [exam, setExam] = useState([])
+    const [loading, setLoading] = useState(false)
+    // const params = useParams()
 
-    useEffect(() => {
-        const fetchExams = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/examination/${ params.id }`);
-                setExam(response.data)
-                setLoading(false)
-            } catch (error) {
-                console.log(error.response.data)
-            }
-        }
-        fetchExams()
-    }, [])
+    // useEffect(() => {
+    //     const fetchExams = async () => {
+    //         try {
+    //             const response = await axios.get(`http://localhost:3000/examination/${ params.id }`);
+    //             setExam(response.data)
+    //             setLoading(false)
+    //         } catch (error) {
+    //             console.log(error.response.data)
+    //         }
+    //     }
+    //     fetchExams()
+    // }, [])
 
 
     return (
         <div className="flex-col justify-center h-full w-screen mx-5">
             <div className="relative flex justify-center w-full shadow-sm border bg-white rounded-2xl">
-                {loading ? <>Loading...</> : <Instruction exam={exam} />}
+                {loading ? <>Loading...</> : <Instruction />} {/* <Instruction exam={exam} />  */}
+
 
             </div>
         </div>
