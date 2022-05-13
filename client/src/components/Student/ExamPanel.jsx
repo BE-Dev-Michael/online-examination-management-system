@@ -4,7 +4,7 @@
 
 import { useState } from 'react'
 import { RiTimerLine } from "react-icons/ri";
-import img2 from '../../images/logo-c.png'
+import logo from '../../assets/images/logo-c.png'
 
 
 function ButtonChoices(props) {
@@ -178,7 +178,7 @@ const ExamPanel = () => {
                 <div className="relative lg:w-3/4 md:w-3/4 w-full flex  items-center h-20 rounded-b-3xl shadow-md border">
                     <div className="flex items-center m-10 text-cyan-500">
                         <div className="absolute left-0 flex items-center px-5">
-                            <img src={img2} alt="logo" className="w-30 h-10 rounded object-cover" />
+                            <img src={logo} alt="logo" className="w-30 h-10 rounded object-cover" />
                             {/* <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider">Online Inc.</h2> */}
                         </div>
 
