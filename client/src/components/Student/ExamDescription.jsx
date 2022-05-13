@@ -36,7 +36,7 @@ function Instruction({ exam }) {
     )
 }
 
-const Examboard = () => {
+const ExamDescription = () => {
     const [exam, setExam] = useState([])
     const [loading, setLoading] = useState(true)
     const params = useParams()
@@ -65,4 +65,4 @@ const Examboard = () => {
     )
 }
 
-export default Examboard
+export default ExamDescription
