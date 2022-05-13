@@ -46,7 +46,7 @@ const SideBarProfile = () => {
                     <Link onClick={() => activeLinkHandler(false, 0)} to={'/student/profile'}>
                         <h5 className=" mt-4 text-lg font-semibold text-gray-600 hover:text-cyan-600 hover:underline underline-offset-4">Romeo Gatchalian</h5>
                     </Link>
-                    <span className=" text-gray-400 ">Student | BSIT-4Q</span>
+                    <span className=" text-gray-400 ">Student</span>
                 </div>
 
                 <div className="space-y-2 tracking-wide mt-8">
