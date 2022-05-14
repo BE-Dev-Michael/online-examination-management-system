@@ -7,6 +7,7 @@ import { FiEdit3 } from 'react-icons/fi'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 import sidebarState from './sidebarAtom'
+import getUserData from '../Auth/authService'
 
 //* GET and POST method
 //* POST for adding question bank
@@ -226,8 +227,9 @@ function CreateBankMode() {
     const submitBank = async (e) => {
       e.preventDefault()
       try {
-        const bank = await axios.post(BANKS_URI, { title: addTitle, user: '627e010de1cef3e4ffa8d3f6' })
-        console.log(bank.data)
+        const { _id } = await getUserData()
+        await axios.post(BANKS_URI, { title: addTitle, user: _id })
+        
         setIsCreateMode(false)
         setAddTitle('')
         // //* Nagaappend ng new object sa array of objects
@@ -277,7 +279,8 @@ function QuestionBanks() {
   useEffect(() => {
     const getBanks = async () => {
         try {
-            const banks = await axios.get(BANKS_URI.concat('/all/627e010de1cef3e4ffa8d3f6'))
+            const { _id } = await getUserData()
+            const banks = await axios.get(BANKS_URI.concat(`/all/${_id}`))
             
             let fetchedBanks = banks.data.map(data => {
                 return { id: data._id, title: data.title, questions: data.questions }

@@ -12,8 +12,6 @@ import { useRecoilValue, useRecoilState } from 'recoil'
 import tokenState from './components/Login/tokenAtom'
 
 function App() {
-  //* If user is not authenticated, it cannot bypass a protected component
-  const user = useRecoilValue(tokenState)
   return (
     <Routes>
       <Route path="/" element={<Landing/>} />
