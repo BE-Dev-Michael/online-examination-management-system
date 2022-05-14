@@ -418,7 +418,7 @@ function ExamDetails() {
         <h1 className='font-bold mb-2 ml-3 mt-3'>Exam Title</h1>
         <input onChange={formDataHandler} value={formData.title} name='title' className='p-2 border-b ml-3 focus:outline-[#7B9EBE] w-[70%] mx-auto' type="text" placeholder='Title'/>
         <div className='flex flex-col'>
-          <h1 className='font-bold mb-2 ml-3 mt-3'>Exam Description</h1>
+          <h1 className='font-bold mb-2 ml-3 mt-3'>Instructions</h1>
           <ExamDescriptionRichText/>
         </div>
         <div className='border-b'></div>

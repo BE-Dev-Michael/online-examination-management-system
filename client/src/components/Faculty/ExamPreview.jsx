@@ -89,7 +89,7 @@ function ExamDetails(props) {
       <div className='relative flex flex-col gap-10 py-5 px-0 items-center'>
         <div className={`bg-white w-[80%] rounded-lg shadow-lg p-5 h-auto ${previewQuestions === true ? 'hidden' : 'block'}`}>
           <h1 className='text-2xl font-bold mb-4'>{props.title}</h1>
-          <h1 className='font-bold'>Exam Description</h1>
+          <h1 className='font-bold'>Instructions</h1>
           <div
             className='mb-4'
             dangerouslySetInnerHTML={{__html: props.desc}}
