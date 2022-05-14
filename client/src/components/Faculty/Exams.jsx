@@ -5,6 +5,7 @@ import sidebarState from './sidebarAtom'
 import { IoAddCircleOutline, IoSearchOutline, IoClose, IoEllipsisHorizontal } from 'react-icons/io5'
 import './QuestionBanks.css'
 import { useNavigate } from 'react-router-dom'
+import getUserData from '../Auth/authService'
 
 //* GET and POST method
 //* POST for adding exam
@@ -66,7 +67,8 @@ function Exams() {
   useEffect(() => {
     const getExams = async () => {
         try {
-            const exams = await axios.get(EXAMS_URI)
+            const { _id } = await getUserData()
+            const exams = await axios.get(EXAMS_URI.concat(`/all/${_id}`))
             
             let fetchedExams = exams.data.map(data => {
                 return { id: data._id, title: data.title, questions: data.questions, groups: data.groups, isPublished: data.isPublished }

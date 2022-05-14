@@ -473,7 +473,9 @@ function ExamForm() {
   
     const sendExamData = async () => {
       try {
-        const newExam = await axios.post(EXAMS_URI, formData)
+        const { _id } = await getUserData()
+        const examData = {...formData, user: _id}
+        const newExam = await axios.post(EXAMS_URI, examData)  
         if (publish === true) {
           await axios.patch(EXAM_URI.concat(`publish/${newExam.data._id}`), { isPublished: true })
           setPublish(false)
