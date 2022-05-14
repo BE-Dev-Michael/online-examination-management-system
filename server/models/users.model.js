@@ -5,7 +5,15 @@ const userSchema = mongoose.Schema({
     email: String,
     password: String,
     role: String,
-    isVerified: Boolean
+    isVerified: Boolean,
+    bank: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Banks'
+    }],
+    exam: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exams'
+    }],
 })
 
 module.exports = mongoose.model('Users', userSchema)
