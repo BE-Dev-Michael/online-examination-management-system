@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './bg.css'
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../components/Faculty/Dashboard'
@@ -13,6 +13,7 @@ import Background from '../components/Faculty/Background'
 import Header from '../components/Faculty/Header'
 import { useRecoilValue } from 'recoil'
 import sidebarState from '../components/Faculty/sidebarAtom'
+import { useNavigate  } from 'react-router-dom'
 
 function Content({children}) {
   return(
@@ -23,28 +24,41 @@ function Content({children}) {
 }
 function Faculty() {
   const isSidebarVisible = useRecoilValue(sidebarState)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    //* If user is not authenticated, it cannot bypass a protected component
+    if (!token) {
+      navigate('/')
+    }
+  }, [])
   
   return (
-    <Background>
-      <Sidebar/>
-      <main className={`flex flex-col gap-4 main-container sm:w-[100vw] h-auto ${isSidebarVisible ? 'w-[100vw]' : 'w-[100vw]'}`}>
-        <header className='w-full'>
-          <Header/>
-        </header>
-        <Content>
-          <Routes>
-            {/* //* Child routes of /faculty */}
-            <Route path="dashboard" element={<Dashboard/>} />
-            <Route path="banks" element={<QuestionBanks/>} /> 
-            <Route path="banks/:id" element={<Questions/>} />
-            <Route path="exams" element={<Exams/>} />
-            <Route path="exams/:id" element={<ExamPreview/>} />
-            <Route path="exams/form" element={<ExamForm/>} />
-            <Route path="reports" element={<Reports/>} />
-          </Routes>
-        </Content>
-      </main>
-    </Background>
+    <>
+    {localStorage.getItem('token') &&
+      <Background>
+        <Sidebar/>
+        <main className={`flex flex-col gap-4 main-container sm:w-[100vw] h-auto ${isSidebarVisible ? 'w-[100vw]' : 'w-[100vw]'}`}>
+          <header className='w-full'>
+            <Header/>
+          </header>
+          <Content>
+            <Routes>
+              {/* //* Child routes of /faculty */}
+              <Route path="dashboard" element={<Dashboard/>} />
+              <Route path="banks" element={<QuestionBanks/>} /> 
+              <Route path="banks/:id" element={<Questions/>} />
+              <Route path="exams" element={<Exams/>} />
+              <Route path="exams/:id" element={<ExamPreview/>} />
+              <Route path="exams/form" element={<ExamForm/>} />
+              <Route path="reports" element={<Reports/>} />
+            </Routes>
+          </Content>
+        </main>
+      </Background>
+    }
+    </>
   )
 }
 

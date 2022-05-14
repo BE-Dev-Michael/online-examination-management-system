@@ -7,19 +7,19 @@ const protectRoute = async (req, res, next) => {
 
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             try {
-                // Get token from header
+                //* Kuhanin yung token from request header
                 token = req.headers.authorization.split(' ')[1]
 
-                // Verify token
+                //* Verify yung token
                 const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
-                // Get user from the token
+                //* Kuhanin yung user data from the token
                 req.user = await Users.findOne({_id: decoded._id}).select('-password')
                 
                 next()
             } catch (error) {
                 console.log(error)
-                res.status(401).send('Not authorized')
+                res.status(401).send('Unauthorized')
             }
         }
 

@@ -10,6 +10,7 @@ import DateTimePicker from 'react-datetime-picker';
 import './QuestionBanks.css'
 import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
+import getUserData from '../Auth/authService';
 
 //* GET and POST method
 //* POST for adding exam
@@ -220,7 +221,8 @@ function ExamQuestionGroup() {
       setIsModalVisible(!isModalVisible)
       setClickedBank(null)
       try {
-        const banks = await axios.get(BANKS_URI)
+        const { _id } = await getUserData()
+        const banks = await axios.get(BANKS_URI.concat(`/all/${_id}`))
             
         let fetchedBanks = banks.data.map(data => {
             return { id: data._id, title: data.title, questions: data.questions }

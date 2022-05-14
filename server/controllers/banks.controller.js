@@ -8,7 +8,6 @@ const getAllQuestionBanks = async (req, res) => {
     try {
         // const banksData = await Banks.find({})
         const bankData = await Users.findById({_id: req.params.user}).populate('bank')
-        console.log(req.params.user)
         res.send(bankData.bank)
     } catch (error) {
         console.error(error)

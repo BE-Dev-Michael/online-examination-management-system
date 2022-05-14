@@ -9,7 +9,7 @@ const LOGIN_URI = `${process.env.REACT_APP_BASE_URL}/api/users/login`
 
 function LoginItems() {
   const initialValue = {
-    email: '',
+    emailOrUname: '',
     password: '',
   }
 
@@ -35,17 +35,13 @@ function LoginItems() {
     e.preventDefault()
     try {
       const response = await axios.post(LOGIN_URI, formData)
-      console.log(response.data.token);
       localStorage.setItem("token", response.data.token);
-      // localStorage.setItem("user", response.data.user._id);
-      setToken(localStorage.getItem("token"))
+      
       if (response.data.user.role === 'Faculty') {
-        console.log('faculty!');
         navigate('/faculty')
       } else {
         console.log('Student');
       }
-      
     } catch (err) {
       console.error(err.response.data)
       setFormError(err.response.data)
@@ -62,14 +58,14 @@ function LoginItems() {
             </p>
           </div> : ''}
           <div className="flex flex-col mb-6">
-            <label className="font-medium text-base text-slate-500 mb-1">Email</label>
+            <label className="font-medium text-base text-slate-500 mb-1">Username or email address</label>
             <div className="flex relative ">
-              <input value={formData.email}
+              <input value={formData.emailOrUname}
                 onChange={formDataHandler}
-                name="email"
+                name="emailOrUname"
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
-                placeholder="Enter your email" />
+               />
             </div>
           </div>
 
@@ -81,7 +77,7 @@ function LoginItems() {
                 name="password"
                 type={(showEye === false) ? 'password' : 'text'}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
-                placeholder="Enter your password" />
+                />
             </div>
             <div className='text-2xl absolute top-9 right-2'>
               {(showEye === false) ?
