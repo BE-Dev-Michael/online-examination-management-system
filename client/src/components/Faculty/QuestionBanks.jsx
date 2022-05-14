@@ -226,7 +226,7 @@ function CreateBankMode() {
     const submitBank = async (e) => {
       e.preventDefault()
       try {
-        const bank = await axios.post(BANKS_URI, { title: addTitle })
+        const bank = await axios.post(BANKS_URI, { title: addTitle, user: '627e010de1cef3e4ffa8d3f6' })
         console.log(bank.data)
         setIsCreateMode(false)
         setAddTitle('')
@@ -277,7 +277,7 @@ function QuestionBanks() {
   useEffect(() => {
     const getBanks = async () => {
         try {
-            const banks = await axios.get(BANKS_URI)
+            const banks = await axios.get(BANKS_URI.concat('/all/627e010de1cef3e4ffa8d3f6'))
             
             let fetchedBanks = banks.data.map(data => {
                 return { id: data._id, title: data.title, questions: data.questions }

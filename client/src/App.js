@@ -22,7 +22,7 @@ function App() {
       <Route path="/signup" element={<SignUp/>} />
       <Route path="/signup/verify/:email" element={<EmailSent/>} />
       <Route path="/api/users/:id/verify/:token" element={<VerifyEmail/>} />
-      <Route path="/faculty/*" element={<ProtectedRoute user={user}><Faculty/></ProtectedRoute>}/>
+      <Route path="/faculty/*" element={<Faculty/>}/>
       <Route path='/student/*' element={<Student/>}/>
       <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
