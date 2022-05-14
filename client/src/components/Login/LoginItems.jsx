@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import tokenState from './tokenAtom'
 
 const LOGIN_URI = `${process.env.REACT_APP_BASE_URL}/api/users/login`
 
@@ -15,6 +17,7 @@ function LoginItems() {
   const [formError, setFormError] = useState('')
   const [showEye, setShowEye] = useState(false)
   const navigate = useNavigate()
+  const [token, setToken] = useRecoilState(tokenState)
 
   const formDataHandler = (e) => {
     const { name, value } = e.target
@@ -35,7 +38,9 @@ function LoginItems() {
       console.log(response.data.token);
       localStorage.setItem("token", response.data.token);
       // localStorage.setItem("user", response.data.user._id);
+      setToken(localStorage.getItem("token"))
       if (response.data.user.role === 'Faculty') {
+        console.log('faculty!');
         navigate('/faculty')
       } else {
         console.log('Student');
