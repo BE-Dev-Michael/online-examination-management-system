@@ -82,15 +82,14 @@ const viewQuestionGroupState = atom({
   }
 })
 
-function ExamDescriptionRichText() {
-    const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+function InstructionsRichText() {
     const [, setRichText] = useRecoilState(richTextState)
     const [formData, setFormData] = useRecoilState(examFormDataState)
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
       
       
     useEffect(() => {
         setRichText(draftToHtml(convertToRaw(editorState.getCurrentContent())))
-        console.log(formData)
     }, [editorState])
       
     const textEditorHandler = (e) => {
@@ -421,7 +420,7 @@ function ExamDetails() {
         <input onChange={formDataHandler} value={formData.title} name='title' className='p-2 border-b ml-3 focus:outline-[#7B9EBE] w-[70%] mx-auto' type="text" placeholder='Title'/>
         <div className='flex flex-col'>
           <h1 className='font-bold mb-2 ml-3 mt-3'>Instructions</h1>
-          <ExamDescriptionRichText/>
+          <InstructionsRichText/>
         </div>
         <div className='border-b'></div>
         <div className='w-full p-2 mb-5 mt-5'>
@@ -497,8 +496,13 @@ function ExamForm() {
         <form onSubmit={submitExam}>
           <div className='flex items-center justify-center'>
             <div className='w-[80%] rounded-lg bg-white p-3 shadow-lg'>
-              {isNextClicked !== true ? <ExamDetails/> : <ExamQuestions/>}
-              
+              {/* {isNextClicked !== true ? <ExamDetails/> : <ExamQuestions/>} */}
+              <div className={isNextClicked !== true ? 'block' : 'hidden'}>
+                <ExamDetails/>
+              </div>
+              <div className={isNextClicked !== true ? 'hidden' : 'block'}>
+                <ExamQuestions/>
+              </div>
               <div className={`${isNextClicked !== true ? 'block' : 'hidden'} flex justify-end m-5 gap-4`}>
                 <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
                 <button onClick={() => setIsNextClicked(!isNextClicked)} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Next</button>
