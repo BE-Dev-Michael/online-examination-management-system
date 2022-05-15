@@ -215,6 +215,7 @@ function ExamQuestionGroup() {
    const [questionGroupData, setQuestionGroupData] = useRecoilState(questionGroupDataState)
    const [questionGroup, setQuestionGroup] = useRecoilState(questionGroupState)
    const [formData, setFormData] = useRecoilState(examFormDataState)
+   const [hasQuestionNo, setHasQuestionNo] = useState(false)
 
    const getBankList = async () => {
       setIsModalVisible(!isModalVisible)
@@ -246,6 +247,9 @@ function ExamQuestionGroup() {
 
   const questionGroupDataHandler = (e) => {
     const {name, value} = e.target
+    if (name === 'noOfQuestions') {
+      parseInt(value) > 0 ? setHasQuestionNo(true) : setHasQuestionNo(false)
+    }
     setQuestionGroupData({...questionGroupData, [name]: value})
   }
 
@@ -266,7 +270,7 @@ function ExamQuestionGroup() {
         <input name='noOfQuestions' onChange={questionGroupDataHandler} value={questionGroupData.noOfQuestions} type="number" placeholder='Number of Questions'/>
       </div>
       <div className='mt-3'>
-        <a onClick={getBankList} className='cursor-pointer text-[#7B9EBC] underline underline-offset-1'>Select from Question Bank</a>
+        <a onClick={getBankList} className={`${hasQuestionNo === true ? 'block' : 'hidden'} cursor-pointer text-[#7B9EBC] underline underline-offset-1`}>Select from Question Bank</a>
       </div>
       <div className='mt-2 flex flex-col gap-4'>
         {selectedBank !== null ? 
