@@ -36,9 +36,9 @@ function AboutDevelopers() {
                 <div class="grid justify-items-center lg:p-4 md:p-2 relative lg:w-11/12 md:w-full sm:w-2/4">
                     <div class="bg-white rounded-2xl shadow-2xl justify-items-center lg:w-11/12 md:w-full sm:w-11/12 h-fit">
                         <div class="absolute text-center mb-4 -top-16 right-1/2 transform translate-x-1/2 justify-self-center h-40 w-40">
-                            <a href="#" class=" relative">
+                            <div className=" relative">
                                 <img alt="Gatchalian Profile" src="../images/GatchalianRAJ.jpg" class="object-cover rounded-full h-40 w-40  border-4 border-white"/>
-                            </a>
+                            </div>
                         </div>
                         <div class="flex flex-col justify-items-center text-center lg:mt-24 md:mt-28 sm:mt-32">
                             <p class="font-[Cocon] text-lg text-gray-800 text-center">
@@ -66,9 +66,9 @@ function AboutDevelopers() {
                 <div class="grid justify-items-center lg:p-4 md:p-2 relative lg:w-11/12 md:w-full sm:w-2/4">
                     <div class="bg-white rounded-2xl shadow-2xl justify-items-center lg:w-11/12 md:w-full sm:w-11/12 h-fit">
                         <div class="absolute text-center mb-4 -top-16 right-1/2 transform translate-x-1/2 justify-self-center h-40 w-40">
-                            <a href="#" class=" relative">
+                            <div className=" relative">
                                 <img alt="Flores Profile" src="../images/FloresJMC.jpg" class="object-cover rounded-full h-40 w-40  border-4 border-white"/>
-                            </a>
+                            </div>
                         </div>
                         <div class="flex flex-col justify-items-center text-center lg:mt-24 md:mt-28 sm:mt-32">
                             <p class="font-[Cocon] text-lg text-gray-800 text-center">
@@ -96,9 +96,9 @@ function AboutDevelopers() {
                 <div class="grid justify-items-center lg:p-4 md:p-2 relative lg:w-11/12 md:w-full sm:w-2/4">
                     <div class="bg-white rounded-2xl shadow-2xl justify-items-center lg:w-11/12 md:w-full sm:w-11/12 h-fit">
                         <div class="absolute text-center mb-4 -top-16 right-1/2 transform translate-x-1/2 justify-self-center h-40 w-40">
-                            <a href="#" class=" relative">
+                            <div className=" relative">
                                 <img alt="Santos Profile" src="../images/SantosERB.jpg" class="object-cover rounded-full h-40 w-40  border-4 border-white"/>
-                            </a>
+                            </div>
                         </div>
                         <div class="flex flex-col justify-items-center text-center lg:mt-24 md:mt-28 sm:mt-32">
                             <p class="font-[Cocon] text-lg text-gray-800 text-center">
@@ -130,9 +130,9 @@ function AboutDevelopers() {
                 <div class="grid justify-items-center lg:p-4 md:p-2 relative lg:w-11/12 md:w-full sm:w-2/4">
                     <div class="bg-white rounded-2xl shadow-2xl justify-items-center lg:w-11/12 md:w-full sm:w-11/12 h-fit">
                         <div class="absolute text-center mb-4 -top-16 right-1/2 transform translate-x-1/2 justify-self-center h-40 w-40">
-                            <a href="#" class=" relative">
-                                <img alt="Santos Profile" src="../images/profilep.jpeg" class="object-cover rounded-full h-40 w-40  border-4 border-white"/>
-                            </a>
+                            <div className=" relative">
+                                <img alt="Simon Profile" src="../images/SimonDP.jpg" class="object-cover rounded-full h-40 w-40  border-4 border-white"/>
+                            </div>
                         </div>
                         <div class="flex flex-col justify-items-center text-center lg:mt-24 md:mt-28 sm:mt-32">
                             <p class="font-[Cocon] text-lg text-gray-800 text-center">
@@ -146,20 +146,8 @@ function AboutDevelopers() {
                             </p> */}
                             <hr className= "border-[#414141] border-2 rounded-md w-14 self-center mt-3"></hr>
                         </div>
-                        <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-between">
-                            <a href="#">
-                                <FaTwitter className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
-                                {/* <img src="../images/twitter-icon.png" alt="Twitter" className="h-8 w-8"/> */}
-                            </a>
-                            <a href="#">
-                                <FaGithub className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
-
-                            </a>
-                            <a href="#">
-                                <FaLinkedinIn className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
-
-                            </a>
-                            <a href="#">
+                        <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-center">
+                            <a href="https://www.facebook.com/dharyl.simon" target="_blank">
                                 <FaFacebook className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
                             </a>
                         </div>
@@ -168,9 +156,9 @@ function AboutDevelopers() {
                 <div class="grid justify-items-center lg:p-4 md:p-2 relative lg:w-11/12 md:w-full sm:w-2/4">
                     <div class="bg-white rounded-2xl shadow-2xl justify-items-center lg:w-11/12 md:w-full sm:w-11/12 h-fit">
                         <div class="absolute text-center mb-4 -top-16 right-1/2 transform translate-x-1/2 justify-self-center h-40 w-40">
-                            <a href="#" class=" relative">
-                                <img alt="Santos Profile" src="../images/profilep.jpeg" class="object-cover rounded-full h-40 w-40  border-4 border-white"/>
-                            </a>
+                            <div className=" relative">
+                                <img alt="Soriaga Profile" src="../images/SoriagaVD.jpg" class="object-cover rounded-full h-40 w-40  border-4 border-white"/>
+                            </div>
                         </div>
                         <div class="flex flex-col justify-items-center text-center lg:mt-24 md:mt-28 sm:mt-32">
                             <p class="font-[Cocon] text-lg text-gray-800 text-center">
@@ -184,20 +172,12 @@ function AboutDevelopers() {
                             </p> */}
                             <hr className= "border-[#414141] border-2 rounded-md w-14 self-center mt-3"></hr>
                         </div>
-                        <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-between">
-                            <a href="#">
-                                <FaTwitter className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
-                                {/* <img src="../images/twitter-icon.png" alt="Twitter" className="h-8 w-8"/> */}
-                            </a>
-                            <a href="#">
+                        <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-around">
+                            <a href="https://github.com/vncnt07" target="_blank">
                                 <FaGithub className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
 
                             </a>
-                            <a href="#">
-                                <FaLinkedinIn className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
-
-                            </a>
-                            <a href="#">
+                            <a href="https://www.facebook.com/vncnt07" target="_blank">
                                 <FaFacebook className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
                             </a>
                         </div>
