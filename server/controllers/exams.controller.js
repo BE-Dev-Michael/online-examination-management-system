@@ -16,6 +16,17 @@ const getAllExams = async (req, res) => {
 }
 
 //* HTTP Method => GET
+//* Route endpoint => /api/exams/student/:code
+const getExamByCode = async (req, res) => {
+    try {
+        const examData = await Exams.find({examCode: req.params.code}).populate('questions').populate('groups')
+        res.send(examData)
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+//* HTTP Method => GET
 //* Route endpoint => /api/exams/:id
 const viewExam = async (req, res) => {
     try {
@@ -210,7 +221,8 @@ const deleteExam = (req, res) => {
 }
 
 module.exports = { 
-    getAllExams, 
+    getAllExams,
+    getExamByCode, 
     viewExam,
     pullQuestionsFromBank, 
     addQuestion, 
