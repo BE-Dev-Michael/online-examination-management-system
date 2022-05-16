@@ -68,6 +68,20 @@ const addQuestion = async (req, res) => {
     }
 }
 
+//* HTTP Method => PATCH
+//* Route endpoint => /api/banks/question/:id
+const updateQuestion = async (req, res) => {
+    const { questionData } = req.body
+   
+    try {
+        const updatedQuestion = await Questions.findByIdAndUpdate(req.params.id, questionData)
+        res.status(200).send(await Questions.findById(updatedQuestion._id))
+    } catch (error) {
+        console.error(error)
+        res.status(500)
+    }
+}
+
 //* HTTP Method => POST
 //* Route endpoint => /api/banks
 const addQuestionBank = async (req, res) => {
@@ -113,4 +127,4 @@ const deleteQuestionBank = (req, res) => {
     res.send('DELETE')
 }
 
-module.exports = { getAllQuestionBanks, getQuestions, addQuestion, addQuestionBank, updateQuestionBank, deleteQuestionBank }
+module.exports = { getAllQuestionBanks, getQuestions, addQuestion, updateQuestion, addQuestionBank, updateQuestionBank, deleteQuestionBank }

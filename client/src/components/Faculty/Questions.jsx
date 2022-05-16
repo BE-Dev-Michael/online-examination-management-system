@@ -9,6 +9,7 @@ import './QuestionBanks.css'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil'
 import { useNavigate } from 'react-router-dom'
+import { FaRegEdit } from 'react-icons/fa'
 
 const BANK_URI = `${process.env.REACT_APP_BASE_URL}/api/banks/`
 
@@ -245,7 +246,10 @@ function QuestionCard(props) {
             <h1 className='font-bold'>Question</h1>
             <h1 className='font-semibold'>{props.points === 1 ? `${props.points}pt` : `${props.points}pts`}</h1>
           </header>
-          <div className='w-full pl-4 py-8'>
+          <div className='w-full flex justify-end items-center pr-8 mt-5'>
+            <button><FaRegEdit/></button> 
+          </div>
+          <div className='w-full pl-4 pb-8 pt-1'>
             <h1 className='font-semibold'>{props.question}</h1>
           </div>
           <div className='w-full px-7 pb-7'>
