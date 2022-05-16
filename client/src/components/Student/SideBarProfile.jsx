@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdDashboard } from 'react-icons/md'
 import { FaHistory } from "react-icons/fa";
 import getUserData from '../Auth/authService'
+import { useNavigate  } from 'react-router-dom'
 
 function SidebarMenus(props) {
     const activeClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC]", set2: "-mr-1 font-medium" }
@@ -33,6 +34,7 @@ const SideBarProfile = () => {
             icon: <FaHistory />
         }
     ]
+    const navigate = useNavigate()
 
     useEffect(() => {
        const fetchUserData = async () => {
@@ -47,6 +49,11 @@ const SideBarProfile = () => {
         const keys = Object.keys(activeLink)
         setActiveLink({ ...activeLink, [keys[0]]: isActive, [keys[1]]: index })
     }
+
+    const logout = () => {
+      localStorage.removeItem('token')
+      navigate('/login')
+   }
 
     return (
         <>
@@ -70,7 +77,7 @@ const SideBarProfile = () => {
               </div>
 
               <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
-                  <button className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+                  <button onClick={() => logout()} className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                       </svg>
