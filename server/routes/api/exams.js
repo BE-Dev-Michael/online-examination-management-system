@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getAllExams, 
         getExamByCode,
+        getExamByStudent,
         viewExam, 
         pullQuestionsFromBank, 
         addQuestion, 
@@ -12,7 +13,8 @@ const { getAllExams,
         deleteExam } = require('../../controllers/exams.controller')
 
 router.get('/all/:user', getAllExams)
-router.get('/student/:code', getExamByCode)
+router.post('/student', getExamByCode)
+router.get('/student/:user', getExamByStudent)
 router.get('/:id', viewExam)
 router.post('/pull/:id', pullQuestionsFromBank)
 router.post('/question/:id', addQuestion)
