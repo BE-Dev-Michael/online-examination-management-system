@@ -1,14 +1,17 @@
+const Users = require('../models/users.model');
 const Banks = require('../models/banks.model');
 const Questions = require('../models/questions.model');
 
 //* HTTP Method => GET
-//* Route endpoint => /api/banks
+//* Route endpoint => /api/banks/all/:user
 const getAllQuestionBanks = async (req, res) => {
     try {
-        const bankData = await Banks.find({})
-        res.send(bankData)
+        // const banksData = await Banks.find({})
+        const bankData = await Users.findById({_id: req.params.user}).populate('bank')
+        res.send(bankData.bank)
     } catch (error) {
-        throw new Error(error)
+        console.error(error)
+        res.send([])
     }
 }
 
@@ -65,15 +68,35 @@ const addQuestion = async (req, res) => {
     }
 }
 
+//* HTTP Method => PATCH
+//* Route endpoint => /api/banks/question/:id
+const updateQuestion = async (req, res) => {
+    const { questionData } = req.body
+   
+    try {
+        const updatedQuestion = await Questions.findByIdAndUpdate(req.params.id, questionData)
+        res.status(200).send(await Questions.findById(updatedQuestion._id))
+    } catch (error) {
+        console.error(error)
+        res.status(500)
+    }
+}
+
 //* HTTP Method => POST
 //* Route endpoint => /api/banks
 const addQuestionBank = async (req, res) => {
-    const { title } = req.body
+    const { title, user } = req.body
     try {
         const bankData = await Banks.create({
             title: title
         })
-    
+        await Users.findByIdAndUpdate(user, {
+            //* Push an object to array property in schema
+            $push: {bank: bankData._id}
+        }, {
+            //* Returns the object after successful update
+            new: true
+        })
         res.send(bankData)
     } catch (error) {
         res.status(500)
@@ -104,4 +127,4 @@ const deleteQuestionBank = (req, res) => {
     res.send('DELETE')
 }
 
-module.exports = { getAllQuestionBanks, getQuestions, addQuestion, addQuestionBank, updateQuestionBank, deleteQuestionBank }
+module.exports = { getAllQuestionBanks, getQuestions, addQuestion, updateQuestion, addQuestionBank, updateQuestionBank, deleteQuestionBank }

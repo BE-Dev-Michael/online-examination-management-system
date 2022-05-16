@@ -18,14 +18,14 @@ function UserFeatures () {
                                 <div class="flex ">
                                     <div class="grid grid-rows-2 ml-4 justify-items-end">
                                         <h4 class="font-['Cocon'] text-lg leading-6 text-['#414141'] align-text-bottom h-fit place-self-end">
-                                            One-look dashboard
+                                            Create Question Banks
                                         </h4>
                                         <p class="text-base leading-6 text-['#414141'] text-right">
-                                            Know everything about your business in a single glance with your new dashboard.
+                                           Algebra, Georgraphy, Literature, etc. Create your own question bank for any specific topic in your course.
                                         </p>
                                     </div>
                                     <div class="flex flex-shrink-0 justify-items-end w-fit h-fit ml-5">
-                                        <img src="../../images/menu-b.png" alt="feature icon" className="w-3/4 h-3/4 justify-self-end mt-3"/>
+                                        <img src="../../images/box.png" alt="feature icon" className="h-20 w-20 justify-self-end mt-3"/>
                                     </div>
                                 </div>
                             </li>
@@ -33,14 +33,14 @@ function UserFeatures () {
                                 <div class="flex ">
                                     <div class="grid grid-rows-2 ml-4 justify-items-end">
                                         <h4 class="font-['Cocon'] text-lg leading-6 text-['#414141'] align-text-bottom h-fit place-self-end">
-                                            One-look dashboard
+                                            Create Exams
                                         </h4>
                                         <p class="text-base leading-6 text-['#414141'] text-right">
-                                            Know everything about your business in a single glance with your new dashboard.
+                                            Create multiple-choice type of exams and share the exam code to your students.
                                         </p>
                                     </div>
                                     <div class="flex flex-shrink-0 justify-items-end w-fit h-fit ml-5">
-                                        <img src="../../images/menu-b.png" alt="feature icon" className="w-3/4 h-3/4 justify-self-end mt-3"/>
+                                        <img src="../../images/exam.png" alt="feature icon" className="h-20 w-20 justify-self-end mt-3"/>
                                     </div>
                                 </div>
                             </li>
@@ -48,14 +48,14 @@ function UserFeatures () {
                                 <div class="flex ">
                                     <div class="grid grid-rows-2 ml-4 justify-items-end">
                                         <h4 class="font-['Cocon'] text-lg leading-6 text-['#414141'] align-text-bottom h-fit place-self-end">
-                                            One-look dashboard
+                                            Generate Reports
                                         </h4>
                                         <p class="text-base leading-6 text-['#414141'] text-right">
-                                            Know everything about your business in a single glance with your new dashboard.
+                                            View and print exam results and generate exam with two-dimensional table of specifications. 
                                         </p>
                                     </div>
                                     <div class="flex flex-shrink-0 justify-items-end w-fit h-fit ml-5">
-                                        <img src="../../images/menu-b.png" alt="feature icon" className="w-3/4 h-3/4 justify-self-end mt-3"/>
+                                        <img src="../../images/report.png" alt="feature icon" className="h-20 w-20 justify-self-end mt-3"/>
                                     </div>
                                 </div>
                             </li>
@@ -74,19 +74,35 @@ function UserFeatures () {
                             <li>
                                 <div class="flex ">
                                     <div class="flex flex-shrink-0 justify-items-end w-fit h-fit ml-3 mt-6">
-                                        <img src="../../images/menu-b.png" alt="feature icon" className="w-3/4 h-3/4 justify-self-end"/>
+                                        <img src="../../images/faq.png" alt="feature icon" className="h-20 w-20 justify-self-end"/>
                                     </div>
                                     <div class="grid grid-rows-2 ml-4 justify-items-end h-fit">
                                         <h4 class="font-['Cocon'] text-lg leading-6 text-['#414141'] align-text-bottom h-fit place-self-start self-end">
-                                            One-look dashboard
+                                            Answer Exams
                                         </h4>
                                         <p class="text-base leading-6 text-['#414141'] text-left">
-                                            Know everything about your business in a single glance with your new dashboard.
+                                            Take an exam by entering a valid exam code and get results right away.
                                         </p>
                                     </div>
                                 </div>
                             </li>
                             <li>
+                                <div class="flex ">
+                                    <div class="flex flex-shrink-0 justify-items-end w-fit h-fit ml-3 mt-6">
+                                        <img src="../../images/mind.png" alt="feature icon" className="h-20 w-20 justify-self-end"/>
+                                    </div>
+                                    <div class="grid grid-rows-2 ml-4 justify-items-end h-fit">
+                                        <h4 class="font-['Cocon'] text-lg leading-6 text-['#414141'] align-text-bottom h-fit place-self-start self-end">
+                                            Focused Thinking
+                                        </h4>
+                                        <p class="text-base leading-6 text-['#414141'] text-left">
+                                            Testdeck's simple and clean design prevents needless distractions 
+                                            so you can focus on acing your exams.
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            {/* <li>
                                 <div class="flex ">
                                     <div class="flex flex-shrink-0 justify-items-end w-fit h-fit ml-3 mt-6">
                                         <img src="../../images/menu-b.png" alt="feature icon" className="w-3/4 h-3/4 justify-self-end"/>
@@ -100,22 +116,7 @@ function UserFeatures () {
                                         </p>
                                     </div>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="flex ">
-                                    <div class="flex flex-shrink-0 justify-items-end w-fit h-fit ml-3 mt-6">
-                                        <img src="../../images/menu-b.png" alt="feature icon" className="w-3/4 h-3/4 justify-self-end"/>
-                                    </div>
-                                    <div class="grid grid-rows-2 ml-4 justify-items-end h-fit">
-                                        <h4 class="font-['Cocon'] text-lg leading-6 text-['#414141'] align-text-bottom h-fit place-self-start self-end">
-                                            One-look dashboard
-                                        </h4>
-                                        <p class="text-base leading-6 text-['#414141'] text-left">
-                                            Know everything about your business in a single glance with your new dashboard.
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
+                            </li> */}
                         </ul>
                         
                     </div>

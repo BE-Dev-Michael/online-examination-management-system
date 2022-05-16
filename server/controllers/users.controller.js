@@ -6,10 +6,14 @@ const sendEmail = require('../utils/sendEmail');
 const jwt = require("jsonwebtoken");
 
 //* HTTP Method => GET
-//* Route endpoint => /api/users/:id
-const getUser = (req, res) => {
-    console.log('Get user')
-    res.send('Get user')
+//* Route endpoint => /api/users/user
+const getUser = async (req, res) => {
+    try {
+        const userData = await Users.findById({_id: req.user._id})
+        res.status(200).send(userData)
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 //* HTTP Method => GET
@@ -79,23 +83,27 @@ const verifyUser = async (req, res) => {
 //* HTTP Method => POST
 //* Route endpoint => /api/users/login
 const loginUser = async (req, res) => {
-    const { email, password } = req.body
+    const { emailOrUname, password } = req.body
     try {
-        const user = await Users.findOne({ email: email });
+        let user
+
+        emailOrUname.endsWith(".com") ? user = await Users.findOne({ email: emailOrUname }) : 
+        user = await Users.findOne({ username: emailOrUname })
+
         if (!user) {
-           return res.status(400).send("Email or password is incorrect")
+           return res.status(400).send("Invalid credentials")
         }
 
         const isValid = await argon2.verify(user.password, password)
         if(!isValid) {
-           return res.status(400).send("Email or password is incorrect")
+           return res.status(400).send("Invalid credentials")
         }
             
         //* If user account is not yet verified
         if (!user.isVerified) {
             return res.status(400).send("Please verify your account first!")
         }
-
+        
         //* If credentials are valid and account is verified, generate a jwt
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
             expiresIn: "7d",

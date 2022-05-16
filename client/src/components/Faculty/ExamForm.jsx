@@ -10,6 +10,7 @@ import DateTimePicker from 'react-datetime-picker';
 import './QuestionBanks.css'
 import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
+import getUserData from '../Auth/authService';
 
 //* GET and POST method
 //* POST for adding exam
@@ -81,15 +82,14 @@ const viewQuestionGroupState = atom({
   }
 })
 
-function ExamDescriptionRichText() {
-    const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+function InstructionsRichText() {
     const [, setRichText] = useRecoilState(richTextState)
     const [formData, setFormData] = useRecoilState(examFormDataState)
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
       
       
     useEffect(() => {
         setRichText(draftToHtml(convertToRaw(editorState.getCurrentContent())))
-        console.log(formData)
     }, [editorState])
       
     const textEditorHandler = (e) => {
@@ -215,12 +215,14 @@ function ExamQuestionGroup() {
    const [questionGroupData, setQuestionGroupData] = useRecoilState(questionGroupDataState)
    const [questionGroup, setQuestionGroup] = useRecoilState(questionGroupState)
    const [formData, setFormData] = useRecoilState(examFormDataState)
+   const [hasQuestionNo, setHasQuestionNo] = useState(false)
 
    const getBankList = async () => {
       setIsModalVisible(!isModalVisible)
       setClickedBank(null)
       try {
-        const banks = await axios.get(BANKS_URI)
+        const { _id } = await getUserData()
+        const banks = await axios.get(BANKS_URI.concat(`/all/${_id}`))
             
         let fetchedBanks = banks.data.map(data => {
             return { id: data._id, title: data.title, questions: data.questions }
@@ -245,6 +247,9 @@ function ExamQuestionGroup() {
 
   const questionGroupDataHandler = (e) => {
     const {name, value} = e.target
+    if (name === 'noOfQuestions') {
+      parseInt(value) > 0 ? setHasQuestionNo(true) : setHasQuestionNo(false)
+    }
     setQuestionGroupData({...questionGroupData, [name]: value})
   }
 
@@ -265,7 +270,7 @@ function ExamQuestionGroup() {
         <input name='noOfQuestions' onChange={questionGroupDataHandler} value={questionGroupData.noOfQuestions} type="number" placeholder='Number of Questions'/>
       </div>
       <div className='mt-3'>
-        <a onClick={getBankList} className='cursor-pointer text-[#7B9EBC] underline underline-offset-1'>Select from Question Bank</a>
+        <a onClick={getBankList} className={`${hasQuestionNo === true ? 'block' : 'hidden'} cursor-pointer text-[#7B9EBC] underline underline-offset-1`}>Select from Question Bank</a>
       </div>
       <div className='mt-2 flex flex-col gap-4'>
         {selectedBank !== null ? 
@@ -418,8 +423,8 @@ function ExamDetails() {
         <h1 className='font-bold mb-2 ml-3 mt-3'>Exam Title</h1>
         <input onChange={formDataHandler} value={formData.title} name='title' className='p-2 border-b ml-3 focus:outline-[#7B9EBE] w-[70%] mx-auto' type="text" placeholder='Title'/>
         <div className='flex flex-col'>
-          <h1 className='font-bold mb-2 ml-3 mt-3'>Exam Description</h1>
-          <ExamDescriptionRichText/>
+          <h1 className='font-bold mb-2 ml-3 mt-3'>Instructions</h1>
+          <InstructionsRichText/>
         </div>
         <div className='border-b'></div>
         <div className='w-full p-2 mb-5 mt-5'>
@@ -471,7 +476,9 @@ function ExamForm() {
   
     const sendExamData = async () => {
       try {
-        const newExam = await axios.post(EXAMS_URI, formData)
+        const { _id } = await getUserData()
+        const examData = {...formData, user: _id}
+        const newExam = await axios.post(EXAMS_URI, examData)  
         if (publish === true) {
           await axios.patch(EXAM_URI.concat(`publish/${newExam.data._id}`), { isPublished: true })
           setPublish(false)
@@ -493,8 +500,13 @@ function ExamForm() {
         <form onSubmit={submitExam}>
           <div className='flex items-center justify-center'>
             <div className='w-[80%] rounded-lg bg-white p-3 shadow-lg'>
-              {isNextClicked !== true ? <ExamDetails/> : <ExamQuestions/>}
-              
+              {/* {isNextClicked !== true ? <ExamDetails/> : <ExamQuestions/>} */}
+              <div className={isNextClicked !== true ? 'block' : 'hidden'}>
+                <ExamDetails/>
+              </div>
+              <div className={isNextClicked !== true ? 'hidden' : 'block'}>
+                <ExamQuestions/>
+              </div>
               <div className={`${isNextClicked !== true ? 'block' : 'hidden'} flex justify-end m-5 gap-4`}>
                 <button onClick={() => setIsFormVisible(!isFormVisible)} type='button' className='px-5 py-2 bg-slate-300 rounded-md shadow-md'>Cancel</button>
                 <button onClick={() => setIsNextClicked(!isNextClicked)} type='button' className='px-5 py-2 bg-[#7B9EBE] text-white rounded-md shadow-md'>Next</button>

@@ -1,13 +1,15 @@
+const Users = require('../models/users.model');
 const Exams = require('../models/exams.model');
 const Banks = require('../models/banks.model');
 const Questions = require('../models/questions.model');
 
 //* HTTP Method => GET
-//* Route endpoint => /api/exams
+//* Route endpoint => /api/exams/all/:user
 const getAllExams = async (req, res) => {
     try {
-        const examData = await Exams.find({})
-        res.send(examData)
+        // const examData = await Exams.find({})
+        const examData = await Users.findById({_id: req.params.user}).populate('exam')
+        res.send(examData.exam)
     } catch (error) {
         throw new Error(error)
     }
@@ -144,7 +146,7 @@ const addQuestionGroup = async (req, res) => {
 //* HTTP Method => POST
 //* Route endpoint => /api/exams
 const addExam = async (req, res) => {
-    const { title, desc, timeLimit, startDate, endDate, examCode, questions, groups, isPublished } = req.body
+    const { title, desc, timeLimit, startDate, endDate, examCode, questions, groups, isPublished, user } = req.body
     try {
         const examData = await Exams.create({
             title: title,
@@ -156,6 +158,13 @@ const addExam = async (req, res) => {
             questions: questions,
             groups: groups,
             isPublished: isPublished
+        })
+        await Users.findByIdAndUpdate(user, {
+            //* Push an object to array property in schema
+            $push: {exam: examData._id}
+        }, {
+            //* Returns the object after successful update
+            new: true
         })
         
         res.send(examData)

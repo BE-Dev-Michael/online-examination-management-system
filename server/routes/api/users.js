@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { getUser, getAllUsers, signUpUser, verifyUser, loginUser } = require('../../controllers/users.controller')
+const protectRoute = require('../../middleware/auth')
 
-router.get('/:id', getUser)
+router.get('/user', protectRoute, getUser)
 router.get('/', getAllUsers)
 router.post('/signup', signUpUser)
 router.get('/:id/verify/:token', verifyUser)

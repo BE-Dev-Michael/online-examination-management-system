@@ -5,6 +5,7 @@ import axios from 'axios'
 import './Reports.css'
 import { useReactToPrint } from 'react-to-print'
 import { ReportTemplate } from './ReportTemplate'
+import getUserData from '../Auth/authService';
 
 const REPORTS_URI = `${process.env.REACT_APP_BASE_URL}/api/reports`
 
@@ -102,7 +103,8 @@ function Reports() {
   useEffect(() => {
     const getExamAndQuestions = async () => {
         try {
-            const exams = await axios.get(REPORTS_URI)
+            const { _id } = await getUserData()
+            const exams = await axios.get(REPORTS_URI.concat(`/${_id}`))
             
             let fetchedExams = exams.data.map(data => {
                 return { 
