@@ -15,11 +15,68 @@ const getAllExams = async (req, res) => {
     }
 }
 
-//* HTTP Method => GET
-//* Route endpoint => /api/exams/student/:code
+//* HTTP Method => POST
+//* Route endpoint => /api/exams/student
 const getExamByCode = async (req, res) => {
+    const { examCode, userId } = req.body
+
+    //* Checks if may mag mamatch na exam code sa mga exams and if yung inaaccess na exam is not yet published
     try {
-        const examData = await Exams.find({examCode: req.params.code}).populate('questions').populate('groups')
+        const exam = await Exams.findOne({examCode: examCode})
+        //* 1 = If there are no exam with the given exam code
+        if(!exam) return res.send('1');
+        //* 2 = If exam is not yet published
+        if(exam.isPublished === false) return res.send('2');
+    } catch (error) {
+        console.error(error)
+    }
+    
+    //* Pang check if naaccess na ni student yung exam via exam code
+    const checkIfAlreadyAccessed = async () => {
+        try {
+            const examByCode = await Exams.findOne({examCode: examCode})
+            const examId = String(examByCode._id)
+            const examByStudent = await Users.findById({_id: userId})
+            const result = examByStudent.studentExam.filter(data => String(data) === examId)
+            
+            if (result.length > 0) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    
+    //* If already accessed na ni student, then wag na isend yung exam data
+    if (await checkIfAlreadyAccessed()) {
+        //* 3 = You have already accessed this exam
+        res.send('3')
+    } else {
+        try {
+            const examByCode = await Exams.findOne({examCode: examCode}).populate('questions').populate('groups')
+            await Users.findByIdAndUpdate(userId, {
+                //* Push an object to array property in schema
+                $push: {studentExam: examByCode._id}
+            }, {
+                //* Returns the object after successful update
+                new: true
+            })
+            res.send(examByCode)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+}
+
+//* HTTP Method => GET
+//* Route endpoint => /api/exams/student/:user
+const getExamByStudent = async (req, res) => {
+    try {
+        const examByStudent = await Users.findById({_id: req.params.user}).populate('studentExam').select('-password -exam -bank')
+        const examIds = examByStudent.studentExam.map(data => data._id)
+        const examData = await Exams.find({_id: examIds}).populate('questions').populate('groups')
         res.send(examData)
     } catch (error) {
         throw new Error(error)
@@ -222,7 +279,8 @@ const deleteExam = (req, res) => {
 
 module.exports = { 
     getAllExams,
-    getExamByCode, 
+    getExamByCode,
+    getExamByStudent, 
     viewExam,
     pullQuestionsFromBank, 
     addQuestion, 

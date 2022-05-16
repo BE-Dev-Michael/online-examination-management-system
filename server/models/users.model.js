@@ -6,11 +6,15 @@ const userSchema = mongoose.Schema({
     password: String,
     role: String,
     isVerified: Boolean,
-    bank: [{
+    bank: [{ //* Faculty relationship to question banks
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Banks'
     }],
-    exam: [{
+    exam: [{ //* Faculty relationship to exam
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exams'
+    }],
+    studentExam: [{ //* Student relationship to exam
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Exams'
     }],

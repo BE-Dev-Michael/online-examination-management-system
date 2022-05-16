@@ -19,7 +19,7 @@ const Student = () => {
                     <Route path="/" element={<Examboard />} />
                     <Route path="activity" element={<Activityboard />} />
                     <Route path="profile/*" element={<Profile />} />
-                    <Route path="examination/:code" element={<ExamDescription />} />
+                    <Route path="examination/:id" element={<ExamDescription />} />
                 </Routes>
             </div>
         </div>

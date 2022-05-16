@@ -64,14 +64,15 @@ const verifyUser = async (req, res) => {
     try {
         const user = await Users.findOne({ _id: req.params.id });
         if (!user) return res.status(400).send({ message: "Invalid url" });
-
+        
         const token = await RegisterToken.findOne({
             userId: user._id,
             token: req.params.token,
         });
+        
         if (!token) return res.status(400).send({ message: "Invalid url" });
 
-        await Users.updateOne({ _id: user._id, isVerified: true });
+        await Users.findByIdAndUpdate(user._id, { isVerified: true });
         await token.remove();
         console.log('Email verification is successful')
         res.status(200).send("Email verification is successful");

@@ -40,7 +40,7 @@ function LoginItems() {
       if (response.data.user.role === 'Faculty') {
         navigate('/faculty')
       } else {
-        console.log('Student');
+        navigate('/student')
       }
     } catch (err) {
       console.error(err.response.data)

@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import axios from "axios"
+import getUserData from '../Auth/authService'
 
-const EXAM_URL = `${process.env.REACT_APP_BASE_URL}/api/exams/student`
+const EXAM_URL = `${process.env.REACT_APP_BASE_URL}/api/exams`
 
 function Instruction() {
-    const { code } = useParams()
+    const { id } = useParams()
     const [exams, setExams] = useState()
     const [totalPoints, setTotalPoints] = useState(0)
 
@@ -21,17 +22,17 @@ function Instruction() {
     }, [exams])
     
     useEffect(() => {
-        const fetchExam = async (examCode) => {
+        const viewExam = async () => {
             try {
                 // change the url with the real examination url
-                const response = await axios.get(EXAM_URL.concat(`/${examCode}`));
-                console.log(...response.data);
-                setExams(...response.data)
+                const response = await axios.get(EXAM_URL.concat(`/${id}`));
+                console.log(response.data);
+                setExams(response.data)
             } catch (error) {
                 console.log(error.response.data)
             }
         }
-        fetchExam(code)
+        viewExam()
     }, [])
     
     return (
@@ -79,7 +80,7 @@ const ExamDescription = () => {
     // const params = useParams()
 
     // useEffect(() => {
-    //     const fetchExams = async () => {
+    //     const viewExams = async () => {
     //         try {
     //             const response = await axios.get(`http://localhost:3000/examination/${ params.id }`);
     //             setExam(response.data)
@@ -88,7 +89,7 @@ const ExamDescription = () => {
     //             console.log(error.response.data)
     //         }
     //     }
-    //     fetchExams()
+    //     viewExams()
     // }, [])
 
 
