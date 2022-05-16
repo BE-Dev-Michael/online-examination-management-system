@@ -115,5 +115,27 @@ const loginUser = async (req, res) => {
     }
 }
 
+//* HTTP Method => POST
+//* Route endpoint => /api/users/dummy
+//* For testing purposes only
+const createDummyUser = async (req, res) => {
+    const { username, email, password, role } = req.body
 
-module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser }
+    try {
+        const hashedPword = await argon2.hash(password, { type: argon2.argon2id })
+        console.log(hashedPword)
+        const userData = await Users.create({
+            username: username,
+            email: email,
+            password: hashedPword,
+            role: role,
+            isVerified: true
+        })
+        res.send(userData)
+    } catch(err) {
+        console.error(err)
+    }
+}
+
+
+module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser, createDummyUser }
