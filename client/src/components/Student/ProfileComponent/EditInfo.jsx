@@ -32,6 +32,8 @@ const EditInfo = (props) => {
     const [formErrors, setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)
 
+    console.log(formData);
+
     const formDataHandler = (e) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
@@ -82,9 +84,10 @@ const EditInfo = (props) => {
                 <h3 className="text-lg font-medium mb-5">Edit Information</h3>
 
                 {Object.entries(formData).map((data, index) => {
-                    if (data[0] !== 'id' && data[0] !== 'password') {
+                    if (data[0] === 'username' || data[0] === 'email') {
                         return <InputField data={data} key={index} formErrors={formErrors} dataHandler={formDataHandler} toggle={props.toggle} />
                     }
+                    return null
                 })}
 
                 <div className="flex justify-center py-4">

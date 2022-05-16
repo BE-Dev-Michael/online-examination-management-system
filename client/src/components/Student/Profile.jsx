@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import EditInfo from './ProfileComponent/EditInfo'
 import ChangePass from './ProfileComponent/ChangePass';
 import UpdatePic from './ProfileComponent/UpdatePic';
+import getUserData from '../Auth/authService'
 
 
 function Dropdown() {
@@ -50,26 +51,47 @@ const Profile = () => {
         password: "password123"
     })
 
-    return (
-        <div className="relative h-full w-screen mx-5 rounded-2xl shadow-sm bg-white border" >
-            <div className="relative flex">
-                <h3 className="text-lg font-medium m-3" >ACCOUNT INFORMATION</h3>
-                <Dropdown />
-            </div>
-            <hr className="h-2 w-full" />
+    const [userData, setUserData] = useState()
 
-            <div className="relative flex justify-center">
-                <div className="relative lg:flex justify-center w-10/12 xl:w-6/12">
-                    <Routes>
-                        {/* Change the props user with real data */}
-                        <Route path="/" element={<EditInfo user={user} toggle={false} />} />
-                        <Route path="/editinformation" element={<EditInfo user={user} toggle={true} />} />
-                        <Route path="/changepassword" element={<ChangePass user={user} />} />
-                        <Route path="/updatepicture" element={<UpdatePic />} />
-                    </Routes>
-                </div>
-            </div>
-        </div>
+    useEffect(() => {
+     if (userData) {
+       console.log(userData)
+     }
+    }, [userData])
+    
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const userData = await getUserData()
+            setUserData({username: userData.username, email: userData.email})
+        }
+        fetchUserData()
+     }, [])
+
+    return (
+        <>
+        {userData && 
+          <div className="relative h-full w-screen mx-5 rounded-2xl shadow-sm bg-white border" >
+              <div className="relative flex">
+                  <h3 className="text-lg font-medium m-3" >ACCOUNT INFORMATION</h3>
+                  <Dropdown />
+              </div>
+              <hr className="h-2 w-full" />
+
+              <div className="relative flex justify-center">
+                  <div className="relative lg:flex justify-center w-10/12 xl:w-6/12">
+                      <Routes>
+                          {/* Change the props user with real data */}
+                          <Route path="/" element={<EditInfo user={userData} toggle={false} />} />
+                          <Route path="/editinformation" element={<EditInfo user={user} toggle={true} />} />
+                          <Route path="/changepassword" element={<ChangePass user={user} />} />
+                          <Route path="/updatepicture" element={<UpdatePic />} />
+                      </Routes>
+                  </div>
+              </div>
+          </div>
+        }
+        </>
     )
 }
 
