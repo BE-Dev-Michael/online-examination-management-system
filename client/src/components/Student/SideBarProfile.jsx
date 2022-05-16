@@ -38,10 +38,17 @@ const SideBarProfile = () => {
 
     useEffect(() => {
        const fetchUserData = async () => {
-           const userData = await getUserData()
-           setUserData(userData)
+          const userData = await getUserData()
+          setUserData(userData)
        }
-       fetchUserData()
+       const token = localStorage.getItem('token')
+       if (token) {
+         fetchUserData()
+       } else {
+         //* Load hardcoded data if ibabypass yung url ng student
+         //! Temporary data muna para hindi nawawala yung sidebar kung ibabypass
+         setUserData({username: 'Romeo Gatchalian'})
+       }
     }, [])
     
 
@@ -53,7 +60,7 @@ const SideBarProfile = () => {
     const logout = () => {
       localStorage.removeItem('token')
       navigate('/login')
-   }
+    }
 
     return (
         <>
