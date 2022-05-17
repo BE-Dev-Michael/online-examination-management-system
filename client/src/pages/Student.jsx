@@ -9,7 +9,7 @@ import ExamDescription from '../components/Student/ExamDescription';
 
 const Student = () => {
     return (
-        <div className="bg-gradient-to-b from-[#216E81] via-[#eaf8fc] to-[#ffffff]  pt-3 relative w-screen h-screen overflow-auto dark:from-[#1E1F25]  dark:to-[#1E1F25]">
+        <div>
             <NavigationBar />
 
             <div className="flex">
