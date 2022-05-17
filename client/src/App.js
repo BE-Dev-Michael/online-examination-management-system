@@ -8,8 +8,7 @@ import Student from "./pages/Student"
 import About from "./pages/About"
 import ProtectedRoute from "./ProtectedRoute"
 import { Routes, Route } from 'react-router-dom';
-import { useRecoilValue, useRecoilState } from 'recoil'
-import tokenState from './components/Login/tokenAtom'
+import ExamPanel from "./components/Student/ExamPanel"
 
 function App() {
   return (
@@ -22,6 +21,7 @@ function App() {
       <Route path="/api/users/:id/verify/:token" element={<VerifyEmail/>} />
       <Route path="/faculty/*" element={<Faculty/>}/>
       <Route path='/student/*' element={<Student/>}/>
+      <Route path='/student/examination/panel/:id' element={<ExamPanel/>}/>
       <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
   );
