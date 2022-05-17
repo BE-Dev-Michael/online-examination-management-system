@@ -6,6 +6,7 @@ import Activityboard from '../components/Student/Activityboard';
 import SideBarProfile from '../components/Student/SideBarProfile';
 import Profile from '../components/Student/Profile';
 import ExamDescription from '../components/Student/ExamDescription';
+import ExamResult from '../components/Student/ExamResult';
 
 const Student = () => {
     return (
@@ -20,6 +21,7 @@ const Student = () => {
                     <Route path="activity" element={<Activityboard />} />
                     <Route path="profile/*" element={<Profile />} />
                     <Route path="examination/:id" element={<ExamDescription />} />
+                    <Route path="activity/result" element={<ExamResult />} />
                 </Routes>
             </div>
         </div>
