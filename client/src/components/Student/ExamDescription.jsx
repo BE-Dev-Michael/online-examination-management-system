@@ -68,8 +68,8 @@ function Instruction() {
                     <div className="flex justify-center my-5">
                         {/*  If current date is greater than or equal to start date of exam and 
                              current date is less than or equal to end date of exam then the exam can be taken */}
-                        {new Date().toLocaleString('en-US', dateFormat) >= exams.startDate && 
-                         new Date().toLocaleString('en-US', dateFormat) <= exams.endDate ?
+                        {new Date() >= new Date(exams.startDate) && 
+                         new Date() <= new Date(exams.endDate) ?
                           <button
                               onClick={startExam}
                               className={`w-52 py-2 px-4 bg-slate-400 hover:bg-slate-500 focus:ring-slate-500 focus:ring-offset-slate-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full`}>
@@ -77,7 +77,7 @@ function Instruction() {
                           </button>
                           :
                           <div className='flex gap-4'>
-                            {new Date().toLocaleString('en-US', dateFormat) < exams.startDate ?
+                            {new Date() < new Date(exams.startDate) ?
                               <div className='flex gap-4'>
                                 <MdInfo className='text-2xl text-green-600'/>
                                 <h1 className='font-semibold'>
