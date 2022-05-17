@@ -205,14 +205,14 @@ const ExamPanel = () => {
     const [exam, setExam] = useState()
     const [correctAnswer, setCorrectAnswer] = useRecoilState(correctAnswerState)
     
-    const convertMinutes = () => {
+    const getTimeLimit = () => {
       const isTimerStarted = localStorage.getItem('timer')
       //* If hindi pa naseset yung timer data sa local storage
       if (!isTimerStarted) {
         const mins = exam.timeLimit
         const minutes = mins % 60;
         const hours = Math.floor(mins / 60);
-        const hoursMinSecs = { hours: 0, minutes: 0, seconds: 5 }
+        const hoursMinSecs = { hours: hours, minutes: minutes, seconds: 0 }
         localStorage.setItem('timer', JSON.stringify(hoursMinSecs))
         const timer = localStorage.getItem('timer')
         return JSON.parse(timer)
@@ -256,7 +256,7 @@ const ExamPanel = () => {
 
                       <div className='absolute right-0 flex flex-row-reverse px-5'>
                           <p className="text-lg font-medium">
-                            <Timer hoursMinSecs={convertMinutes()}/>
+                            <Timer hoursMinSecs={getTimeLimit()}/>
                           </p>
                           <RiTimerLine className="w-8 h-8 " />
                       </div>
