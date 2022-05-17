@@ -9,27 +9,31 @@ const ExamCard = (props) => {
     const navigate = useNavigate()
 
     return (
-        <div className="shadow-lg rounded-xl max-w-xs p-4 border bg-white relative overflow-hidden">
+        <div className="shadow-lg rounded-xl max-w-xs p-4 border bg-white relative overflow-hidden dark:bg-[#26292F] dark:border-none">
             <a href="#" className="w-full h-full block">
                 <div className="w-full">
 
-                    <p className="text-gray-800 text-xl font-medium mb-2">
+                    <p className="text-gray-800 text-xl font-medium mb-2 dark:text-white">
                         {props.title}
                     </p>
 
-                    <p className="text-gray-400 text-xs font-medium mb-2">
-                        Time limit: {props.timeLimit} minutes
-                    </p>
+                    <div className="text-gray-400 dark:text-gray-300">
+                        <p className="text-xs font-medium mb-2">
+                            Time limit: {props.timeLimit} minutes
+                        </p>
 
-                    <p className="text-gray-400 text-xs font-medium mb-2">
-                        Available from {props.startDate} to {props.endDate}
-                    </p>
+                        <p className="text-xs font-medium mb-2">
+                            Available from {props.startDate} to {props.endDate}
+                        </p>
 
-                    <p className="text-gray-400 text-xs font-medium mb-2">
-                        Points: {totalPoints}
-                    </p>
-                
-                    <button onClick={() => navigate(`/student/examination/${props.id}`)} type="button" className="py-2 px-4  bg-[#7B9EBE] hover:bg-[#6e8eac] focus:ring-[#7B9EBE] focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        <p className="text-xs font-medium mb-2">
+                            Points: {totalPoints}
+                        </p>
+                    </div>
+
+
+
+                    <button onClick={() => navigate(`/student/examination/${ props.id }`)} type="button" className="py-2 px-4  bg-[#7B9EBE] hover:bg-[#6e8eac] focus:ring-[#7B9EBE] focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                         Take exam
                     </button>
                 </div>
