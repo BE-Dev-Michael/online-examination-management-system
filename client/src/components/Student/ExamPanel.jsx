@@ -82,7 +82,8 @@ const QuestionForm = ({ exam }) => {
         console.log(newCurrent)
     }
 
-    const submitExam = () => {
+    const submitExam = (e) => {
+        e.preventDefault()
         //test the computation of student score
         const result = correctAnswer.map((answer, index) => {
           if (answer === studentAnswer[index]) {
@@ -96,6 +97,7 @@ const QuestionForm = ({ exam }) => {
 
     return (
         <>
+          <form onSubmit={submitExam}>
             <div className="relative flex flex-col justify-center align-middle items-center px-10">
                 {/* Question form */}
                 <div className="relative h-full lg:w-3/4 md:w-3/4 w-full flex flex-col mt-32 mx-10 border border-y-8 border-cyan-200  bg-slate-100 rounded-2xl shadow-md">
@@ -121,13 +123,14 @@ const QuestionForm = ({ exam }) => {
 
                 {/* Buttons */}
                 <div className="flex justify-center gap-5 w-96 mt-5 text-white">
-                    <button onClick={previousQuestionHandler} className="bg-red-500 hover:bg-red-600 p-2  w-24 shadow-md rounded">Previous</button>
-                    <button onClick={nextQuestionHandler} className="bg-green-400 hover:bg-green-500 p-2 w-24 shadow-md rounded">Next</button>
+                    <button type='button' onClick={previousQuestionHandler} className="bg-red-500 hover:bg-red-600 p-2  w-24 shadow-md rounded">Previous</button>
+                    <button type='button' onClick={nextQuestionHandler} className="bg-green-400 hover:bg-green-500 p-2 w-24 shadow-md rounded">Next</button>
                 </div>
                 <div className='flex justify-center mt-12 border rounded-md p-5'>
-                    <button onClick={submitExam} className='px-12 py-2 text-white bg-cyan-400 rounded-md shadow-md hover:bg-cyan-500'>Submit</button>
+                    <button type='submit' className='px-12 py-2 text-white bg-cyan-400 rounded-md shadow-md hover:bg-cyan-500'>Submit</button>
                 </div>
             </div>
+          </form>
 
             {/* Link list */}
             <div className="xl:absolute xl:right-0 xl:top-16  flex justify-center -ml-16 xl:mt-32 pr-3">
