@@ -152,80 +152,80 @@ const QuestionForm = ({ exam }) => {
     )
 }
 
+function Timer({ hoursMinSecs, isStopped }) {
+  const { hours = 0, minutes = 0, seconds = 60 } = hoursMinSecs;
+  const [[hrs, mins, secs], setTime] = useState([hours, minutes, seconds]);
+  const [stopTimer, setStopTimer] = useState(false)
+  
+
+  const tick = () => {
+ 
+      if (hrs === 0 && mins === 0 && secs === 0) 
+          stopTimerHandler()
+      else if (mins === 0 && secs === 0) {
+          setTime([hrs - 1, 59, 59]);
+      } else if (secs === 0) {
+          setTime([hrs, mins - 1, 59]);
+      } else {
+          setTime([hrs, mins, secs - 1]);
+      }
+  };
+
+
+  const stopTimerHandler = () => {
+      localStorage.removeItem('timer')
+      setStopTimer(true)
+  }
+
+  
+  useEffect(() => {
+      const timerId = setInterval(() => {
+        tick()
+        //* I-update yung data for timer sa local storage every second
+        localStorage.setItem('timer', JSON.stringify({ hours: hrs, minutes: mins, seconds: secs }))
+      }, 1000);
+      if (stopTimer === true) {
+          clearInterval(timerId)
+      }
+      return () => clearInterval(timerId);
+  });
+
+  
+  return (
+      <div>
+          <p>{`${hrs.toString().padStart(2, '0')}:${mins
+          .toString()
+          .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`}</p> 
+      </div>
+  );
+}
 
 const ExamPanel = () => {
     const { id } = useParams()
     const [exam, setExam] = useState()
     const [correctAnswer, setCorrectAnswer] = useRecoilState(correctAnswerState)
-    // sample exam
-    const questionaire = [
-        {
-            questionId: 1,
-            question: "What is the full meaning of DOM?",
-            choices: [
-                {
-                    choiceText: "Document Object Model"
-                },
-                {
-                    choiceText: "Dynamic Object Model"
-                },
-                {
-                    choiceText: "Document Oriented Modulus"
-                },
-                {
-                    choiceText: "Document Oriented Model"
-                },
-                {
-                    choiceText: "Document Oriented Model"
-                }
-            ],
-            correctAnswer: "Document Object Model",
-            yourAnswer: "",
-            points: 2
-        },
-        {
-            questionId: 2,
-            question: "The program that translates your code from a high-level language to the binary language is called ________",
-            choices: [
-                {
-                    choiceText: "programmer"
-                },
-                {
-                    choiceText: "compiler"
-                },
-                {
-                    choiceText: "translator"
-                },
-                {
-                    choiceText: "linker"
-                }
-            ],
-            correctAnswer: "compiler",
-            yourAnswer: "",
-            points: 2
-        },
-        {
-            questionId: 3,
-            question: " In JavaScript, what is a block of statement?",
-            choices: [
-                {
-                    choiceText: "Conditional block"
-                },
-                {
-                    choiceText: "block that combines a number of statements into a single compound statement"
-                },
-                {
-                    choiceText: "both conditional block and a single statement"
-                },
-                {
-                    choiceText: "block that contains a single statement"
-                }
-            ],
-            correctAnswer: "block that combines a number of statements into a single compound statement",
-            yourAnswer: "",
-            points: 2
-        }
-    ]
+    
+    const convertMinutes = () => {
+      const isTimerStarted = localStorage.getItem('timer')
+      //* If hindi pa naseset yung timer data sa local storage
+      if (!isTimerStarted) {
+        const mins = exam.timeLimit
+        const minutes = mins % 60;
+        const hours = Math.floor(mins / 60);
+        const hoursMinSecs = { hours: 0, minutes: 0, seconds: 5 }
+        localStorage.setItem('timer', JSON.stringify(hoursMinSecs))
+        const timer = localStorage.getItem('timer')
+        return JSON.parse(timer)
+      }
+      //* Kuhanin yung persistent timer data sa local storage para kahit i-refresh yung page
+      //* hindi magrereset yung timer
+      const stringTimer = localStorage.getItem('timer')
+      const timer = JSON.parse(stringTimer)
+      //* Decrement to fix yung pagdagdag ng 1 second kapag nirefresh yung page
+      timer.seconds--
+      return timer
+      // localStorage.removeItem('timer')
+    }    
 
     useEffect(() => {
         const fetchExam = async () => {
@@ -255,7 +255,9 @@ const ExamPanel = () => {
                       </div>
 
                       <div className='absolute right-0 flex flex-row-reverse px-5'>
-                          <p className="text-lg font-medium">0:59:10</p>
+                          <p className="text-lg font-medium">
+                            <Timer hoursMinSecs={convertMinutes()}/>
+                          </p>
                           <RiTimerLine className="w-8 h-8 " />
                       </div>
                   </div>
