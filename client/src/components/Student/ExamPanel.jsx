@@ -142,7 +142,7 @@ const QuestionForm = ({ exam }) => {
                                       key={index}
                                       value={index}>Question {index + 1}
                                     </li>
-                                    {studentAnswer[index] ? <IoMdCheckmark className='text-green-500'/> : ''}
+                                     {studentAnswer[index] ? <IoMdCheckmark className='text-green-500'/> : ''}
                                    </div>
                         })}
                     </ul>
