@@ -90,7 +90,7 @@ function ConfirmationDialog(props) {
                       Confirmation
                   </p>
                   <p class="text-gray-600 text-sm py-2 px-6">
-                      You have ({props.count}) unanswered {props.count === 1 ? 'question. ' : 'questions '}
+                      You have ({props.count}) unanswered {props.count === 1 ? 'question. ' : 'questions. '}
                       Do you wish to continue?
                   </p>
                   <div class="flex items-center justify-between gap-4 w-full mt-8">
