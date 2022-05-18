@@ -10,7 +10,7 @@ function InputField({ data, formErrors, dataHandler, toggle }) {
 
     return (
         <div className="flex flex-col mb-3">
-            <label className="font-semibold mb-1 ml-5 capitalize">{data[0]}</label>
+            <label className="font-semibold mb-1 ml-5 capitalize dark:text-[#e2dddd]">{data[0]}</label>
             <div className="flex relative ">
                 {toggle ?
                     <input
@@ -18,8 +18,8 @@ function InputField({ data, formErrors, dataHandler, toggle }) {
                         onChange={dataHandler}
                         name={data[0]}
                         type="text"
-                        className="ml-5 mr-10 rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" />
-                    : <p className="ml-5 mr-10 py-1 px-4 text-lg font-sans cursor-pointer">{data[1]}</p>}
+                        className="ml-5 mr-10 rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent dark:bg-[#17181C] dark:border-[#17181C] dark:text-[#e2dddd]" />
+                    : <p className="ml-5 mr-10 py-1 px-4 text-lg font-sans cursor-pointer dark:text-[#e2dddd]">{data[1]}</p>}
             </div>
             <p className="text-red-600 text-sm font-normal ml-6">{error}</p>
         </div>
@@ -51,6 +51,9 @@ const EditInfo = (props) => {
         if (!data.name) {
             errors.name = "Name is required!"
         }
+        if (/\d/.test(data.name)) {
+            errors.name = "Name field must contain only letters!"
+        }
         if (!data.username) {
             errors.username = "Username is required!"
         }
@@ -59,9 +62,7 @@ const EditInfo = (props) => {
         } else if (!validator.test(data.email)) {
             errors.email = "This is not a valid email format!"
         }
-        if (!data.section) {
-            errors.section = "Section is required!"
-        }
+
 
         return errors
     }
@@ -79,9 +80,9 @@ const EditInfo = (props) => {
     }, [formErrors])
 
     return (
-        <div className="my-5 lg:w-10/12 border p-5 rounded-sm shadow">
+        <div className="my-5 lg:w-10/12 border p-5 rounded-md shadow-md bg-white dark:bg-[#26292F] dark:border-[#26292F]">
             <form onSubmit={onSubmitHandle} autoComplete="off">
-                <h3 className="text-lg font-medium mb-5">Edit Information</h3>
+                <h3 className="text-lg font-medium mb-3 ml-5 dark:text-[#e2dddd]">Edit Information</h3>
 
                 {Object.entries(formData).map((data, index) => {
                     if (data[0] === 'username' || data[0] === 'email') {
