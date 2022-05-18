@@ -4,6 +4,6 @@ const { getAllExamResult, setExamResult, viewExamResult } = require('../../contr
 
 router.get('/all/:user', getAllExamResult)
 router.post('/', setExamResult)
-router.post('/:id', viewExamResult)
+router.get('/:id', viewExamResult)
 
 module.exports = router
