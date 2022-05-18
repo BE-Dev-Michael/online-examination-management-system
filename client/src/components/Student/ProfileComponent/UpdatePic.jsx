@@ -27,17 +27,17 @@ const UpdatePic = () => {
     }, [])
 
     return (
-        <div className="mt-4 lg:w-10/12 border p-5 rounded-sm mb-5 shadow">
-            <h3 className="text-lg font-medium mb-5">Profile picture</h3>
+        <div className="mt-4 lg:w-10/12 border p-5 rounded-sm mb-5 shadow-md bg-white dark:bg-[#26292F] dark:border-[#26292F]">
+            <h3 className="text-lg font-medium mb-5 ml-5 dark:text-[#e2dddd]">Profile picture</h3>
             <form onSubmit={changePictureHandler}>
                 <div className="flex justify-center m-5 h-52">
                     <img src={picture} alt="Profile pic" className="flex h-52 w-52 border-2 border-gray-500" />
                 </div>
 
                 <div className="max-w-2xl m-5">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" >Upload file</label>
-                    <input onChange={getPhotoHandler} type="file" accept="image/*" className="w-full p-1 hover:bg-slate-200 transition ease-in font- border border-gray-300 rounded-lg cursor-pointer focus:outline-none" />
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">PNG and JPG (MAX. 800x400px).</p>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#e2dddd]" >Upload file</label>
+                    <input onChange={getPhotoHandler} type="file" accept="image/*" className="w-full p-1 hover:bg-slate-200 transition ease-in font- border border-gray-300 rounded-lg cursor-pointer focus:outline-none dark:bg-[#17181C] dark:border-[#17181C] dark:text-[#e2dddd]" />
+                    <p className="mt-1 text-sm text-gray-500 dark:text-[#e2dddd]">PNG and JPG (MAX. 800x400px).</p>
                 </div>
 
                 <div className="flex justify-center pb-1">
