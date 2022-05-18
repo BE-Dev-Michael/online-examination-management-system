@@ -6,7 +6,7 @@ import getUserData from '../Auth/authService'
 import { useNavigate } from 'react-router-dom'
 
 function SidebarMenus(props) {
-    const activeClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC] dark:from-[#216E81] dark:to-[#218E60]", set2: "-mr-1 font-medium" }
+    const activeClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-blue-500 to-cyan-400", set2: "-mr-1 font-medium" }
     const inactiveClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-gray-600 group", set2: "group-hover:text-gray-700 dark:group-hover:text-gray-100" }
 
     return (
@@ -71,7 +71,7 @@ const SideBarProfile = () => {
                         <div className="mt-8 text-center">
                             <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="" className="w-28 h-28 m-auto rounded-full object-cover" />
                             <Link onClick={() => activeLinkHandler(false, 0)} to={'/student/profile'}>
-                                <h5 className=" mt-4 text-lg font-semibold text-gray-600 hover:text-cyan-600 hover:underline underline-offset-4 dark:text-[#e2dddd]">{userData.username}</h5>
+                                <h5 className=" mt-4 text-lg font-semibold text-gray-600 hover:text-cyan-500 hover:underline underline-offset-4 dark:text-[#e2dddd] dark:hover:text-cyan-400">{userData.username}</h5>
                             </Link>
                             <span className=" text-gray-400 ">Student</span>
                         </div>
@@ -84,11 +84,11 @@ const SideBarProfile = () => {
                     </div>
 
                     <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t mt-3 dark:border-gray-600">
-                        <button onClick={() => logout()} className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button onClick={() => logout()} className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group dark:text-[#e2dddd] hover:text-[#e2dddd] hover:bg-gradient-to-r from-blue-500 to-cyan-400 hover:font-medium w-full transition ease-in-out ">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:text-[#e2dddd]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            <span className="group-hover:text-gray-700">Logout</span>
+                            <span className="dark:text-[#e2dddd]">Logout</span>
                         </button>
                     </div>
                 </aside>

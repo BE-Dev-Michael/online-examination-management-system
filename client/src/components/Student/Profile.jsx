@@ -74,10 +74,9 @@ const Profile = () => {
             {userData &&
                 <div className="relative h-full w-screen mx-5 rounded-2xl shadow-sm bg-white border dark:bg-[#1e2027] dark:border-[#292d35]" >
                     <div className="relative flex">
-                        <h3 className="text-lg font-medium m-3" >ACCOUNT INFORMATION</h3>
+                        <h1 className="ml-9 mt-4  text-gray-600 text-2xl font-bold dark:text-gray-300" >Account Settings</h1>
                         <Dropdown />
                     </div>
-                    <hr className="h-2 w-full" />
 
                     <div className="relative flex justify-center">
                         <div className="relative lg:flex justify-center w-10/12 xl:w-6/12">

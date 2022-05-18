@@ -52,7 +52,7 @@ const Examboard = () => {
             <InputCode getCodeFunction={getExamCodeHandler} />
 
             <div className="relative w-full shadow-sm border bg-white rounded-2xl dark:bg-[#1e2027] dark:border-[#292d35]">
-                <p className="ml-9 mt-4 text-xl font-bold text-gray-500">Available Exams</p>
+                <p className="ml-9 mt-4 text-xl font-bold text-gray-600 dark:text-gray-300">Available Exams</p>
 
                 <div className="grid xl:grid-cols-2 2xl:grid-cols-3 grid-cols-1 gap-10 p-5 ">
                     {/* This filter is to filter and get the inputed code */}

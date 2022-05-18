@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { BsFillBellFill, BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from 'react-router-dom';
-import logo from '../../assets/images/logo-c.png'
+// import logo from "../../images/box.png"
 import useDarkMode from './DarkModeComponent/useDarkMode'
 
 const NavigationBar = () => {
-    const [darkMode, setDarkMode] = useState(true)
+    const [darkMode, setDarkMode] = useState(false)
     const [showSearch, setShowSearch] = useState(false)
     const [setTheme, colorTheme] = useDarkMode()
 
@@ -23,7 +23,7 @@ const NavigationBar = () => {
                     <section className="flex items-center space-x-8">
                         <a href="#">
                             <div className="flex items-center space-x-2">
-                                <img src={logo} alt="logo" className="h-10 object-cover" />
+                                <img src={darkMode ? "../../images/logo-whitetext.png" : "../../images/logo-c.png"} alt="logo" className="h-10 object-cover" />
                                 <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider"></h2>
                             </div>
                         </a>
@@ -65,8 +65,8 @@ const NavigationBar = () => {
                                 <li>
                                     <button onClick={setDarkModeHandler} className="w-10 h-10 rounded-xl border border-gray-200 dark:bg-[#17181C] dark:border-none ">
                                         {darkMode ?
-                                            <BsFillMoonFill className="h-5 w-5 m-auto text-gray-600 hover:text-blue-400" /> :
-                                            <BsFillSunFill className="h-5 w-5 m-auto text-gray-600 hover:text-blue-400 dark:text-[#8C94A0] dark:hover:text-blue-400" />
+                                            <BsFillSunFill className="h-5 w-5 m-auto text-gray-600 hover:text-blue-400 dark:text-[#8C94A0] dark:hover:text-blue-400" /> :
+                                            <BsFillMoonFill className="h-5 w-5 m-auto text-gray-600 hover:text-blue-400" />
                                         }
                                     </button>
                                 </li>
