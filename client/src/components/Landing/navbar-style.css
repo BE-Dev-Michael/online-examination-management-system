@@ -2,6 +2,8 @@
 @tailwind components; 
 @tailwind utilities;
 
+
+
 .navbar{
     background:  transparent; 
     position: fixed; 
@@ -71,7 +73,7 @@
   }
 
   .nav-links:hover {
-    color: #7cbe83;
+    color: #74bade;
   }
 
   .nav-links-mobile {
@@ -91,7 +93,7 @@
   }
 
   .nav-links-mobile:hover {
-    color: #7C9EBE;
+    color: #74bade;
     transition: 250ms;
   }
 
@@ -119,21 +121,21 @@
 }
 
 .sign_up-btn:hover{
-  background: #7cbe83;
+  background: #74bade;
   color: #fcfcfc;
 }
 
 .sign_up-btn.alt{
-  background:  #7C9EBE;
+  background:  #74bade;
   color: #fcfcfc;
 }
 
 .sign_up-btn.alt:hover{
-  background: #8baac7;
+  background: #88c9e9;
 }
 
 .sign_up-btn.dropdown{
-  background:  #7C9EBE;
+  background:  #74bade;
   color: #fcfcfc;
   align-self: center;
   margin: 0.25rem auto;
@@ -145,6 +147,5 @@
 }
 
 .sign_up-btn.dropdown:hover{
-  background: #6a88a5;
-  color: #414141;
+  background: #88c9e9;
 }

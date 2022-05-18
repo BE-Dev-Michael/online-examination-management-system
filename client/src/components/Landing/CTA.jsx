@@ -14,7 +14,7 @@ function CTA () {
             </h2>
             <div class="lg:mt-0 lg:flex-shrink-0">
                 <div class="inline-flex">
-                    <button type="button" class="hover:bg-gradient-to-r from-[#fa709a] to-[#fdc05a] hover:text-[#fcfcfc] py-2 px-7 text-lg text-[#414141] bg-white font-bold rounded-full text-base w-fit shadow-xl sm:mt-5 lg:mt-0">
+                    <button type="button" class="hover:bg-[#74bade] hover:text-[#fcfcfc] py-2 px-7 text-lg text-[#414141] bg-white font-bold rounded-full text-base w-fit shadow-xl sm:mt-5 lg:mt-0">
                         Sign Up
                     </button>
                 </div>

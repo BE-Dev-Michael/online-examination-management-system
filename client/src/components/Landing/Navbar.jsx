@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import DropdownMenu from './DropdownMenu'
 import NavbarLinks from './NavbarLinks'
 import './navbar-style.css';
+import { CgMenuRight } from 'react-icons/cg'
 
 function Navbar() {
     const [collapse, setCollapse] = useState(false)
@@ -47,7 +48,8 @@ function Navbar() {
                 <NavbarLinks navbar={navbar}/>
               </div>
               <div onClick={dropdownHandler} className='text-3xl absolute right-12 top-6 cursor-pointer md:hidden'>
-                <img class="h-5 w-5" src={navbar ? "../../images/menu-b.png" : "../../images/menu.png"} alt="menu"/>
+                <CgMenuRight className={navbar ? "text-[#74bade]" : "text-white"}/>
+                {/* <img class="h-5 w-5" src={navbar ? "../../images/menu-b.png" : "../../images/menu.png"} alt="menu"/> */}
               </div> 
             </div>
           </div>

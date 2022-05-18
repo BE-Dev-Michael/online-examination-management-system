@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios"
+import { MdInfo } from 'react-icons/md'
+import { AiOutlineStop } from 'react-icons/ai'
 import getUserData from '../Auth/authService'
 
 const EXAM_URL = `${process.env.REACT_APP_BASE_URL}/api/exams`
@@ -10,7 +12,10 @@ function Instruction() {
     const { id } = useParams()
     const [exams, setExams] = useState()
     const [totalPoints, setTotalPoints] = useState(0)
+    const navigate = useNavigate()
+    const dateFormat = {month: 'short', day: 'numeric', weekday: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric'}
 
+    console.log(new Date().toLocaleString('en-US', dateFormat))
 
     useEffect(() => {
       if (exams) {
@@ -34,6 +39,10 @@ function Instruction() {
         }
         viewExam()
     }, [])
+
+    const startExam = () => {
+        navigate(`/student/examination/panel/${exams._id}`)
+    }
     
     return (
         <>
@@ -55,17 +64,38 @@ function Instruction() {
                         </p>
                     </div>
 
-                    <form >
-                        <div className="flex justify-center my-5">
-                            {/* <Link to={`/student/examination/${ exam.id }`}> */}
-                            <button
-                                type="submit"
-                                className={`w-52 py-2 px-4 bg-slate-400 hover:bg-slate-500 focus:ring-slate-500 focus:ring-offset-slate-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full`}>
-                                Start
-                            </button>
-                            {/* </Link> */}
-                        </div>
-                    </form>
+                    
+                    <div className="flex justify-center my-5">
+                        {/*  If current date is greater than or equal to start date of exam and 
+                             current date is less than or equal to end date of exam then the exam can be taken */}
+                        {new Date() >= new Date(exams.startDate) && 
+                         new Date() <= new Date(exams.endDate) ?
+                          <button
+                              onClick={startExam}
+                              className={`w-52 py-2 px-4 bg-slate-400 hover:bg-slate-500 focus:ring-slate-500 focus:ring-offset-slate-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full`}>
+                              Start
+                          </button>
+                          :
+                          <div className='flex gap-4'>
+                            {new Date() < new Date(exams.startDate) ?
+                              <div className='flex gap-4'>
+                                <MdInfo className='text-2xl text-green-600'/>
+                                <h1 className='font-semibold'>
+                                    The exam is not yet available until {exams.startDate}
+                                </h1>
+                              </div>
+                              :
+                              <div className='flex gap-4'>
+                                <AiOutlineStop className='text-2xl text-red-400'/>
+                                <h1 className='font-semibold'>
+                                    The exam was closed on {exams.endDate}
+                                </h1>
+                              </div>
+                            }
+                          </div>
+                        }
+                    </div>
+                    
 
                 </div>
             </div>

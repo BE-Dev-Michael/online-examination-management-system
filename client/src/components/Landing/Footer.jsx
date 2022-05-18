@@ -3,42 +3,18 @@ import React from 'react';
 function Footer () {
     return (
         
-        <footer class="px-3 py-8 pt-36 pb-16 bg-[#414141] text-2 text-gray-500 dark:text-gray-200 transition-colors duration-200 z-10">
-
-        {/* <div class="flex bg-gradient-to-r from-[#a1c4fc] to-[#c1e8fb] bg-gray-300 z-20 w-2/4 place-self-center rounded-3xl">
-        <div class="lg:flex lg:items-center lg:justify-between w-full mx-auto py-12 px-6 sm:px-6 lg:py-16 lg:px-4 z-20">
-            <h2 class="text-3xl font-extrabold text-black dark:text-white sm:text-4xl">
-                <span className="block font-['Cocon']">
-                    Online Examination Platform
-                </span>
-                <span class="block text-indigo-500 text-sm mt-2">
-                    It&#x27;s today or never.
-                </span>
-            </h2>
-            <div class="lg:mt-0 lg:flex-shrink-0">
-                <div class=" inline-flex rounded-full shadow h-fit">
-                    <button type="button" class="py-4 px-6 bg-white hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-[#c1e8fb] w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full ">
-                        Sign Up
-                    </button>
-                </div>
-            </div>
-        </div>
-        </div> */}
-            
+        <footer class="px-3 py-8 pt-36 pb-16 bg-[#414141] text-2 text-gray-500 dark:text-gray-200 transition-colors duration-200 z-10"> 
             <div class="flex flex-col">
                 <div class="md:hidden mt-7 mx-auto w-11 h-px rounded-full bg-slate-300">
                 </div>
                 <div class="mt-4 md:mt-0 flex flex-col md:flex-row">
                     <nav class="flex-1 flex flex-col items-center justify-center md:items-end md:border-r border-gray-100 md:pr-5">
-                        <a aria-current="page" href="#" class="hover:text-[#c1e8fb]">
+                        <a aria-current="page" href="/" class="hover:text-[#c1e8fb]">
                             Home
                         </a>
-                        <a aria-current="page" href="#" class="hover:text-[#c1e8fb]">
+                        <a aria-current="page" href="/About" class="hover:text-[#c1e8fb]">
                             About
                         </a>
-                        {/* <a aria-current="page" href="#" class="hover:text-gray-700 dark:hover:text-white">
-                            Customization
-                        </a> */}
                     </nav>
                     <div class="md:hidden mt-4 mx-auto w-11 h-px rounded-full">
                     </div>
