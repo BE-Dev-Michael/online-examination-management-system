@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BsFillBellFill, BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from 'react-router-dom';
-import logo from '../../assets/images/logo-c.png'
+// import logo from "../../images/box.png"
 import useDarkMode from './DarkModeComponent/useDarkMode'
 
 const NavigationBar = () => {
@@ -23,7 +23,7 @@ const NavigationBar = () => {
                     <section className="flex items-center space-x-8">
                         <a href="#">
                             <div className="flex items-center space-x-2">
-                                <img src={logo} alt="logo" className="h-10 object-cover" />
+                                <img src={"../../images/logo-c.png"} alt="logo" className="h-10 object-cover" />
                                 <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider"></h2>
                             </div>
                         </a>
