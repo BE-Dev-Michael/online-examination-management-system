@@ -1,0 +1,52 @@
+const Users = require('../models/users.model');
+const Exams = require('../models/exams.model');
+const Result = require('../models/result.model');
+
+//* HTTP Method => GET
+//* Route endpoint => /api/result/all/:user
+const getAllExamResult = async (req, res) => {
+    try {
+        const resultData = await Users.findById({_id: req.params.user}).populate('result')
+        res.send(resultData)
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+//* HTTP Method => POST
+//* Route endpoint => /api/result
+const setExamResult = async (req, res) => {
+    const { score, remarks, completedDate, examId, userId } = req.body
+
+    try {
+        const resultData = await Result.create({
+            score: score,
+            remarks: remarks,
+            completedDate: completedDate,
+            $push: { exam: examId }
+        })
+        await Users.findByIdAndUpdate(userId, {
+            //* Push an object to array property in schema
+            $push: {result: resultData._id}
+        }, {
+            //* Returns the object after successful update
+            new: true
+        })
+        res.send(resultData)
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+//* HTTP Method => GET
+//* Route endpoint => /api/result/:id
+const viewExamResult = async (req, res) => {
+    try {
+        const examData = await Result.findById({_id: req.params.id}).populate('exam')
+        res.send(examData)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+module.exports = { getAllExamResult, setExamResult, viewExamResult }
