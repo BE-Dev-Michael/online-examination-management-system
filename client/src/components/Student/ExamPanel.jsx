@@ -63,6 +63,12 @@ function ConfirmationDialog(props) {
   const [, setUnanswered] = useRecoilState(unansweredQuestionState)
   const studentAnswer = useRecoilValue(studentAnswerState)
   const correctAnswer = useRecoilValue(correctAnswerState)
+  const [, setStopTimer] = useRecoilState(timerStatusState)
+
+  const forceStopTimer = () => {
+     localStorage.removeItem('timer')
+     setStopTimer(true)
+  }
 
   const forceSubmitExam = (e) => {
     e.preventDefault()
@@ -75,6 +81,7 @@ function ConfirmationDialog(props) {
     })
     const score = result.reduce((prev, curr) => prev + curr, 0)
     alert(`You scored ${score} out of ${correctAnswer.length}`)
+    forceStopTimer()
   }
 
   return(
@@ -118,6 +125,12 @@ const QuestionForm = ({ exam }) => {
     const [unanswered, setUnanswered] = useRecoilState(unansweredQuestionState)
     const isTimerStopped = useRecoilValue(timerStatusState)
     const submitButtonRef = useRef(null)
+    const [, setStopTimer] = useRecoilState(timerStatusState)
+
+    const forceStopTimer = () => {
+       localStorage.removeItem('timer')
+       setStopTimer(true)
+    }
 
     //* Auto submit the form when timer stops
     useEffect(() => {
@@ -167,6 +180,7 @@ const QuestionForm = ({ exam }) => {
       })
       const score = result.reduce((prev, curr) => prev + curr, 0)
       alert(`You scored ${score} out of ${correctAnswer.length}`)
+      forceStopTimer()
     }
 
     const submitExam = (e) => {
