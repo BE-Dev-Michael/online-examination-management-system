@@ -8,13 +8,14 @@ function AboutDevelopers() {
 
             <div className=" relative z-10 bg-gradient-to-r from-[#a1c4fc] to-[#c1e8fb]">
                 <div className="grid mx-20 xl:px-34 py-14 md:py-24 sm:py-20 xl:grid-rows-2 md:grid-rows-2 sm:grid-rows-1">
-                    <h1 className="md:mt-10 sm:mt-12 h-fit text-center font-[Cocon] text-white text-3xl">
+                    <h1 className="md:mt-10 sm:mt-12 h-fit text-center font-[Cocon] text-white text-3xl self-center">
                         About Us
                     </h1>
-                    <p className="text-white lg:px-28 md:mx-14 sm:mx-8 md:mt-6 sm:mt-8">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime explicabo perspiciatis
-                        necessitatibus natus maiores exercitationem illum quo! Eius vel asperiores incidunt inventore
-                        blanditiis, natus illum distinctio esse dolorum laborum vitae.
+                    <p className="text-white font-semibold lg:px-28 md:mx-14 sm:mx-8 md:mt-4 sm:mt-8">
+                    Our mission is to create an online examination platform that facilitates delivering online examinations efficiently. 
+                    Testdeck has a clean UI design and uncomplicated procedures so instructors and students can utilize the system with ease. The 
+                    name testdeck came from combining two English words, "test," referring to the system being an online examination platform, and 
+                    "deck," a term used to describe a collection of multiple cards, in this instance, question cards. 
                     </p>
                 </div>
             </div>
@@ -146,7 +147,7 @@ function AboutDevelopers() {
                             </p> */}
                                 <hr className="border-[#414141] border-2 rounded-md w-14 self-center mt-3"></hr>
                             </div>
-                            <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-between">
+                            <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-center">
                                 <a href="https://www.facebook.com/dharyl.simon" target="_blank">
                                   <FaFacebook className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
                                 </a>
@@ -172,7 +173,7 @@ function AboutDevelopers() {
                             </p> */}
                                 <hr className="border-[#414141] border-2 rounded-md w-14 self-center mt-3"></hr>
                             </div>
-                            <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-between">
+                            <div class="pt-8 flex mb-14 w-40 mx-auto text-gray-500 items-center justify-around">
                                 <a href="https://github.com/vncnt07" target="_blank">
                                   <FaGithub className="h-7 w-7 text-[#F1838A] hover:text-[#414141] transition-colors duration-200"/>
                                 </a>
