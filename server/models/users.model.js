@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Exams'
     }],
+    result: [{ //* Student relationship to exam result
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Result'
+    }]
 })
 
 module.exports = mongoose.model('Users', userSchema)

@@ -16,16 +16,18 @@ const getAllExamResult = async (req, res) => {
 //* HTTP Method => POST
 //* Route endpoint => /api/result
 const setExamResult = async (req, res) => {
-    const { score, remarks, completedDate, examId, userId } = req.body
+    const { score, remark, completedDate, answers, correctAnswers, examId, userId } = req.body
 
     try {
         const resultData = await Result.create({
-            score: score,
-            remarks: remarks,
-            completedDate: completedDate,
-            $push: { exam: examId }
+            score: 10,
+            remark: 'Passed',
+            completedDate: '15 May 2022 13:27',
+            answers: ['a', 'b'],
+            correctAnswers: ['a', 'b'],
+            exam: '6280d55e94a118cfa42634ee'
         })
-        await Users.findByIdAndUpdate(userId, {
+        await Users.findByIdAndUpdate('62823715dcdaa7ff6762f4d7', {
             //* Push an object to array property in schema
             $push: {result: resultData._id}
         }, {
