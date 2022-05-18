@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const examResultSchema = mongoose.Schema({
     score: Number,
-    remarks: String,
+    remark: String,
     completedDate: String,
     answers: [],
     correctAnswers: [],
