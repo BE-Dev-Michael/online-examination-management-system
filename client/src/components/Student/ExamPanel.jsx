@@ -5,6 +5,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { RiTimerLine } from "react-icons/ri";
 import { IoMdCheckmark } from 'react-icons/io'
+import { MdOutlineWarning } from 'react-icons/md'
 import logo from '../../assets/images/logo-c.png'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -20,6 +21,16 @@ const studentAnswerState = atom({
 const correctAnswerState = atom({
   key: 'correctAnswerState',
   default: []
+})
+
+const unansweredQuestionState = atom({
+  key: 'unansweredQuestionState',
+  default: 0
+})
+
+const timerStatusState = atom({
+  key: 'timerStatusState',
+  default: false
 })
 
 function ButtonChoices(props) {
@@ -48,12 +59,72 @@ function ButtonChoices(props) {
     )
 }
 
+function ConfirmationDialog(props) {
+  const [, setUnanswered] = useRecoilState(unansweredQuestionState)
+  const studentAnswer = useRecoilValue(studentAnswerState)
+  const correctAnswer = useRecoilValue(correctAnswerState)
+
+  const forceSubmitExam = (e) => {
+    e.preventDefault()
+    setUnanswered(0)
+    const result = correctAnswer.map((answer, index) => {
+      if (answer === studentAnswer[index]) {
+         return 1
+      }
+      return 0
+    })
+    const score = result.reduce((prev, curr) => prev + curr, 0)
+    alert(`You scored ${score} out of ${correctAnswer.length}`)
+  }
+
+  return(
+    <form onSubmit={forceSubmitExam}>
+      <div className="fixed inset-0 z-50">
+        <div className='absolute inset-0 bg-black opacity-50 h-screen w-screen'/>
+          <div className="relative px-4 h-screen flex items-center justify-center">
+            <div className="relative w-[40%] bg-white rounded-lg p-4 mx-4">
+              <div className="relative w-full h-[30vh] max-h-[30vh] bg-white rounded-lg overflow-auto">
+                <div class="flex h-full flex-col justify-between items-center">
+                  <MdOutlineWarning className='text-yellow-400 text-7xl'/>
+                  <p class="text-gray-800 text-xl font-bold mt-4">
+                      Confirmation
+                  </p>
+                  <p class="text-gray-600 text-sm py-2 px-6">
+                      You have ({props.count}) unanswered {props.count === 1 ? 'question. ' : 'questions '}
+                      Do you wish to continue?
+                  </p>
+                  <div class="flex items-center justify-between gap-4 w-full mt-8">
+                    <button onClick={() => setUnanswered(0)} type="button" class="py-2 px-4  bg-slate-100 hover:bg-gray-200 focus:ring-indigo-500 focus:ring-offset-indigo-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        No
+                    </button>
+                    <button type="submit" class="py-2 px-4  bg-cyan-400 hover:bg-cyan-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        Yes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </form>
+  )
+}
 const QuestionForm = ({ exam }) => {
     const counter = exam.length; //count the number of question
     const [currentQuestion, setCurrentQuestion] = useState(0) //counter for current question
     const questionList = useRef(new Array()) //* Reference for question list
     const studentAnswer = useRecoilValue(studentAnswerState)
     const correctAnswer = useRecoilValue(correctAnswerState)
+    const [unanswered, setUnanswered] = useRecoilState(unansweredQuestionState)
+    const isTimerStopped = useRecoilValue(timerStatusState)
+    const submitButtonRef = useRef(null)
+
+    //* Auto submit the form when timer stops
+    useEffect(() => {
+       if (isTimerStopped === true) {
+          submitButtonRef.current.click()
+       }
+    }, [isTimerStopped])
 
     // button for next question
     const nextQuestionHandler = () => {
@@ -82,17 +153,37 @@ const QuestionForm = ({ exam }) => {
         console.log(newCurrent)
     }
 
+    const countAnsweredQuestion = () => {
+       const count = studentAnswer.filter(answer => answer !== null || answer !== undefined)
+       return count.length
+    }
+
+    const getScore = () => {
+      const result = correctAnswer.map((answer, index) => {
+        if (answer === studentAnswer[index]) {
+           return 1
+        }
+        return 0
+      })
+      const score = result.reduce((prev, curr) => prev + curr, 0)
+      alert(`You scored ${score} out of ${correctAnswer.length}`)
+    }
+
     const submitExam = (e) => {
         e.preventDefault()
-        //test the computation of student score
-        const result = correctAnswer.map((answer, index) => {
-          if (answer === studentAnswer[index]) {
-             return 1
-          }
-          return 0
-        })
-        const score = result.reduce((prev, curr) => prev + curr, 0)
-        console.log('Score:', score);
+        console.log('submit');
+        if (isTimerStopped === true) {
+           getScore()
+           return
+        }
+
+        const answeredCount = countAnsweredQuestion()
+        if (answeredCount !== correctAnswer.length) {
+           const unansweredCount = correctAnswer.length - answeredCount
+           setUnanswered(unansweredCount)
+        } else {
+           getScore()
+        }
     }
 
     return (
@@ -127,10 +218,11 @@ const QuestionForm = ({ exam }) => {
                     <button type='button' onClick={nextQuestionHandler} className="bg-green-400 hover:bg-green-500 p-2 w-24 shadow-md rounded">Next</button>
                 </div>
                 <div className='flex justify-center mt-12 border rounded-md p-5'>
-                    <button type='submit' className='px-12 py-2 text-white bg-cyan-400 rounded-md shadow-md hover:bg-cyan-500'>Submit</button>
+                    <button ref={submitButtonRef} type='submit' className='px-12 py-2 text-white bg-cyan-400 rounded-md shadow-md hover:bg-cyan-500'>Submit</button>
                 </div>
             </div>
           </form>
+          
 
             {/* Link list */}
             <div className="xl:absolute xl:right-0 xl:top-16  flex justify-center -ml-16 xl:mt-32 pr-3">
@@ -155,10 +247,10 @@ const QuestionForm = ({ exam }) => {
     )
 }
 
-function Timer({ hoursMinSecs, isStopped }) {
+function Timer({ hoursMinSecs }) {
   const { hours = 0, minutes = 0, seconds = 60 } = hoursMinSecs;
   const [[hrs, mins, secs], setTime] = useState([hours, minutes, seconds]);
-  const [stopTimer, setStopTimer] = useState(false)
+  const [stopTimer, setStopTimer] = useRecoilState(timerStatusState)
   
 
   const tick = () => {
@@ -207,6 +299,7 @@ const ExamPanel = () => {
     const { id } = useParams()
     const [exam, setExam] = useState()
     const [correctAnswer, setCorrectAnswer] = useRecoilState(correctAnswerState)
+    const unansweredCount = useRecoilValue(unansweredQuestionState)
     
     const getTimeLimit = () => {
       const isTimerStarted = localStorage.getItem('timer')
@@ -215,6 +308,8 @@ const ExamPanel = () => {
         const mins = exam.timeLimit
         const minutes = mins % 60;
         const hours = Math.floor(mins / 60);
+        //* Uncomment this line to simulate the auto submission of form when the timer stops
+        // const hoursMinSecs = { hours: 0, minutes: 0, seconds: 10 }
         const hoursMinSecs = { hours: hours, minutes: minutes, seconds: 0 }
         localStorage.setItem('timer', JSON.stringify(hoursMinSecs))
         const timer = localStorage.getItem('timer')
@@ -227,7 +322,6 @@ const ExamPanel = () => {
       //* Decrement to fix yung pagdagdag ng 1 second kapag nirefresh yung page
       timer.seconds--
       return timer
-      // localStorage.removeItem('timer')
     }    
 
     useEffect(() => {
@@ -268,7 +362,9 @@ const ExamPanel = () => {
           </div>
          
           <QuestionForm exam={exam.questions.concat(exam.groups)} />
+          {unansweredCount > 0 ? <ConfirmationDialog count={unansweredCount}/> : ''}
          </>
+          
         }
       </>
     )
