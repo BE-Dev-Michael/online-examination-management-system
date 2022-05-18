@@ -24,5 +24,6 @@ app.use('/api/users', require(path.join(__dirname, 'routes', 'api/users')))
 app.use('/api/banks', require(path.join(__dirname, 'routes', 'api/banks')))
 app.use('/api/exams', require(path.join(__dirname, 'routes', 'api/exams')))
 app.use('/api/reports', require(path.join(__dirname, 'routes', 'api/reports')))
+app.use('/api/result', require(path.join(__dirname, 'routes', 'api/results')))
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`))
