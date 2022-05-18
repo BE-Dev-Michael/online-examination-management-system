@@ -338,6 +338,14 @@ const ExamPanel = () => {
       return timer
     }    
 
+    const getShuffledQuestions = () => {
+       //* Merged array of questions
+       const mergedQuestions = exam.questions.concat(exam.groups)
+       //* Shuffle questions
+       mergedQuestions.sort(() => Math.random() - 0.5);
+       return mergedQuestions
+    }
+
     useEffect(() => {
         const fetchExam = async () => {
             try {
@@ -375,7 +383,7 @@ const ExamPanel = () => {
               </div>
           </div>
          
-          <QuestionForm exam={exam.questions.concat(exam.groups)} />
+          <QuestionForm exam={getShuffledQuestions()} />
           {unansweredCount > 0 ? <ConfirmationDialog count={unansweredCount}/> : ''}
          </>
           
