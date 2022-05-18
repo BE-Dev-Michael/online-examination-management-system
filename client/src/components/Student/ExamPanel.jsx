@@ -10,8 +10,16 @@ import logo from '../../assets/images/logo-c.png'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import getUserData from '../Auth/authService'
+import { useNavigate } from 'react-router-dom'
 
 const EXAM_URL = `${process.env.REACT_APP_BASE_URL}/api/exams`
+const RESULT_URL = `${process.env.REACT_APP_BASE_URL}/api/result`
+
+const studentExamState = atom({
+  key: 'studentTakeExamState',
+  default: null
+})
 
 const studentAnswerState = atom({
   key: 'studentAnswerState',
@@ -44,7 +52,7 @@ function ButtonChoices(props) {
     const getChoiceValueHandler = (e) => {
        //* Set the answer of student
         const answerCopy = [...answer]
-        answerCopy[props.questionNo] = e.target.value
+        answerCopy[props.questionNo] = { answer: e.target.value, id: props.id }
         setAnswer(answerCopy)
     }
 
@@ -53,7 +61,7 @@ function ButtonChoices(props) {
             onClick={getChoiceValueHandler}
             value={props.text}
             type="button"
-            className={`p-3 rounded-xl shadow ${answer[props.questionNo] === props.text ? activeClass : 'bg-cyan-300 hover:bg-cyan-500'}`}>
+            className={`p-3 rounded-xl shadow ${answer?.[props.questionNo]?.answer === props.text ? activeClass : 'bg-cyan-300 hover:bg-cyan-500'}`}>
             {props.text}
         </button>
     )
@@ -126,7 +134,10 @@ const QuestionForm = ({ exam }) => {
     const isTimerStopped = useRecoilValue(timerStatusState)
     const submitButtonRef = useRef(null)
     const [, setStopTimer] = useRecoilState(timerStatusState)
-
+    const examData = useRecoilValue(studentExamState)
+    const dateFormat = {month: 'short', day: 'numeric', weekday: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric'}
+    const navigate = useNavigate()
+    
     const forceStopTimer = () => {
        localStorage.removeItem('timer')
        setStopTimer(true)
@@ -171,32 +182,104 @@ const QuestionForm = ({ exam }) => {
        return count.length
     }
 
-    const getScore = () => {
-      const result = correctAnswer.map((answer, index) => {
-        if (answer === studentAnswer[index]) {
-           return 1
+    const getRemark = (score, totalPoints) => {
+        //* Passing score is greater than or equal to half of the total points
+        const half = totalPoints / 2
+        if (score >= Math.round(half)) {
+          return 'Passed'
+        } else {
+          return 'Failed'
         }
-        return 0
-      })
-      const score = result.reduce((prev, curr) => prev + curr, 0)
-      alert(`You scored ${score} out of ${correctAnswer.length}`)
+    }
+
+    const getCompletedDate = () => {
+        return new Date().toLocaleString('en-US', dateFormat)
+    }
+
+    const generateResult = () => {
       forceStopTimer()
+      //* Dito mangagaling yung correct answers (Not shuffled)
+      const mergedQuestions = examData.questions.concat(examData.groups)
+      
+      //* Question IDs from exam (Not Shuffled)
+      const unshuffledIds = mergedQuestions.map(question => question._id)
+
+      //* Sort questions from exam based on sequence of student's shuffled question
+      const sortedQuestions = studentAnswer.map(data => {
+          const index = unshuffledIds.indexOf(data.id)
+          return mergedQuestions[index]
+      })
+
+      //* Compare the answer of student to correct answer
+      const result = sortedQuestions.map((question, index) => {
+         if (question.answer === studentAnswer[index].answer) {
+            return 1
+         }
+         return 0
+      })
+
+      //* Sum up the score
+      const score = result.reduce((prev, curr) => prev + curr, 0)
+      const points = mergedQuestions.map(data => data.points)
+      const totalPoints = points.reduce((prev, curr) => prev + curr, 0)
+
+      //* Get the remark. Passing score is greater than or equal to half of total points
+      const remark = getRemark(score, totalPoints)
+
+      //* Get yung date kung kelan natapos mag exam si student
+      const completedDate = getCompletedDate()
+
+      //* Get correct answers
+      const correctAnswers = sortedQuestions.map(data => data.answer)
+
+      //* Unset questions from local storage
+      localStorage.removeItem('questions')
+
+      return { 
+        score: score, 
+        remark: remark, 
+        completedDate: completedDate, 
+        answers: studentAnswer, 
+        correctAnswers: correctAnswers
+      }
+    }
+
+    const sendExamResults = async (obj) => {
+        const { score, remark, completedDate, answers, correctAnswers } = obj
+        const { _id } = await getUserData()
+        console.log(obj, examData._id, _id);
+        navigate('/student/activity')
+        // try {
+        //     const { _id } = await getUserData()
+        //     const resultData = await axios.post(RESULT_URL, {
+        //       score: score,
+        //       remark: remark,
+        //       completedDate: completedDate,
+        //       answers: answers,
+        //       correctAnswers: correctAnswers,
+        //       examId: examData._id,
+        //       userId: _id
+        //     })
+        // } catch (error) {
+          
+        // }
     }
 
     const submitExam = (e) => {
         e.preventDefault()
         console.log('submit');
         if (isTimerStopped === true) {
-           getScore()
+           generateResult()
            return
         }
 
         const answeredCount = countAnsweredQuestion()
-        if (answeredCount !== correctAnswer.length) {
-           const unansweredCount = correctAnswer.length - answeredCount
+        if (answeredCount !== examData.questions.concat(examData.groups).length) {
+           const unansweredCount = examData.questions.concat(examData.groups).length - answeredCount
            setUnanswered(unansweredCount)
         } else {
-           getScore()
+           let resultObj = generateResult()
+           sendExamResults(resultObj)
         }
     }
 
@@ -220,7 +303,7 @@ const QuestionForm = ({ exam }) => {
                         <div className="grid grid-cols-2 grid-flow-row gap-5 p-5 lg:px-20" role='group'>
 
                             {exam[currentQuestion].choices.map((choice, index) => {
-                                return <ButtonChoices key={index} questionNo={currentQuestion} text={choice}/>
+                                return <ButtonChoices id={exam[currentQuestion]._id} key={index} questionNo={currentQuestion} text={choice}/>
                             })}
                         </div>
                     </div>
@@ -311,7 +394,7 @@ function Timer({ hoursMinSecs }) {
 
 const ExamPanel = () => {
     const { id } = useParams()
-    const [exam, setExam] = useState()
+    const [exam, setExam] = useRecoilState(studentExamState)
     const [correctAnswer, setCorrectAnswer] = useRecoilState(correctAnswerState)
     const unansweredCount = useRecoilValue(unansweredQuestionState)
     
@@ -339,11 +422,20 @@ const ExamPanel = () => {
     }    
 
     const getShuffledQuestions = () => {
-       //* Merged array of questions
-       const mergedQuestions = exam.questions.concat(exam.groups)
-       //* Shuffle questions
-       mergedQuestions.sort(() => Math.random() - 0.5);
-       return mergedQuestions
+      const shuffledQuestions = localStorage.getItem('questions')
+      if (!shuffledQuestions) {
+        //* Merged array of questions
+        const mergedQuestions = exam.questions.concat(exam.groups)
+        const questions = mergedQuestions.map(data => {
+           return { _id: data._id, question: data.question, choices: data.choices }
+        })
+        //* Shuffle questions
+        questions.sort(() => Math.random() - 0.5);
+        localStorage.setItem('questions', JSON.stringify(questions))
+        console.log(questions);
+        return questions
+      }
+      return JSON.parse(localStorage.getItem('questions'))
     }
 
     useEffect(() => {
@@ -351,9 +443,8 @@ const ExamPanel = () => {
             try {
                 // change the url with the real examination url
                 const response = await axios.get(EXAM_URL.concat(`/${id}`));
+                console.log(response.data);
                 setExam(response.data)
-                const questions = response.data.questions.concat(response.data.groups)
-                setCorrectAnswer(questions.map(question => question.answer))
             } catch (error) {
                 console.log(error.response.data)
             }
@@ -364,29 +455,28 @@ const ExamPanel = () => {
     return (
       <>
         {exam &&
-        <>
+          <>
           <div className="flex justify-center ">
-              <div className="relative lg:w-3/4 md:w-3/4 w-full flex  items-center h-20 rounded-b-3xl shadow-md border">
-                  <div className="flex items-center m-10 text-cyan-500">
-                      <div className="absolute left-0 flex items-center px-5">
-                          <img src={logo} alt="logo" className="w-30 h-10 rounded object-cover" />
-                          {/* <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider">Online Inc.</h2> */}
-                      </div>
+            <div className="relative lg:w-3/4 md:w-3/4 w-full flex  items-center h-20 rounded-b-3xl shadow-md border">
+              <div className="flex items-center m-10 text-cyan-500">
+                <div className="absolute left-0 flex items-center px-5">
+                  <img src={logo} alt="logo" className="w-30 h-10 rounded object-cover" />
+                  {/* <h2 className="text-sm lg:text-1g font-bold text-slate-900 capitalize tracking-wider">Online Inc.</h2> */}
+                </div>
 
-                      <div className='absolute right-0 flex flex-row-reverse px-5'>
-                          <p className="text-lg font-medium">
-                            <Timer hoursMinSecs={getTimeLimit()}/>
-                          </p>
-                          <RiTimerLine className="w-8 h-8 " />
-                      </div>
-                  </div>
+                <div className='absolute right-0 flex flex-row-reverse px-5'>
+                  <p className="text-lg font-medium">
+                    <Timer hoursMinSecs={getTimeLimit()}/>
+                  </p>
+                  <RiTimerLine className="w-8 h-8 " />
+                </div>
               </div>
+            </div>
           </div>
          
           <QuestionForm exam={getShuffledQuestions()} />
           {unansweredCount > 0 ? <ConfirmationDialog count={unansweredCount}/> : ''}
-         </>
-          
+          </>
         }
       </>
     )
