@@ -20,14 +20,14 @@ const setExamResult = async (req, res) => {
 
     try {
         const resultData = await Result.create({
-            score: 10,
-            remark: 'Passed',
-            completedDate: '15 May 2022 13:27',
-            answers: ['a', 'b'],
-            correctAnswers: ['a', 'b'],
-            exam: '6280d55e94a118cfa42634ee'
+            score: score,
+            remark: remark,
+            completedDate: completedDate,
+            answers: answers,
+            correctAnswers: correctAnswers,
+            exam: examId
         })
-        await Users.findByIdAndUpdate('62823715dcdaa7ff6762f4d7', {
+        await Users.findByIdAndUpdate(userId, {
             //* Push an object to array property in schema
             $push: {result: resultData._id}
         }, {
