@@ -6,6 +6,8 @@ import { MdInfo } from 'react-icons/md'
 import { AiOutlineStop } from 'react-icons/ai'
 import getUserData from '../Auth/authService'
 
+import darkModeAtom from "./DarkModeComponent/darkAtom"
+import { useRecoilValue } from 'recoil'
 
 const EXAM_URL = `${ process.env.REACT_APP_BASE_URL }/api/exams`
 
@@ -15,6 +17,10 @@ function Instruction() {
   const [totalPoints, setTotalPoints] = useState(0)
   const navigate = useNavigate()
   const dateFormat = { month: 'short', day: 'numeric', weekday: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric' }
+
+  const isDarkMode = useRecoilValue(darkModeAtom)
+
+
 
   console.log(new Date().toLocaleString('en-US', dateFormat))
 
@@ -45,7 +51,7 @@ function Instruction() {
     navigate(`/student/examination/panel/${ exams._id }`)
   }
 
-
+  console.log(isDarkMode)
   return (
     <>
       {exams &&
@@ -59,10 +65,10 @@ function Instruction() {
               <p><strong>Availability: </strong>{exams.startDate} to {exams.endDate}</p>
 
               <p className="leading-6 tracking-tight whitespace-pre-line mt-3"><strong>Instruction</strong><br />
-                <div
-                  className="mb-4"
-                  dangerouslySetInnerHTML={{ __html: exams.desc }}
-                />
+                {!isDarkMode ?
+                  <div className="mb-4" dangerouslySetInnerHTML={{ __html: exams.desc }} /> :
+                  <div className="mb-4" dangerouslySetInnerHTML={{ __html: exams.desc.replace(/(<([^>]+)>)/gi, "") }} />}
+
               </p>
             </div>
 
