@@ -16,7 +16,7 @@ function ExamQuestionChoices(props) {
           <input type="radio" name="choice" /> 
           <label className='text-lg'>
             {props.choice}
-            {props.answer === props.choice ? <span className='ml-4 py-1 px-2 bg-lime-300 text-sm rounded-full'>Correct Answer</span> : ''}
+            {props.answer === props.choice ? <span className='ml-4 py-1 px-2 bg-[#6590E5] text-white text-sm rounded-full'>Correct Answer</span> : ''}
           </label>
         </div>
     </>
