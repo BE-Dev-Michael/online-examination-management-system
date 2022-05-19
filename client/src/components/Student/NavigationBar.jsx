@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 // import logo from "../../images/box.png"
 import useDarkMode from './DarkModeComponent/useDarkMode'
 
+import darkModeAtom from "./DarkModeComponent/darkAtom"
+import { useRecoilState } from 'recoil'
+
 const NavigationBar = () => {
-    const [darkMode, setDarkMode] = useState(false)
+    const [darkMode, setDarkMode] = useRecoilState(darkModeAtom)
+
     const [showSearch, setShowSearch] = useState(false)
     const [setTheme, colorTheme] = useDarkMode()
 
