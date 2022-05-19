@@ -6,6 +6,7 @@ import { MdInfo } from 'react-icons/md'
 import { AiOutlineStop } from 'react-icons/ai'
 import getUserData from '../Auth/authService'
 
+
 const EXAM_URL = `${ process.env.REACT_APP_BASE_URL }/api/exams`
 
 function Instruction() {
@@ -44,6 +45,7 @@ function Instruction() {
     navigate(`/student/examination/panel/${ exams._id }`)
   }
 
+
   return (
     <>
       {exams &&
@@ -58,7 +60,7 @@ function Instruction() {
 
               <p className="leading-6 tracking-tight whitespace-pre-line mt-3"><strong>Instruction</strong><br />
                 <div
-                  className='mb-4'
+                  className="mb-4"
                   dangerouslySetInnerHTML={{ __html: exams.desc }}
                 />
               </p>
@@ -80,14 +82,14 @@ function Instruction() {
                   {new Date() < new Date(exams.startDate) ?
                     <div className='flex gap-4'>
                       <MdInfo className='text-2xl text-green-600' />
-                      <h1 className='font-semibold'>
+                      <h1 className='font-semibold dark:text-[#e2dddd]'>
                         The exam is not yet available until {exams.startDate}
                       </h1>
                     </div>
                     :
                     <div className='flex gap-4'>
                       <AiOutlineStop className='text-2xl text-red-400' />
-                      <h1 className='font-semibold'>
+                      <h1 className='font-semibold dark:text-[#e2dddd]'>
                         The exam was closed on {exams.endDate}
                       </h1>
                     </div>
@@ -125,7 +127,7 @@ const ExamDescription = () => {
 
   return (
     <div className="flex-col justify-center h-full w-screen mx-5">
-      <div className="relative flex justify-center w-full shadow-sm border bg-white rounded-2xl">
+      <div className="relative flex justify-center w-full shadow-sm border bg-white rounded-2xl dark:bg-[#1e2027]  dark:border-[#292d35]">
         {loading ? <>Loading...</> : <Instruction />} {/* <Instruction exam={exam} />  */}
 
 
