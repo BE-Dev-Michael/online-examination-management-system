@@ -52,7 +52,7 @@ function ButtonChoices(props) {
     const getChoiceValueHandler = (e) => {
        //* Set the answer of student
         const answerCopy = [...answer]
-        answerCopy[props.questionNo] = { answer: e.target.value, id: props.id }
+        answerCopy[props.questionNo] = { id: props.id, answer: e.target.value }
         setAnswer(answerCopy)
     }
 
@@ -174,7 +174,7 @@ const QuestionForm = ({ exam }) => {
     }
 
     const countAnsweredQuestion = () => {
-       const count = studentAnswer.filter(answer => answer !== null || answer !== undefined)
+       const count = studentAnswer.filter(answer => answer !== undefined)
        return count.length
     }
 
@@ -197,18 +197,30 @@ const QuestionForm = ({ exam }) => {
       //* Dito mangagaling yung correct answers (Not shuffled)
       const mergedQuestions = examData.questions.concat(examData.groups)
       
+      //* Get shuffled questions 
+      //! Correct answers are not included here
+      const shuffledQuestions = JSON.parse(localStorage.getItem('questions'))
+
       //* Question IDs from exam (Not Shuffled)
       const unshuffledIds = mergedQuestions.map(question => question._id)
 
-      //* Sort questions from exam based on sequence of student's shuffled question
-      const sortedQuestions = studentAnswer.map(data => {
-          const index = unshuffledIds.indexOf(data.id)
+      //* Returns a new array based on the sequence of shuffled questions including correct answers
+      const newShuffledQuestions = shuffledQuestions.map(data => {
+          const index = unshuffledIds.indexOf(data._id)
           return mergedQuestions[index]
       })
 
+      //* Put a 'No answer' string if student didn't answered a specific question
+      const newStudentAnswer = shuffledQuestions.map((data, index) => {
+          if (studentAnswer[index] === undefined) {
+             return { id: data._id, answer: 'No answer' }
+          }
+          return studentAnswer[index]
+      })
+
       //* Compare the answer of student to correct answer
-      const arrayPoints = sortedQuestions.map((question, index) => {
-         if (question.answer === studentAnswer[index].answer) {
+      const arrayPoints = newShuffledQuestions.map((question, index) => {
+         if (question.answer === newStudentAnswer[index].answer) {
             //* Return points of question per correct answer
             return question.points
          }
@@ -220,6 +232,7 @@ const QuestionForm = ({ exam }) => {
       const score = arrayPoints.reduce((prev, curr) => prev + curr, 0)
       const points = mergedQuestions.map(data => data.points)
       const totalPoints = points.reduce((prev, curr) => prev + curr, 0)
+      console.log(score);
 
       //* Get the remark. Passing score is greater than or equal to half of total points
       const remark = getRemark(score, totalPoints)
@@ -228,7 +241,7 @@ const QuestionForm = ({ exam }) => {
       const completedDate = getCompletedDate()
 
       //* Get correct answers
-      const correctAnswers = sortedQuestions.map(data => data.answer)
+      const correctAnswers = newShuffledQuestions.map(data => data.answer)
 
       //* Unset questions from local storage
       localStorage.removeItem('questions')
@@ -237,7 +250,7 @@ const QuestionForm = ({ exam }) => {
         score: score, 
         remark: remark, 
         completedDate: completedDate, 
-        answers: studentAnswer, 
+        answers: newStudentAnswer, 
         correctAnswers: correctAnswers
       }
     }
@@ -246,7 +259,7 @@ const QuestionForm = ({ exam }) => {
         const { score, remark, completedDate, answers, correctAnswers } = obj
         const { _id } = await getUserData()
         console.log('Question form', obj, examData._id, _id);
-        navigate('/student/activity')
+        // navigate('/student/activity')
         // try {
         //     const { _id } = await getUserData()
         //     const resultData = await axios.post(RESULT_URL, {
