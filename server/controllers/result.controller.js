@@ -6,8 +6,10 @@ const Result = require('../models/result.model');
 //* Route endpoint => /api/result/all/:user
 const getAllExamResult = async (req, res) => {
     try {
-        const resultData = await Users.findById({_id: req.params.user}).populate('result')
-        res.send(resultData)
+        //* Get exam result by user with nested joins/populate
+        const resultByUser = await Users.findById({_id: req.params.user}).
+        populate({ path: 'result', populate: { path: 'exam', populate: { path: 'questions groups' } } })
+        res.send(resultByUser.result)
     } catch (error) {
         throw new Error(error)
     }
