@@ -9,7 +9,7 @@ import { MdOutlineWarning } from 'react-icons/md'
 import logo from '../../assets/images/logo-c.png'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import getUserData from '../Auth/authService'
 import { useNavigate } from 'react-router-dom'
 
@@ -72,6 +72,9 @@ function ConfirmationDialog(props) {
   const studentAnswer = useRecoilValue(studentAnswerState)
   const correctAnswer = useRecoilValue(correctAnswerState)
   const [, setStopTimer] = useRecoilState(timerStatusState)
+  const examData = useRecoilValue(studentExamState)
+  const dateFormat = {month: 'short', day: 'numeric', weekday: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric'}
+  const navigate = useNavigate()
 
   const forceStopTimer = () => {
      localStorage.removeItem('timer')
@@ -81,14 +84,6 @@ function ConfirmationDialog(props) {
   const forceSubmitExam = (e) => {
     e.preventDefault()
     setUnanswered(0)
-    const result = correctAnswer.map((answer, index) => {
-      if (answer === studentAnswer[index]) {
-         return 1
-      }
-      return 0
-    })
-    const score = result.reduce((prev, curr) => prev + curr, 0)
-    alert(`You scored ${score} out of ${correctAnswer.length}`)
     forceStopTimer()
   }
 
@@ -132,6 +127,7 @@ const QuestionForm = ({ exam }) => {
     const correctAnswer = useRecoilValue(correctAnswerState)
     const [unanswered, setUnanswered] = useRecoilState(unansweredQuestionState)
     const isTimerStopped = useRecoilValue(timerStatusState)
+    const resetTimer = useResetRecoilState(timerStatusState)
     const submitButtonRef = useRef(null)
     const [, setStopTimer] = useRecoilState(timerStatusState)
     const examData = useRecoilValue(studentExamState)
@@ -249,7 +245,7 @@ const QuestionForm = ({ exam }) => {
     const sendExamResults = async (obj) => {
         const { score, remark, completedDate, answers, correctAnswers } = obj
         const { _id } = await getUserData()
-        console.log(obj, examData._id, _id);
+        console.log('Question form', obj, examData._id, _id);
         navigate('/student/activity')
         // try {
         //     const { _id } = await getUserData()
@@ -271,7 +267,9 @@ const QuestionForm = ({ exam }) => {
         e.preventDefault()
         console.log('submit');
         if (isTimerStopped === true) {
-           generateResult()
+           let resultObj = generateResult()
+           resetTimer()
+           sendExamResults(resultObj)
            return
         }
 
