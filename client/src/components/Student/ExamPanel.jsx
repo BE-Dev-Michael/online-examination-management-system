@@ -211,15 +211,17 @@ const QuestionForm = ({ exam }) => {
       })
 
       //* Compare the answer of student to correct answer
-      const result = sortedQuestions.map((question, index) => {
+      const arrayPoints = sortedQuestions.map((question, index) => {
          if (question.answer === studentAnswer[index].answer) {
-            return 1
+            //* Return points of question per correct answer
+            return question.points
          }
+         //* Return 0 if incorrect answer
          return 0
       })
 
       //* Sum up the score
-      const score = result.reduce((prev, curr) => prev + curr, 0)
+      const score = arrayPoints.reduce((prev, curr) => prev + curr, 0)
       const points = mergedQuestions.map(data => data.points)
       const totalPoints = points.reduce((prev, curr) => prev + curr, 0)
 
