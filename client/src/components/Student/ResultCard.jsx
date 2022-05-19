@@ -2,19 +2,22 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 const ResultCard = ({ result }) => {
+    const mergedQuestions = result.exam.questions.concat(result.exam.groups)
+    const points = mergedQuestions.map(data => data.points)
+    const totalPoints = points.reduce((prev, curr) => prev + curr, 0)
     return (
         <div className="shadow-lg rounded-xl max-w-xs p-4 border bg-white relative overflow-hidden dark:bg-[#26292F] dark:border-none">
             <div className="w-full h-full block">
 
                 <p className="text-gray-800 text-xl font-medium mb-1 dark:text-[#e2dddd]">
-                    Midterm Examination in Programming 1
+                    {result.exam.title}
                 </p>
 
                 <div className="dark:text-[#e2dddd]">
                     <p>
                         <strong className="text-gray-500 dark:text-white">Score: </strong>
                         <strong className={`text-xl ${ result.remark === "Passed" ? 'text-green-500' : 'text-red-500' } `}>{result.score}</strong>
-                        <strong> / 60</strong>
+                        <strong> / {totalPoints}</strong>
                     </p>
 
                     <p>
@@ -24,7 +27,7 @@ const ResultCard = ({ result }) => {
 
                     <p className="mb-2">
                         <strong className="text-gray-500 dark:text-white">Completed: </strong>
-                        15 May 2022 13:27
+                        {result.completedDate}
                     </p>
                 </div>
 
