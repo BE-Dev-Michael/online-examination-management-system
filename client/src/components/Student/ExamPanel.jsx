@@ -255,25 +255,25 @@ const QuestionForm = ({ exam }) => {
       }
     }
 
-    const sendExamResults = async (obj) => {
+    const sendExamResult = async (obj) => {
         const { score, remark, completedDate, answers, correctAnswers } = obj
-        const { _id } = await getUserData()
-        console.log('Question form', obj, examData._id, _id);
-        // navigate('/student/activity')
-        // try {
-        //     const { _id } = await getUserData()
-        //     const resultData = await axios.post(RESULT_URL, {
-        //       score: score,
-        //       remark: remark,
-        //       completedDate: completedDate,
-        //       answers: answers,
-        //       correctAnswers: correctAnswers,
-        //       examId: examData._id,
-        //       userId: _id
-        //     })
-        // } catch (error) {
+      
+        try {
+            const { _id } = await getUserData()
+            const resultData = await axios.post(RESULT_URL, {
+              score: score,
+              remark: remark,
+              completedDate: completedDate,
+              answers: answers,
+              correctAnswers: correctAnswers,
+              examId: examData._id,
+              userId: _id
+            })
+            console.log(resultData);
+            navigate('/student/activity')
+        } catch (error) {
           
-        // }
+        }
     }
 
     const submitExam = (e) => {
@@ -282,7 +282,7 @@ const QuestionForm = ({ exam }) => {
         if (isTimerStopped === true) {
            let resultObj = generateResult()
            resetTimer()
-           sendExamResults(resultObj)
+           sendExamResult(resultObj)
            return
         }
 
@@ -292,7 +292,7 @@ const QuestionForm = ({ exam }) => {
            setUnanswered(unansweredCount)
         } else {
            let resultObj = generateResult()
-           sendExamResults(resultObj)
+           sendExamResult(resultObj)
         }
     }
 
