@@ -38,7 +38,7 @@ function ExamCard(props) {
         {/* <span className='text-gray-600 bg-[#C8CFCF] rounded-xl py-1 px-5 text-xs'>
           {props.noOfQuestions === 1 ? `${props.noOfQuestions} Question` : `${props.noOfQuestions} Questions`} 
         </span> */}
-        <span className={`${props.isPublished !== true ? 'bg-[#C8CFCF] text-gray-600' : 'bg-[#7CBE83] text-white'}  rounded-xl py-1 px-5 text-xs`}>
+        <span className={`${props.isPublished !== true ? 'bg-[#C8CFCF] text-gray-600' : 'bg-[#6590E5] text-white'}  rounded-xl py-1 px-5 text-xs`}>
           {props.isPublished !== true ? 'Unpublished' : 'Published'}
         </span>
       </div>
@@ -46,7 +46,7 @@ function ExamCard(props) {
         
       </div>
           
-      <div className='flex justify-center items-center rounded-[1.2rem] bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC] w-20 h-20'>
+      <div className='flex justify-center items-center rounded-[1.2rem] bg-gradient-to-r from-[#6590E5] to-[#7DD1DA] w-20 h-20'>
         <div className='text-white text-3xl'>
           {initials.map(value => value).join('').split(' ').join('').substring(0, 2)}
         </div>

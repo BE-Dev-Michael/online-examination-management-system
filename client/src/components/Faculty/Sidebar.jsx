@@ -11,7 +11,7 @@ import { HiOutlineDocumentReport } from 'react-icons/hi'
 
 function SidebarMenus(props) {
   const isSidebarVisible = useRecoilValue(sidebarState)
-  const activeClass = `w-full max-h-[92px] font-thin uppercase text-white flex ${isSidebarVisible ? 'flex-row rounded-xl' : 'flex-col gap-1 h-[92px] justify-center'} items-center p-4 my-2 transition-colors duration-200 justify-start bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC]`
+  const activeClass = `w-full max-h-[92px] font-thin uppercase text-white flex ${isSidebarVisible ? 'flex-row rounded-xl' : 'flex-col gap-1 h-[92px] justify-center'} items-center p-4 my-2 transition-colors duration-200 justify-start bg-gradient-to-r from-[#6590E5] to-[#7DD1DA]`
   const inactiveClass = `w-full max-h-[92px] font-thin uppercase text-black flex ${isSidebarVisible ? 'flex-row rounded-xl' : 'flex-col gap-1 h-[92px] justify-center'} items-center p-4 my-2 transition-colors duration-200 justify-start`
   
   return (

@@ -137,7 +137,7 @@ function Bank(props) {
           
         </div>
         
-        <div className='flex justify-center items-center rounded-[1.2rem] bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC] w-20 h-20'>
+        <div className='flex justify-center items-center rounded-[1.2rem] bg-gradient-to-r from-[#6590E5] to-[#7DD1DA] w-20 h-20'>
           <div className='text-white text-3xl'>
             {initials.map(value => value).join('').split(' ').join('').substring(0, 2)}
           </div>
