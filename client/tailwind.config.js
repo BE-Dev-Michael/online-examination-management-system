@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        'roboto': 'Roboto',
+        'mont':'Montserrat',
+      },
       screens: {
         'mobile' : {'max': '639px'}
       }
