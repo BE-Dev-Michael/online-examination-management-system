@@ -130,9 +130,9 @@ const ExamResult = () => {
                                 </p>
 
                                 <p className="mt-5 leading-6 tracking-tight whitespace-pre-line break-all" ><strong>Instructions</strong><br />
-                                    <div
-                                        dangerouslySetInnerHTML={{ __html: result.exam.desc }}
-                                    />
+                                    {!isDarkMode ?
+                                        <div className="mb-4" dangerouslySetInnerHTML={{ __html: result.exam.desc }} /> :
+                                        <div className="mb-4" dangerouslySetInnerHTML={{ __html: result.exam.desc.replace(/(<([^>]+)>)/gi, "") }} />}
                                 </p>
                             </div>
 
