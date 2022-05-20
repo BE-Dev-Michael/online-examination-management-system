@@ -2,20 +2,23 @@ import React from 'react'
 import { BsCheckLg, BsXLg } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 
+import darkModeAtom from "./DarkModeComponent/darkAtom"
+import { useRecoilValue } from 'recoil'
+
 function Choices(props) {
     return (
         <>
-          {props.correct !== props.answer ?
-            <div className={`${ props.answer === props.choice ? 'bg-red-200 dark:bg-[#FF5161]' : '' } ${ props.correct === props.choice ? 'bg-green-200 dark:bg-green-400 dark:text-gray-800' : '' } relative flex items-center text-left p-2 my-1 w-full rounded-md border dark:text-[#e2dddd] dark:border-[#4e5564]`}>
-                {props.choice}
-                {props.correct === props.choice ? <BsCheckLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
-                {props.answer === props.choice ? <BsXLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
-            </div> :
-            <div className={`${ props.answer === props.choice ? 'bg-green-200 dark:bg-green-400 dark:text-gray-800' : '' } relative flex items-center text-left p-2 my-1 w-full rounded-md border dark:text-[#e2dddd] dark:border-[#4e5564]`}>
-                {props.choice}
-                {props.correct === props.choice ? <BsCheckLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
-            </div>
-          }
+            {props.correct !== props.answer ?
+                <div className={`${ props.answer === props.choice ? 'bg-red-200 dark:bg-[#FF5161]' : '' } ${ props.correct === props.choice ? 'bg-green-200 dark:bg-green-400 dark:text-gray-800' : '' } relative flex items-center text-left p-2 my-1 w-full rounded-md border dark:text-[#e2dddd] dark:border-[#4e5564]`}>
+                    {props.choice}
+                    {props.correct === props.choice ? <BsCheckLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
+                    {props.answer === props.choice ? <BsXLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
+                </div> :
+                <div className={`${ props.answer === props.choice ? 'bg-green-200 dark:bg-green-400 dark:text-gray-800' : '' } relative flex items-center text-left p-2 my-1 w-full rounded-md border dark:text-[#e2dddd] dark:border-[#4e5564]`}>
+                    {props.choice}
+                    {props.correct === props.choice ? <BsCheckLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
+                </div>
+            }
         </>
     )
 }
@@ -46,7 +49,7 @@ function ReviewForm({ questions, result }) {
                             })}
                         </div>
 
-                         {/* student answer */}
+                        {/* student answer */}
                         <div className="p-3 dark:text-[#e2dddd]">
                             <strong>Your Answer</strong>
                             <div className="ml-4">
@@ -69,6 +72,7 @@ function ReviewForm({ questions, result }) {
 
 
 const ExamResult = () => {
+    const isDarkMode = useRecoilValue(darkModeAtom)
     const location = useLocation()
     //* Get result data
     const result = location.state.result
@@ -82,10 +86,10 @@ const ExamResult = () => {
     const unshuffledIds = mergedQuestions.map(question => question._id)
     //* Returns a new array based on the sequence of shuffled questions
     const sortedQuestions = result.answers.map(data => {
-      const index = unshuffledIds.indexOf(data.id)
-      return mergedQuestions[index]
+        const index = unshuffledIds.indexOf(data.id)
+        return mergedQuestions[index]
     })
-    
+
     // sample examination just for display
     const examination = {
         title: "Midterm Examination in Programming 1",
@@ -174,7 +178,7 @@ const ExamResult = () => {
 
                                 <p className="mt-5 leading-6 tracking-tight whitespace-pre-line break-all" ><strong>Instructions</strong><br />
                                     <div
-                                      dangerouslySetInnerHTML={{ __html: result.exam.desc }}
+                                        dangerouslySetInnerHTML={{ __html: result.exam.desc }}
                                     />
                                 </p>
                             </div>
