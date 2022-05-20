@@ -12,7 +12,7 @@ function Choices(props) {
                 <div className={`${ props.answer === props.choice ? 'bg-red-200 dark:bg-[#FF5161]' : '' } ${ props.correct === props.choice ? 'bg-green-200 dark:bg-green-400 dark:text-gray-800' : '' } relative flex items-center text-left p-2 my-1 w-full rounded-md border dark:text-[#e2dddd] dark:border-[#4e5564]`}>
                     {props.choice}
                     {props.correct === props.choice ? <BsCheckLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
-                    {props.answer === props.choice ? <BsXLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600" /> : ''}
+                    {props.answer === props.choice ? <BsXLg className="w-4 h-4 absolute right-0 mr-4 text-slate-600 dark:text-slate-100" /> : ''}
                 </div> :
                 <div className={`${ props.answer === props.choice ? 'bg-green-200 dark:bg-green-400 dark:text-gray-800' : '' } relative flex items-center text-left p-2 my-1 w-full rounded-md border dark:text-[#e2dddd] dark:border-[#4e5564]`}>
                     {props.choice}
@@ -58,7 +58,7 @@ function ReviewForm({ questions, result }) {
                         </div>
 
                         {/* correct answer */}
-                        <div className="p-3 dark:text-[#e2dddd]">
+                        <div className="pt-1 px-3 pb-3 dark:text-[#e2dddd]">
                             <strong>Correct Answer</strong>
                             <div className="ml-4">
                                 <p>{item.answer}</p>
@@ -96,7 +96,7 @@ const ExamResult = () => {
             <div className="relative flex justify-center w-full shadow-sm border rounded-2xl bg-white dark:bg-[#1e2027] dark:border-[#292d35] ">
 
                 <div className="relative lg:flex justify-center w-10/12 xl:w-6/12">
-                    <div className="flex flex-col my-5 lg:w-11/12 border p-5 rounded-sm shadow-lg dark:bg-[#26292F] dark:border-[#26292F]">
+                    <div className="flex flex-col my-5 mt-8 lg:w-11/12 border p-5 rounded-sm shadow-lg dark:bg-[#26292F] dark:border-[#26292F]">
 
                         <div className="flex-col mb-5">
 
