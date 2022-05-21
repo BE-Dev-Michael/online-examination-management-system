@@ -4,7 +4,7 @@ import axios from 'axios'
 import sidebarState from './sidebarAtom'
 import { IoAddCircleOutline, IoSearchOutline, IoClose, IoEllipsisHorizontal } from 'react-icons/io5'
 import './QuestionBanks.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import getUserData from '../Auth/authService'
 
 //* GET and POST method
@@ -20,17 +20,7 @@ const examsState = atom({
 
 function ExamCard(props) {
   const initials = [...props.title].filter(initial => initial === initial.toUpperCase())
-  const navigate = useNavigate()
-
-  const previewExam = async () => {
-    try {
-      const examData = await axios.get(EXAM_URI.concat(props._id))
-      navigate(`/faculty/exams/${examData.data._id}`)
-    } catch (error) {
-        throw new Error(error)
-    }
-  }
-
+  
   return(
     <div className="flex flex-col items-center justify-between shadow-lg rounded-[1.2rem] w-[350px] md:w-full lg:w-full p-4 bg-white relative min-h-[240px] max-h-[240px]">
       <div className='flex justify-between items-center w-full'>
@@ -51,10 +41,11 @@ function ExamCard(props) {
           {initials.map(value => value).join('').split(' ').join('').substring(0, 2)}
         </div>
       </div>
-      
-      <button onClick={previewExam} className='bg-[#7B9EBE] hover:bg-[#6e8eac] rounded-xl text-white py-2 px-5 w-full mt-5 transition-all ease-linear delay-[.4ms]'>
-        Open
-      </button>
+      <Link className='w-full' to={`/faculty/exams/${props.pos}`} state={{ id: props._id }}>
+        <button type='button' className='bg-[#7B9EBE] hover:bg-[#6e8eac] rounded-xl text-white py-2 px-5 w-full mt-5 transition-all ease-linear delay-[.4ms]'>
+          Open
+        </button>
+      </Link>
     </div>
   )
 }
@@ -106,8 +97,8 @@ function Exams() {
         
         <div className="relative w-full h-full p-5 mb-24">
           <div className="grid grid-rows-2 gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center items-center ease-in-out duration-300">
-          {exams.map(exam => {
-              return <ExamCard _id={exam.id} key={exam.id} title={exam.title} noOfQuestions={exam.questions.length + exam.groups.length} isPublished={exam.isPublished}/>
+          {exams.map((exam, index) => {
+              return <ExamCard _id={exam.id} pos={index+1} key={exam.id} title={exam.title} noOfQuestions={exam.questions.length + exam.groups.length} isPublished={exam.isPublished}/>
           })}
           </div>
         </div> 
