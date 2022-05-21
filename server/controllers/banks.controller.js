@@ -68,6 +68,18 @@ const addQuestion = async (req, res) => {
     }
 }
 
+//* HTTP Method => GET
+//* Route endpoint => /api/banks/question/:id
+const getQuestion = async (req, res) => {
+    try {
+        const questionData = await Questions.findById({ _id: req.params.id })
+        res.status(200).send(questionData)
+    } catch (error) {
+        console.error(error)
+        res.status(500)
+    }
+}
+
 //* HTTP Method => PATCH
 //* Route endpoint => /api/banks/question/:id
 const updateQuestion = async (req, res) => {
@@ -127,4 +139,13 @@ const deleteQuestionBank = (req, res) => {
     res.send('DELETE')
 }
 
-module.exports = { getAllQuestionBanks, getQuestions, addQuestion, updateQuestion, addQuestionBank, updateQuestionBank, deleteQuestionBank }
+module.exports = { 
+    getAllQuestionBanks, 
+    getQuestions, 
+    addQuestion,
+    getQuestion, 
+    updateQuestion, 
+    addQuestionBank, 
+    updateQuestionBank, 
+    deleteQuestionBank 
+}

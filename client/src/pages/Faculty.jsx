@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../components/Faculty/Dashboard'
 import QuestionBanks from '../components/Faculty/QuestionBanks'
 import Questions from '../components/Faculty/Questions'
+import UpdateQuestionForm from '../components/Faculty/UpdateQuestionForm'
 import Exams from '../components/Faculty/Exams'
 import ExamPreview from '../components/Faculty/ExamPreview'
 import ExamForm from '../components/Faculty/ExamForm'
@@ -49,6 +50,7 @@ function Faculty() {
               <Route path="dashboard" element={<Dashboard/>} />
               <Route path="banks" element={<QuestionBanks/>} /> 
               <Route path="banks/:id" element={<Questions/>} />
+              <Route path="question/edit/:id" element={<UpdateQuestionForm/>} />
               <Route path="exams" element={<Exams/>} />
               <Route path="exams/:id" element={<ExamPreview/>} />
               <Route path="exams/form" element={<ExamForm/>} />

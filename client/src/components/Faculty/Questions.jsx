@@ -7,7 +7,7 @@ import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
 import './QuestionBanks.css'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { FaRegEdit } from 'react-icons/fa'
 
 const BANK_URI = `${process.env.REACT_APP_BASE_URL}/api/banks/`
@@ -246,7 +246,9 @@ function QuestionCard(props) {
             <h1 className='font-semibold'>{props.points === 1 ? `${props.points}pt` : `${props.points}pts`}</h1>
           </header>
           <div className='w-full flex justify-end items-center pr-8 mt-5'>
-            <button><FaRegEdit/></button> 
+            <Link to={`/faculty/question/edit/${props.pos}`} state={{ id: props.id }}>
+              <button type='button'><FaRegEdit/></button> 
+            </Link>
           </div>
           <div className='w-full pl-4 pb-8 pt-1'>
             <h1 className='font-semibold'>{props.question}</h1>
@@ -287,9 +289,11 @@ function QuestionsMain(props) {
           <h1 className='text-center text-white text-2xl'>You haven't added questions yet.</h1>
           :
           <div className='flex flex-col gap-4'>
-            {props.bankData.questions.map(data => {
+            {props.bankData.questions.map((data, index) => {
               return <QuestionCard 
                       key={data._id}
+                      id={data._id}
+                      pos={index+1}
                       question={data.question} 
                       choices={data.choices}
                       points={data.points}
@@ -302,14 +306,6 @@ function QuestionsMain(props) {
           </div>}
         </div>
       </div>
-      {/* <div className='relative w-full h-auto lg:w-[20%] min-w-[263px]'>
-        <div className='w-full lg:w-[260px] div-add-question mx-auto'> 
-          <button onClick={() => setIsFormVisible(!isFormVisible)} className='btn-add-question relative flex mx-auto justify-center items-center shadow-lg rounded-2xl px-7 py-4 font-semibold min-w-[260px]'>
-            <IoAddCircleOutline className='absolute left-6 text-white text-4xl'/>
-            <span className='ml-20 mr-3'>Add a question</span>
-          </button>
-        </div>
-      </div> */}
     </div>
    )
 }
