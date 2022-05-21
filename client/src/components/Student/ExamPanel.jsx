@@ -476,7 +476,7 @@ const ExamPanel = () => {
                   <img src={logo} alt="logo" className="w-30 h-10 rounded object-cover" />
                 </div>
 
-                <div className='absolute right-0 flex flex-row-reverse px-5'>
+                <div className='absolute right-0 flex flex-row-reverse px-5 items-center'>
                   <p className="text-lg font-medium font-roboto">
                     <Timer hoursMinSecs={getTimeLimit()} />
                   </p>
