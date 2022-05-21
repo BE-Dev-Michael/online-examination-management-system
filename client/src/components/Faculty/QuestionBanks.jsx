@@ -295,15 +295,6 @@ function QuestionBanks() {
     getBanks()
   }, [])
 
-  const openBank = async (id) => {
-      try {
-          const bank = await axios.get(BANK_URI.concat(id))
-          navigate(`/faculty/banks/${bank.data._id}`)
-      } catch (error) {
-          throw new Error(error)
-      }
-      
-  }
   return (
     <div className='flex flex-col gap-4'>
       <div className='w-full px-5'>
