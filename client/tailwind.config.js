@@ -8,6 +8,7 @@ module.exports = {
       fontFamily:{
         'roboto': 'Roboto',
         'mont':'Montserrat',
+        'lato': 'Lato'
       },
       screens: {
         'mobile' : {'max': '639px'}
