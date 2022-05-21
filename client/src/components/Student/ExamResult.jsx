@@ -116,7 +116,7 @@ const ExamResult = () => {
                             <div className="dark:text-[#e2dddd]">
                                 <p>
                                     <strong >Remark: </strong>
-                                    <strong className="text-xl text-green-500">{result.remark}</strong>
+                                    <strong className={`text-xl ${ result.remark === "Passed" ? 'text-green-500' : 'text-red-500' } `}>{result.remark}</strong>
                                 </p>
 
                                 <p>

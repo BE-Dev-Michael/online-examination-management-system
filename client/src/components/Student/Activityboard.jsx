@@ -23,13 +23,11 @@ const Activityboard = () => {
             <div className='flex justify-center py-5'>
                 {examResult && <>
                     {Object.keys(examResult).length !== 0 ?
-                        <>
-                            <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-cols-1 gap-10 px-5 ">
-                                {examResult.map((result, index) => {
-                                    return <ResultCard result={result} key={result._id} ></ResultCard>
-                                })}
-                            </div>
-                        </>
+                        <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-cols-1 gap-10 px-5 ">
+                            {examResult.map((result, index) => {
+                                return <ResultCard result={result} key={result._id} ></ResultCard>
+                            })}
+                        </div>
                         : <div className="flex text-lg font-lato h-96 items-center justify-center dark:text-[#e2dddd]">
                             <p>There are no exams to display. </p>
                         </div>}
