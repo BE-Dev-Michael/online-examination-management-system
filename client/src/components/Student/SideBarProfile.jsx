@@ -21,7 +21,7 @@ function SidebarMenus(props) {
 
 const SideBarProfile = () => {
     const [userData, setUserData] = useState({})
-    const [activeLink, setActiveLink] = useState({ isActive: false, index: 0 })
+    const [activeLink, setActiveLink] = useState({ isActive: true, index: 0 })
     const sidebar = [
         {
             menuName: 'Exams',

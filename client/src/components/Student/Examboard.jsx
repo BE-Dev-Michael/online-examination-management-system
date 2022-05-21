@@ -64,23 +64,28 @@ const Examboard = () => {
             <div className="relative w-full shadow-sm border bg-white rounded-2xl dark:bg-[#1e2027] dark:border-[#292d35]">
                 <p className="ml-9 mt-4 text-xl font-bold text-gray-600 dark:text-gray-300">Available Exams</p>
                 <div className='flex justify-center'>
-                    <div className="grid xl:grid-cols-2 2xl:grid-cols-3 grid-cols-1 gap-10 p-5 ">
-                        {/* This filter is to filter and get the inputed code */}
-                        {exams.map((exam, index) => {
-                            return <ExamCard
-                                key={exam._id}
-                                id={exam._id}
-                                title={exam.title}
-                                instruction={exam.desc}
-                                timeLimit={exam.timeLimit}
-                                startDate={exam.startDate}
-                                endDate={exam.endDate}
-                                examCode={exam.examCode}
-                                questions={exam.questions.concat(exam.groups)}
-                            />
-                        })}
-
-                    </div>
+                    {Object.keys(exams).length !== 0 ?
+                        <div className="grid xl:grid-cols-2 2xl:grid-cols-3 grid-cols-1 gap-10 p-5 ">
+                            {/* This filter is to filter and get the inputed code */}
+                            {exams.map((exam, index) => {
+                                return <ExamCard
+                                    key={exam._id}
+                                    id={exam._id}
+                                    title={exam.title}
+                                    instruction={exam.desc}
+                                    timeLimit={exam.timeLimit}
+                                    startDate={exam.startDate}
+                                    endDate={exam.endDate}
+                                    examCode={exam.examCode}
+                                    questions={exam.questions.concat(exam.groups)}
+                                />
+                            })}
+                        </div> :
+                        <div className="flex text-lg font-lato h-96 items-center justify-center dark:text-[#e2dddd]">
+                            <p className='text-center'>There are no exams to display. <br />
+                                Enter the exam code to get an exam.</p>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
