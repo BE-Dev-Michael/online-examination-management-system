@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 
@@ -137,7 +137,8 @@ function ExamDetails(props) {
     )
 }
 function ExamPreview() {
-  const { id } = useParams()
+  const location = useLocation()
+  const id = location.state.id
   const [examData, setExamData] = useState()
 
   useEffect(() => {
