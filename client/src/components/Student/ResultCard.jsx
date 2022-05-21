@@ -6,8 +6,8 @@ const ResultCard = ({ result }) => {
     const points = mergedQuestions.map(data => data.points)
     const totalPoints = points.reduce((prev, curr) => prev + curr, 0)
     return (
-        <div className="shadow-lg rounded-xl max-w-xs p-4 border bg-white relative overflow-hidden dark:bg-[#26292F] dark:border-none">
-            <div className="w-full h-full block">
+        <div className="shadow-lg rounded-xl max-w-sm p-4 border bg-white relative overflow-hidden dark:bg-[#26292F] dark:border-none">
+            <div className="relative w-full h-full block">
 
                 <p className="text-gray-800 text-xl font-medium mb-1 dark:text-[#e2dddd]">
                     {result.exam.title}
@@ -31,13 +31,12 @@ const ResultCard = ({ result }) => {
                     </p>
                 </div>
 
-
-
                 <Link to={`/student/activity/result`} state={{ result: result }}>
                     <button type="button" className="py-2 px-4  bg-[#7B9EBE] hover:bg-[#6e8eac] focus:ring-[#7B9EBE] focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg ">
                         View
                     </button>
                 </Link>
+
             </div>
         </div>
     )
