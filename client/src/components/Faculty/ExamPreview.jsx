@@ -94,39 +94,41 @@ function ExamDetails(props) {
             className='mb-4'
             dangerouslySetInnerHTML={{__html: props.desc}}
           />
-          <div className='flex flex-col mb-4'>
-            <h1 className='font-bold'>Questions</h1>
-            <p>{mergedQuestions.length}</p>
-          </div>
-          <div className='flex flex-col mb-4'>
-            <h1 className='font-bold'>Points</h1>
-            <p>
-              {totalPoints}
-            </p>
-          </div>
-          <div className='flex flex-col mb-4'>
-            <h1 className='font-bold'>Time Limit</h1>
-            <p>{props.timeLimit} minutes</p>
-          </div>
-          <div className='flex flex-col mb-4'>
-            <h1 className='font-bold'>Available from</h1>
-            <p>{props.startDate}</p>
-          </div>
-          <div className='flex flex-col mb-4'>
-            <h1 className='font-bold'>Until</h1>
-            <p>{props.endDate}</p>
-          </div>
-          <div className='flex justify-between'>
-            <div className='flex flex-col'>
-              <h1 className='font-bold'>Exam Code</h1>
-              <p>{props.examCode}</p>
+          <div className='grid grid-cols-3 grid-rows-2'>
+            <div className='flex flex-col mb-4'>
+              <h1 className='font-bold'>Questions</h1>
+              <p>{mergedQuestions.length}</p>
             </div>
-            <div className='flex gap-4'>
-              <button onClick={() => setPreviewQuestions(!previewQuestions)} className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>Preview Questions</button>
-              <button onClick={publishExam} className={`px-5 py-2 rounded-lg text-white ${isPublished === true ? 'bg-amber-300' : 'bg-[#7CBE83]'} `}>
-                {isPublished === true ? 'Unpublish' : 'Publish'}
-              </button>
+            <div className='flex flex-col mb-4'>
+              <h1 className='font-bold'>Points</h1>
+              <p>
+                {totalPoints}
+              </p>
             </div>
+            <div className='flex flex-col mb-4'>
+              <h1 className='font-bold'>Time Limit</h1>
+              <p>{props.timeLimit} minutes</p>
+            </div>
+            <div className='flex flex-col mb-4'>
+              <h1 className='font-bold'>Available from</h1>
+              <p>{props.startDate}</p>
+            </div>
+            <div className='flex flex-col mb-4'>
+              <h1 className='font-bold'>Until</h1>
+              <p>{props.endDate}</p>
+            </div>
+            <div className='flex justify-between'>
+              <div className='flex flex-col'>
+                <h1 className='font-bold'>Exam Code</h1>
+                <p>{props.examCode}</p>
+              </div>
+            </div>
+          </div>
+          <div className='flex justify-end gap-4 mt-5'>
+            <button onClick={() => setPreviewQuestions(!previewQuestions)} className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>Preview Questions</button>
+            <button onClick={publishExam} className={`px-5 py-2 rounded-lg text-white ${isPublished === true ? 'bg-amber-300' : 'bg-[#7CBE83]'} `}>
+              {isPublished === true ? 'Unpublish' : 'Publish'}
+            </button>
           </div>
         </div>
          {/* //* Merging questions directly from exam and from pulling questions from bank */}
