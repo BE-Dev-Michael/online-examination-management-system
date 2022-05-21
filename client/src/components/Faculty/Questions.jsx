@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -8,7 +7,7 @@ import { IoAddCircleOutline, IoClose } from 'react-icons/io5'
 import './QuestionBanks.css'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { FaRegEdit } from 'react-icons/fa'
 
 const BANK_URI = `${process.env.REACT_APP_BASE_URL}/api/banks/`
@@ -315,7 +314,8 @@ function QuestionsMain(props) {
    )
 }
 function Questions() {
-    const { id }  = useParams()
+    const location = useLocation()
+    const id = location.state.id
     const [bankData, setBankData] = useState()
     const setBankId = useSetRecoilState(bankIdState)
     const [, setIsFormVisible] = useRecoilState(questionFormState)

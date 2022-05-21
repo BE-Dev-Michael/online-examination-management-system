@@ -5,7 +5,7 @@ import { IoAddCircleOutline, IoSearchOutline, IoClose, IoEllipsisHorizontal } fr
 import { IoMdArchive } from 'react-icons/io'
 import { FiEdit3 } from 'react-icons/fi'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import sidebarState from './sidebarAtom'
 import getUserData from '../Auth/authService'
 
@@ -142,10 +142,11 @@ function Bank(props) {
             {initials.map(value => value).join('').split(' ').join('').substring(0, 2)}
           </div>
         </div>
-
-        <button onClick={props.open} className='bg-[#7B9EBE] hover:bg-[#6e8eac] rounded-xl text-white py-2 px-5 w-full mt-5 transition-all ease-linear delay-[.4ms]'>
-          Open
-        </button>
+        <Link className='w-full' to={`/faculty/banks/${props.pos}`} state={{ id: props._id }}>
+          <button type='button' className='bg-[#7B9EBE] hover:bg-[#6e8eac] rounded-xl text-white py-2 px-5 w-full mt-5 transition-all ease-linear delay-[.4ms]'>
+            Open
+          </button>
+        </Link>
       </div>
   )
   
@@ -321,8 +322,8 @@ function QuestionBanks() {
      
       <div className="relative w-full h-full p-5 mb-24">
         <div className="grid grid-rows-2 gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center items-center ease-in-out duration-300">
-        {banks.map(bank => {
-            return <Bank _id={bank.id} open={() => openBank(bank.id)} key={bank.id} title={bank.title} noOfQuestions={bank.questions.length}/>
+        {banks.map((bank, index) => {
+            return <Bank _id={bank.id} pos={index+1} key={bank.id} title={bank.title} noOfQuestions={bank.questions.length}/>
         })}
         </div>
       </div> 
