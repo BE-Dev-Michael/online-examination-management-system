@@ -61,7 +61,7 @@ function ButtonChoices(props) {
       onClick={getChoiceValueHandler}
       value={props.text}
       type="button"
-      className={`font-mont p-3 rounded-xl shadow-sm ${ answer?.[props.questionNo]?.answer === props.text ? activeClass : 'bg-white hover:bg-cyan-500 border-2 border-cyan-300' }`}>
+      className={`font-mont p-3 rounded-xl shadow-sm ${ answer?.[props.questionNo]?.answer === props.text ? activeClass : 'bg-white hover:bg-cyan-300 border-2 border-cyan-300' }`}>
       {props.text}
     </button>
   )
@@ -336,7 +336,7 @@ const QuestionForm = ({ exam }) => {
 
       {/* Link list */}
       <div className="xl:absolute xl:right-0 xl:top-16  flex justify-center -ml-16 xl:mt-32 pr-3">
-        <div className="relative  xl:w-44 w-3/5 xl:h-48 h-28 overflow-y-scroll px-2 my-5 border">
+        <div className="relative  xl:w-44 w-3/5 xl:h-48 h-28 overflow-y-scroll px-2 my-5 border bg-white">
           <ul>
             {Object.keys(exam).map((item, index) => {
               return <div className='flex gap-4 items-center'>
@@ -347,7 +347,7 @@ const QuestionForm = ({ exam }) => {
                   key={index}
                   value={index}>Question {index + 1}
                 </li>
-                {studentAnswer[index] ? <IoMdCheckmark className='text-green-500' /> : ''}
+                {studentAnswer[index] ? <IoMdCheckmark className='absolute text-green-500 right-3' /> : ''}
               </div>
             })}
           </ul>
@@ -466,7 +466,7 @@ const ExamPanel = () => {
   }, [])
 
   return (
-    <>
+    <div className='bg-white h-full xl:h-screen'>
       {exam &&
         <>
           <div className="flex justify-center ">
@@ -490,7 +490,7 @@ const ExamPanel = () => {
           {unansweredCount > 0 ? <ConfirmationDialog count={unansweredCount} /> : ''}
         </>
       }
-    </>
+    </div>
   )
 }
 
