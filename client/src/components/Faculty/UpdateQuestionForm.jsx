@@ -116,6 +116,8 @@ function UpdateQuestionForm() {
     e.preventDefault()
     try {
       await axios.patch(QUESTION_URL.concat(`/${id}`), { questionData: questionData })
+      resetQuestionData()
+      resetNumOfChoices()
       navigate(-1)
     } catch (error) {
       console.error(error);
