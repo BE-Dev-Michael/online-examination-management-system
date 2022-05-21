@@ -81,13 +81,13 @@ function Header() {
         </button>
         <div className='flex gap-4 items-center'>
           <h1 className='font-semibold text-md text-white'>{email}</h1>
-          <a ref={profileRef} onClick={() => setIsDropdownVisible(!isDropdownVisible)} href="#" className="block relative">
+          <a ref={profileRef} onClick={() => setIsDropdownVisible(!isDropdownVisible)} className="block relative cursor-pointer">
             <img alt="profil" src="https://avatarfiles.alphacoders.com/275/275525.jpg" className="mr-0 md:mr-7 object-cover rounded-full h-10 w-10 "/>
           </a>
         </div>
       </div>
       {isDropdownVisible ? 
-        <div className='absolute z-20 right-14 w-0 h-0 border-l-[10px] border-l-transparent border-r-transparent border-r-[10px] border-b-[15px] border-b-[#7B9EBE]'></div>
+        <div className='absolute z-20 right-14 w-0 h-0 border-l-[10px] border-l-transparent border-r-transparent border-r-[10px] border-b-[15px] border-b-[#ffffff]'></div>
       : ''}
       {isDropdownVisible ? <ProfileMenu menuRef={menuRef}/> : ''}
     </div>
