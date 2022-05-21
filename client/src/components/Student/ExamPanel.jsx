@@ -466,7 +466,7 @@ const ExamPanel = () => {
   }, [])
 
   return (
-    <div className='bg-white h-full xl:h-screen'>
+    <div className='bg-white'>
       {exam &&
         <>
           <div className="flex justify-center ">
