@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
+import { FaRegEdit } from 'react-icons/fa'
 
 const EXAM_URI = `${process.env.REACT_APP_BASE_URL}/api/exams/`
 
@@ -125,10 +126,16 @@ function ExamDetails(props) {
             </div>
           </div>
           <div className='flex justify-end gap-4 mt-5'>
-            <button onClick={() => setPreviewQuestions(!previewQuestions)} className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>Preview Questions</button>
-            <button onClick={publishExam} className={`px-5 py-2 rounded-lg text-white ${isPublished === true ? 'bg-amber-300' : 'bg-[#7CBE83]'} `}>
+            <button onClick={publishExam} className={`px-5 py-2 rounded-lg text-white ${isPublished === true ? 'bg-yellow-500' : 'bg-[#7CBE83]'} `}>
               {isPublished === true ? 'Unpublish' : 'Publish'}
             </button>
+            <button onClick={() => setPreviewQuestions(!previewQuestions)} className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>Preview</button>
+            <Link to={`/faculty/exams/${props.pos}/edit`} state={{ id: props.id }}>
+              <button type='button' className='flex gap-1 items-center px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>
+                <FaRegEdit className='text-white'/>
+                <span>Edit</span>
+              </button> 
+            </Link>
           </div>
         </div>
          {/* //* Merging questions directly from exam and from pulling questions from bank */}
@@ -141,6 +148,7 @@ function ExamDetails(props) {
 function ExamPreview() {
   const location = useLocation()
   const id = location.state.id
+  const pos = location.state.pos
   const [examData, setExamData] = useState()
 
   useEffect(() => {
@@ -161,6 +169,7 @@ function ExamPreview() {
         {examData && 
           <ExamDetails 
               id={id}
+              pos={pos}
               title={examData.title}
               desc={examData.desc}
               timeLimit={examData.timeLimit}

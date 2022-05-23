@@ -1,5 +1,6 @@
 const Users = require('../models/users.model');
 const Exams = require('../models/exams.model');
+const Groups = require('../models/group.model');
 const Banks = require('../models/banks.model');
 const Questions = require('../models/questions.model');
 
@@ -87,7 +88,7 @@ const getExamByStudent = async (req, res) => {
 //* Route endpoint => /api/exams/:id
 const viewExam = async (req, res) => {
     try {
-        const examData = await Exams.findById({_id: req.params.id}).populate('questions').populate('groups')
+        const examData = await Exams.findById({_id: req.params.id}).populate('questions').populate('groups').populate('groupDetails')
         res.send(examData)
     } catch (error) {
         throw new Error(error)
@@ -179,32 +180,54 @@ const addQuestion = async (req, res) => {
 }
 
 //* HTTP Method => POST
+//* Route endpoint => /api/exams/group
+const getQuestionGroups = async (req, res) => {
+    const { groupIds } = req.body
+    try {
+        const groupData = await Groups.find({_id: groupIds}).populate('questions')
+        res.send(groupData)
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+//* HTTP Method => POST
 //* Route endpoint => /api/exams/group/:id
 const addQuestionGroup = async (req, res) => {
+    //* Exam id
     const id = req.params.id
-    // const { question, choices, answer, points } = req.body
-    const questionIds = 
-    ["627107367a0ba49f45c404a0",
-    "62710fb84f85eb437b38770f",
-    "627111b74f85eb437b387734"]
+    const { groupName, noOfQuestions, bankName, questions } = req.body
+   
     try {
-        const groupByExam = await Exams.findByIdAndUpdate(id, {
+        const groupData = await Groups.create({
+            groupName: groupName,
+            noOfQuestions: noOfQuestions,
+            bankName: bankName,
+            questions: questions
+        })
+        await Exams.findByIdAndUpdate(id, {
             //* Push an object to array property in schema
-            $push: {groups: questionIds}
+            $push: {groupDetails: groupData._id}
         }, {
             //* Returns the object after successful update
             new: true
         })
-        // const deleteObj = await Exams.updateOne({
-        //     title: 'English Grammar'
-        // }, {
-        //     $unset: {
-        //         questions: ''
-        //     }
-        // })
-        
-        res.send(groupByExam)
-        
+        const populatedGroupQuestions = await Groups.findById({_id: groupData._id}).populate('questions')
+        res.send(populatedGroupQuestions)
+    } catch (error) {
+        res.status(500)
+        throw new Error(error)
+    }
+}
+
+//* HTTP Method => PATCH
+//* Route endpoint => /api/exams/group/:id
+const updateQuestionGroup = async (req, res) => {
+    const id = req.params.id
+    const { groupDetails } = req.body
+    try {
+        const groupData = await Groups.findByIdAndUpdate(id, groupDetails)
+        res.send(groupData)
     } catch (error) {
         res.status(500)
         throw new Error(error)
@@ -258,11 +281,37 @@ const publishExam = async (req, res) => {
 //* HTTP Method => PATCH
 //* Route endpoint => /api/exams/:id
 const updateExam = async (req, res) => {
-    const { title } = req.body
-   
+    const { title, desc, timeLimit, startDate, endDate, examCode, questions, groups, isPublished } = req.body
+    
     try {
-        const newData = await Exams.findByIdAndUpdate(req.params.id, { examCode: 'sampleExamCode' })
-        res.status(200).send(await Exams.findById(newData.examCode))
+        await Exams.findByIdAndUpdate(req.params.id, {
+            title: title,
+            desc: desc,
+            timeLimit: timeLimit,
+            startDate: startDate,
+            endDate: endDate,
+            examCode: examCode,
+            isPublished: isPublished
+        })
+        //* Get all question ids by question group associated in an exam
+        const groupDataByExam = await Exams.findById({_id: req.params.id}).populate('groupDetails')
+        let groupQuestionIds = groupDataByExam.groupDetails.map(data => data.questions)
+        let mergedQuestions = []
+        const temp = groupQuestionIds.map(data => {
+            return data.map(id => mergedQuestions.push(id))
+        })
+        //* Delete old question ids
+        await Exams.updateOne({
+            _id: req.params.id,
+        }, {
+            $unset: {
+                groups: ''
+            }
+        })
+        //* Insert new question ids
+        await Exams.findByIdAndUpdate(req.params.id, {groups: mergedQuestions})
+        
+        res.status(200).send('updated')
     } catch (error) {
         console.error(error)
         res.status(500)
@@ -284,7 +333,9 @@ module.exports = {
     viewExam,
     pullQuestionsFromBank, 
     addQuestion, 
+    getQuestionGroups,
     addQuestionGroup, 
+    updateQuestionGroup,
     addExam, 
     publishExam,
     updateExam, 

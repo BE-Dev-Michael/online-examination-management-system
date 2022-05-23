@@ -41,7 +41,7 @@ function ExamCard(props) {
           {initials.map(value => value).join('').split(' ').join('').substring(0, 2)}
         </div>
       </div>
-      <Link className='w-full' to={`/faculty/exams/${props.pos}`} state={{ id: props._id }}>
+      <Link className='w-full' to={`/faculty/exams/${props.pos}`} state={{ id: props._id, pos: props.pos}}>
         <button type='button' className='bg-[#7B9EBE] hover:bg-[#6e8eac] rounded-xl text-white py-2 px-5 w-full mt-5 transition-all ease-linear delay-[.4ms]'>
           Open
         </button>
