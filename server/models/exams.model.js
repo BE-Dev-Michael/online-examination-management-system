@@ -16,6 +16,10 @@ const examSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Questions'
     }],
+    groupDetails: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Groups'
+    }],
     isPublished: Boolean
 })
 
