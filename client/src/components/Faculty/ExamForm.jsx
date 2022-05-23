@@ -18,6 +18,7 @@ import getUserData from '../Auth/authService';
 const EXAMS_URI = `${process.env.REACT_APP_BASE_URL}/api/exams`
 const EXAM_URI = `${process.env.REACT_APP_BASE_URL}/api/exams/`
 const BANKS_URI = `${process.env.REACT_APP_BASE_URL}/api/banks`
+const GROUP_URI = `${process.env.REACT_APP_BASE_URL}/api/exams/group`
 
 const richTextState = atom({
     key: 'examRichTextState',
@@ -34,6 +35,7 @@ const examFormDataState = atom({
         examCode: null,
         questions: [],
         groups: [],
+        groupDetails: [],
         isPublished: false
     }
 })
@@ -70,7 +72,7 @@ const questionGroupDataState = atom({
   default: {
     groupName: null,
     noOfQuestions: null,
-    questionBank: null,
+    bankName: null,
     questions: null
   }
 })
@@ -173,7 +175,7 @@ function ExamSelectBankModal() {
         const fetchedBanks = await axios.post(EXAMS_URI.concat(`/pull/${clickedBank}`), 
         {limit: parseInt(questionGroupData.noOfQuestions)})
         console.log(fetchedBanks.data);
-        setQuestionGroupData({...questionGroupData, questionBank: fetchedBanks.data.title,
+        setQuestionGroupData({...questionGroupData, bankName: fetchedBanks.data.title,
         questions: fetchedBanks.data.questions})
         setSelectedBank(clickedBank)
         setIsModalVisible(false)
@@ -253,12 +255,24 @@ function ExamQuestionGroup() {
     setQuestionGroupData({...questionGroupData, [name]: value})
   }
 
-  const createQuestionGroup = () => {
-    setQuestionGroup([...questionGroup, questionGroupData])
+  const createQuestionGroup = async () => {
+    const newGroupData = await axios.post(GROUP_URI.concat('/add'), questionGroupData)
+    console.log(newGroupData.data)
+    //* Set question group details for instant preview of question group
+    const copyGroupData = [...questionGroup]
+    copyGroupData.push(newGroupData.data)
+    setQuestionGroup(copyGroupData)
+    //* Set question group details
+    let groupDetailsCopy = [...formData.groupDetails]
+    groupDetailsCopy.push(newGroupData.data._id)
+    
+    //* Set question ids
     let formQuestionIds = questionGroupData.questions.map(question => question._id)
     let groupsCopy = [...formData.groups]
     groupsCopy.push(...formQuestionIds)
-    setFormData({...formData, groups: groupsCopy})
+
+    //* Set question group ids and group details id
+    setFormData({...formData, groups: groupsCopy, groupDetails: groupDetailsCopy})
     setSelectedBank(null)
     setIsCreateGroup(!isCreateGroup)
   }
@@ -276,7 +290,7 @@ function ExamQuestionGroup() {
         {selectedBank !== null ? 
         <span>Questions will be randomly pulled from:  
           <a className='cursor-pointer text-[#7B9EBC] underline underline-offset-1'>
-            {questionGroupData.questionBank}
+            {questionGroupData.bankName}
           </a>
         </span>
         : ''}
@@ -370,7 +384,7 @@ function QuestionGroupCard(props) {
           <h1 className='font-bold'>{props.noOfQuestions === '1' ? `${props.noOfQuestions} Question` : `${props.noOfQuestions} Questions`}</h1>
         </header>
         <div className='w-full p-3 flex justify-between'>
-         <span>Questions will be randomly pulled from: {props.questionBank}</span>
+         <span>Questions will be randomly pulled from: {props.bankName}</span>
          <span><a onClick={() => setViewQuestionGroup({...viewQuestionGroup, isVisible: true, index: props.index})} className='cursor-pointer text-[#7B9EBC] text-lg underline underline-offset-1'>View</a></span>
         </div>
       </div>
@@ -388,7 +402,7 @@ function ExamQuestions() {
                       index={index}
                       groupName={group.groupName} 
                       noOfQuestions={group.noOfQuestions}
-                      questionBank={group.questionBank}/>
+                      bankName={group.bankName}/>
           })}
     
           {isCreateGroup ? <ExamQuestionGroup/> : <AddQuestionChoices/>}
