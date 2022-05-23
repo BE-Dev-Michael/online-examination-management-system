@@ -7,7 +7,8 @@ const { getAllExams,
         pullQuestionsFromBank, 
         addQuestion, 
         getQuestionGroups,
-        addQuestionGroup, 
+        addQuestionGroup,
+        overwriteQuestionGroup, 
         updateQuestionGroup,
         addExam, 
         publishExam, 
@@ -21,7 +22,8 @@ router.get('/:id', viewExam)
 router.post('/pull/:id', pullQuestionsFromBank)
 router.post('/question/:id', addQuestion)
 router.post('/group', getQuestionGroups)
-router.post('/group/:id', addQuestionGroup)
+router.post('/group/add', addQuestionGroup)
+router.post('/group/:id', overwriteQuestionGroup)
 router.patch('/group/:id', updateQuestionGroup)
 router.post('/', addExam)
 router.patch('/publish/:id', publishExam)

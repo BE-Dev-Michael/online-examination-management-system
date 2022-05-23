@@ -192,8 +192,28 @@ const getQuestionGroups = async (req, res) => {
 }
 
 //* HTTP Method => POST
-//* Route endpoint => /api/exams/group/:id
+//* Route endpoint => /api/exams/group/add
 const addQuestionGroup = async (req, res) => {
+    const { groupName, noOfQuestions, bankName, questions } = req.body
+   
+    try {
+        const groupData = await Groups.create({
+            groupName: groupName,
+            noOfQuestions: noOfQuestions,
+            bankName: bankName,
+            questions: questions
+        })
+        const populatedQuestionGroup = await Groups.findById({_id: groupData._id}).populate('questions')
+        res.send(populatedQuestionGroup)
+    } catch (error) {
+        res.status(500)
+        throw new Error(error)
+    }
+}
+
+//* HTTP Method => POST
+//* Route endpoint => /api/exams/group/:id
+const overwriteQuestionGroup = async (req, res) => {
     //* Exam id
     const id = req.params.id
     const { groupName, noOfQuestions, bankName, questions } = req.body
@@ -237,7 +257,8 @@ const updateQuestionGroup = async (req, res) => {
 //* HTTP Method => POST
 //* Route endpoint => /api/exams
 const addExam = async (req, res) => {
-    const { title, desc, timeLimit, startDate, endDate, examCode, questions, groups, isPublished, user } = req.body
+    const { title, desc, timeLimit, startDate, endDate, examCode, questions, groups, groupDetails, isPublished, user } = req.body
+   
     try {
         const examData = await Exams.create({
             title: title,
@@ -247,7 +268,8 @@ const addExam = async (req, res) => {
             endDate: endDate,
             examCode: examCode,
             questions: questions,
-            groups: groups,
+            groups: groups, //* Array of question ids
+            groupDetails: groupDetails, //* Array of question group ids
             isPublished: isPublished
         })
         await Users.findByIdAndUpdate(user, {
@@ -334,7 +356,8 @@ module.exports = {
     pullQuestionsFromBank, 
     addQuestion, 
     getQuestionGroups,
-    addQuestionGroup, 
+    addQuestionGroup,
+    overwriteQuestionGroup, 
     updateQuestionGroup,
     addExam, 
     publishExam,
