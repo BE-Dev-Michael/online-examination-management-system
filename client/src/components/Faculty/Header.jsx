@@ -23,7 +23,7 @@ function ProfileMenu(props) {
   return(
     <>
       <div ref={props.menuRef} class="absolute right-12 -bottom-24 z-10 bg-white divide-y divide-gray-100 shadow-lg w-44 ring-2 ring-black ring-opacity-10">
-          <ul class="py-1 text-md text-gray-700" aria-labelledby="dropdownDividerButton">
+          <ul class="py-1 text-md text-gray-700 list-none" aria-labelledby="dropdownDividerButton">
             <li>
               <a href="#" class="flex items-center block px-4 py-2 hover:bg-gray-100 font-semibold">
                 <span className='mr-4'><FaRegUserCircle/></span>
