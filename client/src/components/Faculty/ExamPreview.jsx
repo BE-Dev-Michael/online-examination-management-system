@@ -3,6 +3,7 @@ import { useLocation, Link } from 'react-router-dom'
 import axios from 'axios'
 import { atom, useRecoilState, useRecoilValue } from 'recoil'
 import { FaRegEdit } from 'react-icons/fa'
+import '../../fix-bullet.css'
 
 const EXAM_URI = `${process.env.REACT_APP_BASE_URL}/api/exams/`
 
@@ -92,7 +93,7 @@ function ExamDetails(props) {
           <h1 className='text-2xl font-bold mb-4'>{props.title}</h1>
           <h1 className='font-bold'>Instructions</h1>
           <div
-            className='mb-4'
+            className='mb-4 pl-4'
             dangerouslySetInnerHTML={{__html: props.desc}}
           />
           <div className='grid grid-cols-3 grid-rows-2'>
