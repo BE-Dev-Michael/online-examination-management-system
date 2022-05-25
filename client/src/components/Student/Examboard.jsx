@@ -61,7 +61,7 @@ const Examboard = () => {
         <div className="lg:flex lg:flex-row-reverse flex-col justify-center  h-full w-screen mx-5">
             <InputCode getCodeFunction={getExamCodeHandler} />
 
-            <div className="relative w-full shadow-sm border bg-white rounded-2xl dark:bg-[#1e2027] dark:border-[#292d35]">
+            <div className="relative w-full shadow-lg border bg-white rounded-2xl dark:bg-[#1e2027] dark:border-[#292d35]">
                 <p className="ml-9 mt-4 text-xl font-bold text-gray-600 dark:text-gray-300">Available Exams</p>
                 <div className='flex justify-center'>
                     {Object.keys(exams).length !== 0 ?
