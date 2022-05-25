@@ -223,7 +223,7 @@ function SignUpItems() {
           <span className="inline-flex items-center text-sm font-light text-center text-gray-500 ">
             Already have an account?
           </span>
-          <a href="#" className="inline-flex items-center text-md font-light text-center ml-1 text-gray-500 hover:text-sky-400" >
+          <a href="#" onClick={() => navigate('/login')} className="inline-flex items-center text-md font-light text-center ml-1 text-gray-500 hover:text-sky-400" >
             Sign In
           </a>
         </div>
