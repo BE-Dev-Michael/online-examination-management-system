@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
+import getUserData from '../../Auth/authService'
+
+const USER_URL = `${process.env.REACT_APP_BASE_URL}/api/users`
 
 const ChangePass = (props) => {
     // The props.use is a sample data. Change it will the real data
@@ -9,12 +13,17 @@ const ChangePass = (props) => {
     const [currPass, setCurrPass] = useState("")
     const [newPass, setNewPass] = useState("")
     const [confirmPass, setConfirmPass] = useState("")
+    const [isIncorrectPass, setIsIncorrectPass] = useState(false)
 
     const formChangeHandler = (e) => {
         const { name, value } = e.target
 
         // Set the value of each password state
         if (name === "currentpassword") {
+            if (isIncorrectPass) {
+                setIsIncorrectPass(false)
+                setPasswordErrors(passwordValidation(currPass, newPass, confirmPass))
+            }
             setCurrPass(value)
         }
         if (name === "newpassword") {
@@ -30,8 +39,8 @@ const ChangePass = (props) => {
 
         if (!currPass) {
             errors.currPass = "Current password is required!"
-        } else if (currPass !== formData.password) {
-            errors.currPass = "Incorrect Password"
+        } else if (isIncorrectPass) {
+            errors.currPass = "Incorrect Current Password"
         }
 
         if (!newPass) {
@@ -57,8 +66,31 @@ const ChangePass = (props) => {
 
     useEffect(() => {
         if (Object.keys(passwordErrors).length === 0 && isSubmit) {
-            // Yung confirm pass yung ginamit ko pang update ng pass
-            setFormData((prev) => ({ ...prev, password: confirmPass }))
+            // // Yung confirm pass yung ginamit ko pang update ng pass
+            // setFormData((prev) => ({ ...prev, password: confirmPass }))
+            const changePassword = async () => {
+                const { _id } = await getUserData()
+                try {
+                    const newPword = await axios.patch(USER_URL.concat(`/change-password/${_id}`), {
+                        currPass: currPass,
+                        newPass: newPass,
+                    })
+                    if (newPword.data === 1) {
+                        setIsIncorrectPass(true)
+                        setPasswordErrors(passwordValidation(currPass, newPass, confirmPass))
+                    } else {
+                        alert('Your password has been changed.')
+                        window.location.reload(false)
+                    }
+                    
+                } catch (error) {
+                    console.error(error)
+                    
+                }
+              
+                // window.location.reload(false)
+            }
+            changePassword()
         }
     }, [passwordErrors])
 
