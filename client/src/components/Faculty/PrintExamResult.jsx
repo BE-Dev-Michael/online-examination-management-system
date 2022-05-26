@@ -95,10 +95,7 @@ const PrintExamResult = () => {
                 <div className="relative lg:flex justify-center w-full">
                 
                     <div className="flex flex-col my-5 mt-8 lg:w-11/12 border p-5 rounded-sm shadow-lg dark:bg-[#26292F] dark:border-[#26292F]">
-                        <div className='flex justify-between mb-4'>
-                          <h1 className='font-bold text-2xl'>{`Exam Result for ${result.student.username}`}</h1>
-                          <button className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>Print</button>
-                        </div>
+                        <h1 className='font-bold text-2xl mb-5'>{`Exam Result for ${result.student.username}`}</h1>
                         <div className='border'></div>
                         <div className="flex-col mb-5">
 
