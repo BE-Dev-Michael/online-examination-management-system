@@ -4,6 +4,7 @@ const userSchema = mongoose.Schema({
     username: String,
     email: String,
     fullName: String,
+    picture: { type: String, default: 'placeholder.png'},
     password: String,
     role: String,
     isVerified: Boolean,
