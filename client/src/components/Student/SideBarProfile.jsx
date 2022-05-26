@@ -5,6 +5,7 @@ import { FaHistory } from "react-icons/fa";
 import getUserData from '../Auth/authService'
 import { useNavigate } from 'react-router-dom'
 
+
 function SidebarMenus(props) {
     const activeClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-blue-500 to-cyan-400", set2: "-mr-1 font-medium" }
     const inactiveClass = { set1: "relative px-4 py-3 flex items-center space-x-4 rounded-xl text-gray-600 group", set2: "group-hover:text-gray-700 dark:group-hover:text-gray-100" }
@@ -61,7 +62,7 @@ const SideBarProfile = () => {
         localStorage.removeItem('token')
         navigate('/login')
     }
-
+    
     return (
         <>
             {userData &&
@@ -69,7 +70,7 @@ const SideBarProfile = () => {
                     <div>
 
                         <div className="mt-8 text-center">
-                            <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="" className="w-28 h-28 m-auto rounded-full object-cover" />
+                            <img src={`/profile-picture/${userData.picture}`} alt="" className="w-28 h-28 m-auto rounded-full object-cover" />
                             <h1 className='mt-4 text-md font-bold text-gray-600'>{`${userData.fullName}`}</h1>
                             <Link onClick={() => activeLinkHandler(false, 0)} to={'/student/profile'}>
                                 <h5 className="text-lg font-normal text-gray-600 hover:text-cyan-500 hover:underline underline-offset-4 dark:text-[#e2dddd] dark:hover:text-cyan-400">{userData.username}</h5>

@@ -1,15 +1,23 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
+import getUserData from '../../Auth/authService'
+
+const USER_URL = `${process.env.REACT_APP_BASE_URL}/api/users`
 
 
-const UpdatePic = () => {
-    const [picture, setPicture] = useState("https://avatarfiles.alphacoders.com/275/275525.jpg")
+const UpdatePic = ({ user }) => {
+    const [picture, setPicture] = useState(user.picture)
+    const [pictureData, setPictureData] = useState('')
     const [isSubmit, setIsSubmit] = useState(false)
+    const [isChanged, setIsChanged] = useState(false)
 
     const getPhotoHandler = (e) => {
         const reader = new FileReader()
         reader.onload = () => {
             if (reader.readyState === 2) {
                 setPicture(reader.result)
+                setPictureData(e.target.files[0])
+                setIsChanged(!isChanged)
             }
         }
         reader.readAsDataURL(e.target.files[0])
@@ -22,16 +30,24 @@ const UpdatePic = () => {
     }
     useEffect(() => {
         if (isSubmit) {
-            console.log(picture)
+            const uploadPicture = async () => {
+                const formData = new FormData()
+                formData.append('picture', pictureData)
+                const { _id } = await getUserData()
+                await axios.patch(USER_URL.concat(`/profile-picture/${_id}`), formData)
+                window.location.reload(false)
+            }
+            uploadPicture()
+            
         }
-    }, [])
-
+    }, [isSubmit])
+    console.log(picture)
     return (
         <div className="mt-4 lg:w-10/12 border p-5 rounded-sm mb-5 shadow-md bg-white dark:bg-[#26292F] dark:border-[#26292F]">
             <h3 className="text-lg font-medium mb-5 ml-5 dark:text-[#e2dddd]">Profile picture</h3>
-            <form onSubmit={changePictureHandler}>
+            <form onSubmit={changePictureHandler} encType='multipart/form-data'>
                 <div className="flex justify-center m-5 h-52">
-                    <img src={picture} alt="Profile pic" className="flex h-52 w-52 border-2 border-gray-500" />
+                    <img src={isChanged ? picture : `/profile-picture/${picture}`} alt="Profile pic" className="flex h-52 w-52 border-2 border-gray-500" />
                 </div>
 
                 <div className="max-w-2xl m-5">

@@ -154,6 +154,17 @@ const changePassword = async (req, res) => {
     }
 }
 
+//* HTTP Method => PATCH
+//* Route endpoint => /api/users/profile-picture/:id
+const updateProfilePicture = async (req, res) => {
+    try {
+        await Users.findByIdAndUpdate(req.params.id, { picture: req.file.filename })
+    } catch (error) {
+        console.error(error)
+    }
+   res.send('updated')
+}
+
 //* HTTP Method => POST
 //* Route endpoint => /api/users/dummy
 //* For testing purposes only
@@ -177,4 +188,4 @@ const createDummyUser = async (req, res) => {
 }
 
 
-module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser, updateUserData, changePassword, createDummyUser }
+module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser, updateUserData, changePassword, updateProfilePicture, createDummyUser }
