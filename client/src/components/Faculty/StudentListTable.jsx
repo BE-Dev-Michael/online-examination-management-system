@@ -113,6 +113,7 @@ function StudentDataTable() {
 function StudentListTable() {
   const location = useLocation()
   const id  = location.state.id
+  const title = location.state.title
   const [result, setResult] = useRecoilState(studentResultByExamState)
   const [isPrint, setIsPrint] = useRecoilState(printBooleanState)
   const resetResultState = useResetRecoilState(studentResultByExamState)
@@ -131,7 +132,7 @@ function StudentListTable() {
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex justify-between items-center w-full px-16'>
-        <h1 className='text-white text-2xl font-bold'>Student Exam Result</h1>
+        <h1 className='text-white text-2xl font-bold'>Exam Results for {title}</h1>
         <button onClick={() => setIsPrint(!isPrint)} className='flex gap-2 items-center px-5 py-2 bg-[#7DD1DA] text-white rounded-lg'>
           <IoMdPrint/>
           Print
