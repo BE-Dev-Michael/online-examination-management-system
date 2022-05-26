@@ -64,7 +64,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             const userData = await getUserData()
-            setUserData({ username: userData.username, email: userData.email })
+            setUserData({ name: userData.fullName, username: userData.username, email: userData.email })
         }
         fetchUserData()
     }, [])
@@ -83,7 +83,7 @@ const Profile = () => {
                             <Routes>
                                 {/* Change the props user with real data */}
                                 <Route path="/" element={<EditInfo user={userData} toggle={false} />} />
-                                <Route path="/editinformation" element={<EditInfo user={user} toggle={true} />} />
+                                <Route path="/editinformation" element={<EditInfo user={userData} toggle={true} />} />
                                 <Route path="/changepassword" element={<ChangePass user={user} />} />
                                 <Route path="/updatepicture" element={<UpdatePic />} />
                             </Routes>

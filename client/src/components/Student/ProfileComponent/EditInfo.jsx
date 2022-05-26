@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios';
+import getUserData from '../../Auth/authService'
+
+const USER_URL = `${process.env.REACT_APP_BASE_URL}/api/users`
 
 function InputField({ data, formErrors, dataHandler, toggle }) {
     let error = " ";
@@ -75,7 +79,16 @@ const EditInfo = (props) => {
 
     useEffect(() => {
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formData)
+            const updateUserData = async () => {
+                const { _id } = await getUserData()
+                const newUserData = await axios.patch(USER_URL.concat(`/${_id}`), { 
+                    fullName: formData.name, 
+                    username: formData.username,
+                    email: formData.email 
+                })
+                window.location.reload(false)
+            }
+            updateUserData()
         }
     }, [formErrors])
 
@@ -85,7 +98,7 @@ const EditInfo = (props) => {
                 <h3 className="text-lg font-medium mb-3 ml-5 dark:text-[#e2dddd]">Edit Information</h3>
 
                 {Object.entries(formData).map((data, index) => {
-                    if (data[0] === 'username' || data[0] === 'email') {
+                    if (data[0] === 'name' || data[0] === 'username' || data[0] === 'email') {
                         return <InputField data={data} key={index} formErrors={formErrors} dataHandler={formDataHandler} toggle={props.toggle} />
                     }
                     return null

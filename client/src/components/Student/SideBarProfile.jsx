@@ -70,9 +70,11 @@ const SideBarProfile = () => {
 
                         <div className="mt-8 text-center">
                             <img src="https://avatarfiles.alphacoders.com/275/275525.jpg" alt="" className="w-28 h-28 m-auto rounded-full object-cover" />
+                            <h1 className='mt-4 text-md font-bold text-gray-600'>{`${userData.fullName}`}</h1>
                             <Link onClick={() => activeLinkHandler(false, 0)} to={'/student/profile'}>
-                                <h5 className=" mt-4 text-lg font-semibold text-gray-600 hover:text-cyan-500 hover:underline underline-offset-4 dark:text-[#e2dddd] dark:hover:text-cyan-400">{userData.username}</h5>
+                                <h5 className="text-lg font-normal text-gray-600 hover:text-cyan-500 hover:underline underline-offset-4 dark:text-[#e2dddd] dark:hover:text-cyan-400">{userData.username}</h5>
                             </Link>
+                            
                             <span className=" text-gray-400 ">Student</span>
                         </div>
 
