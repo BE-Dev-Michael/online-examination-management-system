@@ -16,7 +16,7 @@ function SignUp() {
         {/* //* Modify the src value if maglalagay ng ibang image */}
         <BannerImage src="https://wallpapercave.com/wp/wp4072615.jpg" />
         <Card>
-          <CardHeader className="relative -top-12 text-xl font-bold sm:text-2xl text-white bg-gradient-to-r from-[#7CBE83] to-[#7B9EBC] " text="Sign Up" />
+          <CardHeader className="relative -top-12 text-xl font-bold sm:text-2xl text-white bg-gradient-to-r from-blue-500 to-cyan-400" text="Sign Up" />
           <SignUpItems />
         </Card>
       </main>

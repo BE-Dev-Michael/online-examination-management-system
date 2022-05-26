@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import tokenState from './tokenAtom'
 
-const LOGIN_URI = `${process.env.REACT_APP_BASE_URL}/api/users/login`
+const LOGIN_URI = `${ process.env.REACT_APP_BASE_URL }/api/users/login`
 
 function LoginItems() {
   const initialValue = {
@@ -36,7 +36,7 @@ function LoginItems() {
     try {
       const response = await axios.post(LOGIN_URI, formData)
       localStorage.setItem("token", response.data.token);
-      
+
       if (response.data.user.role === 'Faculty') {
         navigate('/faculty')
       } else {
@@ -54,7 +54,7 @@ function LoginItems() {
         <form action="#" autoComplete="off" onSubmit={signInHandler}>
           {formError !== '' ? <div class="bg-red-200 border-red-600 text-red-600 border-l-4 p-4 mb-2" role="alert">
             <p class="font-bold">
-                {formError}
+              {formError}
             </p>
           </div> : ''}
           <div className="flex flex-col mb-6">
@@ -65,7 +65,7 @@ function LoginItems() {
                 name="emailOrUname"
                 type="text"
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
-               />
+              />
             </div>
           </div>
 
@@ -77,7 +77,7 @@ function LoginItems() {
                 name="password"
                 type={(showEye === false) ? 'password' : 'text'}
                 className="rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent"
-                />
+              />
             </div>
             <div className='text-2xl absolute top-9 right-2'>
               {(showEye === false) ?
@@ -94,7 +94,7 @@ function LoginItems() {
           <div className="flex w-full">
             <button
               type="submit"
-              className="py-2 px-4  bg-slate-400 hover:bg-slate-500 focus:ring-slate-500 focus:ring-offset-slate-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full ">
+              className="py-2 px-4  bg-[#7B9EBE] hover:bg-[#6e8eac] focus:ring-[#7B9EBE] focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-full ">
               Sign In
             </button>
           </div>
@@ -105,7 +105,7 @@ function LoginItems() {
         <span className="inline-flex items-center text-sm font-light text-center text-gray-500 ">
           Don't have an account?
         </span>
-        <a href="#" className="inline-flex items-center text-md font-light text-center ml-1 text-gray-500 hover:text-sky-400" >
+        <a href="#" onClick={() => navigate('/signup')} className="inline-flex items-center text-md font-light text-center ml-1 text-gray-500 hover:text-sky-400" >
           Sign Up
         </a>
       </div>
