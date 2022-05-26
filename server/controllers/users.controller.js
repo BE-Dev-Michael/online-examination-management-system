@@ -115,6 +115,24 @@ const loginUser = async (req, res) => {
     }
 }
 
+//* HTTP Method => PATCH
+//* Route endpoint => /api/users/:id
+const updateUserData = async (req, res) => {
+    //* This will contain name, username, and email
+    const userData = req.body
+
+    try {
+        const updatedUserData = await Users.findByIdAndUpdate(req.params.id, {
+            fullName: userData.fullName,
+            username: userData.username,
+            email: userData.email
+        })
+        res.send(updatedUserData)
+    } catch(err) {
+        console.error(err)
+    }
+}
+
 //* HTTP Method => POST
 //* Route endpoint => /api/users/dummy
 //* For testing purposes only
@@ -138,4 +156,4 @@ const createDummyUser = async (req, res) => {
 }
 
 
-module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser, createDummyUser }
+module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser, updateUserData, createDummyUser }
