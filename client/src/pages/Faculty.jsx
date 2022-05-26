@@ -9,6 +9,7 @@ import UpdateExamForm from '../components/Faculty/UpdateExamForm'
 import Exams from '../components/Faculty/Exams'
 import ExamPreview from '../components/Faculty/ExamPreview'
 import StudentListTable from '../components/Faculty/StudentListTable'
+import PrintExamResult from '../components/Faculty/PrintExamResult'
 import ExamForm from '../components/Faculty/ExamForm'
 import Reports from '../components/Faculty/Reports'
 import Sidebar from '../components/Faculty/Sidebar'
@@ -56,6 +57,7 @@ function Faculty() {
               <Route path="exams" element={<Exams/>} />
               <Route path="exams/:id" element={<ExamPreview/>} />
               <Route path="student/list" element={<StudentListTable/>} />
+              <Route path="result/view" element={<PrintExamResult/>} />
               <Route path="exams/form" element={<ExamForm/>} />
               <Route path="exams/:id/edit" element={<UpdateExamForm/>} />
               <Route path="reports" element={<Reports/>} />

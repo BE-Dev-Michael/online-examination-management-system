@@ -128,7 +128,7 @@ function ExamDetails(props) {
           </div>
           <div className='flex flex-col lg:flex-row justify-between items-center'>
             <div className='mt-5'>
-              <Link to={'/faculty/student/list'}>
+              <Link to={'/faculty/student/list'} state={{ id: props.id }}>
                 <button className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>View Exam Results</button>
               </Link>
             </div>

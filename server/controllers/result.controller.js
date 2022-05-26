@@ -28,7 +28,8 @@ const setExamResult = async (req, res) => {
             completedDate: completedDate,
             answers: answers,
             correctAnswers: correctAnswers,
-            exam: examId
+            exam: examId,
+            student: userId
         })
         await Users.findByIdAndUpdate(userId, {
             //* Push an object to array property in schema
@@ -54,4 +55,16 @@ const viewExamResult = async (req, res) => {
     }
 }
 
-module.exports = { getAllExamResult, setExamResult, viewExamResult }
+//* HTTP Method => GET
+//* Route endpoint => /api/result/exam/:id
+const getStudentResultByExam = async (req, res) => {
+    const examId = req.params.id
+    try {
+        const studentData = await Result.find({ exam: examId }).populate('student').populate({ path: 'exam', populate: { path: 'questions groups' } })
+        res.send(studentData)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+module.exports = { getAllExamResult, setExamResult, viewExamResult, getStudentResultByExam }

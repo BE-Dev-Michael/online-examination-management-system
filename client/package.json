@@ -13,6 +13,7 @@
     "draftjs-to-markdown": "^0.6.0",
     "react": "^18.0.0",
     "react-data-table-component": "^7.5.1",
+    "react-data-table-component-extensions": "^1.6.0",
     "react-datetime-picker": "^3.5.0",
     "react-dom": "^18.0.0",
     "react-draft-wysiwyg": "^1.14.7",
