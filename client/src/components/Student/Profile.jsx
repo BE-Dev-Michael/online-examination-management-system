@@ -84,7 +84,7 @@ const Profile = () => {
                                 {/* Change the props user with real data */}
                                 <Route path="/" element={<EditInfo user={userData} toggle={false} />} />
                                 <Route path="/editinformation" element={<EditInfo user={userData} toggle={true} />} />
-                                <Route path="/changepassword" element={<ChangePass user={user} />} />
+                                <Route path="/changepassword" element={<ChangePass user={userData} />} />
                                 <Route path="/updatepicture" element={<UpdatePic />} />
                             </Routes>
                         </div>

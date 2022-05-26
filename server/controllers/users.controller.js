@@ -133,6 +133,27 @@ const updateUserData = async (req, res) => {
     }
 }
 
+//* HTTP Method => PATCH
+//* Route endpoint => /api/users/change-password/:id
+const changePassword = async (req, res) => {
+    const passwordData = req.body
+    
+    try {
+        const hashedPword = await Users.findById({_id: req.params.id}).select('password')
+        //* Check if current password matches
+        const isValid = await argon2.verify(hashedPword.password, passwordData.currPass)
+        if(!isValid) {
+          return res.send('1')
+        }
+        //* Update password
+        const newHashedPword = await argon2.hash(passwordData.newPass, { type: argon2.argon2id })
+        await Users.findByIdAndUpdate(req.params.id, { password: newHashedPword })
+        res.status(200).send('updated')
+    } catch(err) {
+        console.error(err)
+    }
+}
+
 //* HTTP Method => POST
 //* Route endpoint => /api/users/dummy
 //* For testing purposes only
@@ -156,4 +177,4 @@ const createDummyUser = async (req, res) => {
 }
 
 
-module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser, updateUserData, createDummyUser }
+module.exports = { getUser, getAllUsers, signUpUser, verifyUser, loginUser, updateUserData, changePassword, createDummyUser }
