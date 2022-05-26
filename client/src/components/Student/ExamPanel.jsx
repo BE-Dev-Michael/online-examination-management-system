@@ -192,6 +192,12 @@ const QuestionForm = ({ exam }) => {
     return new Date().toLocaleString('en-US', dateFormat)
   }
 
+  const getElapsedTime = () => {
+     const elapsedMinutes = localStorage.getItem('elapsed')
+     localStorage.removeItem('elapsed')
+     return JSON.parse(elapsedMinutes)
+  }
+
   const generateResult = () => {
     forceStopTimer()
     //* Dito mangagaling yung correct answers (Not shuffled)
@@ -237,6 +243,9 @@ const QuestionForm = ({ exam }) => {
     //* Get the remark. Passing score is greater than or equal to half of total points
     const remark = getRemark(score, totalPoints)
 
+    //* Get the time spent by the student
+    const timeSpent = getElapsedTime()
+
     //* Get yung date kung kelan natapos mag exam si student
     const completedDate = getCompletedDate()
 
@@ -249,6 +258,7 @@ const QuestionForm = ({ exam }) => {
     return {
       score: score,
       remark: remark,
+      timeSpent: timeSpent,
       completedDate: completedDate,
       answers: newStudentAnswer,
       correctAnswers: correctAnswers
@@ -256,13 +266,14 @@ const QuestionForm = ({ exam }) => {
   }
 
   const sendExamResult = async (obj) => {
-    const { score, remark, completedDate, answers, correctAnswers } = obj
+    const { score, remark, timeSpent, completedDate, answers, correctAnswers } = obj
 
     try {
       const { _id } = await getUserData()
       const resultData = await axios.post(RESULT_URL, {
         score: score,
         remark: remark,
+        timeSpent: String(timeSpent),
         completedDate: completedDate,
         answers: answers,
         correctAnswers: correctAnswers,
@@ -371,6 +382,16 @@ function Timer({ hoursMinSecs }) {
       setTime([hrs - 1, 59, 59]);
     } else if (secs === 0) {
       setTime([hrs, mins - 1, 59]);
+      const getElapsedMinutes = localStorage.getItem('elapsed')
+      if (!getElapsedMinutes) {
+        localStorage.setItem('elapsed', JSON.stringify(0))
+      } else {
+        const getElapsedMinutes = localStorage.getItem('elapsed')
+        let elapsedMins = JSON.parse(getElapsedMinutes)
+        ++elapsedMins
+        localStorage.setItem('elapsed', JSON.stringify(elapsedMins))
+      }
+      
     } else {
       setTime([hrs, mins, secs - 1]);
     }

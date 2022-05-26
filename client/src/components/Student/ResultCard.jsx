@@ -25,6 +25,11 @@ const ResultCard = ({ result }) => {
                         <strong className={`text-xl ${ result.remark === "Passed" ? 'text-green-500' : 'text-red-500' } `}>{result.remark}</strong>
                     </p>
 
+                    <p>
+                        <strong className="text-gray-500 dark:text-white">Time spent: </strong>
+                        {parseInt(result.timeSpent) < 1 ? 'less than 1 minute' : parseInt(result.timeSpent) === 1 ? `${result.timeSpent} minute` : `${result.timeSpent} minutes`}
+                    </p>
+
                     <p className="mb-2">
                         <strong className="text-gray-500 dark:text-white">Completed: </strong>
                         {result.completedDate}

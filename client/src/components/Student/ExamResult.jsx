@@ -120,6 +120,11 @@ const ExamResult = () => {
                                 </p>
 
                                 <p>
+                                    <strong>Time spent: </strong>
+                                    {parseInt(result.timeSpent) < 1 ? 'less than 1 minute' : parseInt(result.timeSpent) === 1 ? `${result.timeSpent} minute` : `${result.timeSpent} minutes`}
+                                </p>
+                                
+                                <p>
                                     <strong>Completed: </strong>
                                     {result.completedDate}
                                 </p>
