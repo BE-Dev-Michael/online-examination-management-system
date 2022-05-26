@@ -58,12 +58,12 @@ const NavigationBar = () => {
                                 </li>
 
                                 {/* Notification */}
-                                <li>
+                                {/* <li>
 
                                     <button className="w-10 h-10 rounded-xl border border-gray-200 dark:bg-[#17181C] dark:border-none">
                                         <BsFillBellFill className="h-5 w-5 m-auto text-gray-600 hover:text-blue-400 dark:text-[#8C94A0] dark:hover:text-blue-400" />
                                     </button>
-                                </li>
+                                </li> */}
 
                                 {/*Dark Mode  */}
                                 <li>
