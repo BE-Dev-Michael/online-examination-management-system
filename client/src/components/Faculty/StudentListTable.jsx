@@ -43,14 +43,22 @@ function StudentDataTable() {
       name: 'Time Spent',
       selector: row => parseInt(row.timeSpent) < 1 ? 'less than 1 minute' : 
       parseInt(row.timeSpent) === 1 ? `${row.timeSpent} minute` : `${row.timeSpent} minutes`,
+      sortable: true,
     },
     {
       name: 'Completed Date',
       selector: row => row.completedDate,
+      sortable: true,
     },
     {
       name: 'Score',
       selector: row => row.score,
+      sortable: true,
+    },
+    {
+      name: 'Remark',
+      selector: row => row.remark,
+      sortable: true,
     },
   ];
 

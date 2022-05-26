@@ -20,6 +20,7 @@ export const StudentListTemplate = React.forwardRef((props, ref) => {
                   <th>Time Spent</th>
                   <th>Completed Date</th>
                   <th>Score</th>
+                  <th>Remark</th>
                 </tr>
                 {props.details.map(data => {
                   return  <tr>
@@ -30,6 +31,7 @@ export const StudentListTemplate = React.forwardRef((props, ref) => {
                             </td>
                             <td>{data.completedDate}</td>
                             <td>{data.score}</td>
+                            <td>{data.remark}</td>
                           </tr>
                 })}
                 
