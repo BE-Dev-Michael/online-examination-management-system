@@ -126,17 +126,24 @@ function ExamDetails(props) {
               </div>
             </div>
           </div>
-          <div className='flex justify-end gap-4 mt-5'>
-            <button onClick={publishExam} className={`px-5 py-2 rounded-lg text-white ${isPublished === true ? 'bg-yellow-500' : 'bg-[#7CBE83]'} `}>
-              {isPublished === true ? 'Unpublish' : 'Publish'}
-            </button>
-            <button onClick={() => setPreviewQuestions(!previewQuestions)} className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>Preview</button>
-            <Link to={`/faculty/exams/${props.pos}/edit`} state={{ id: props.id }}>
-              <button type='button' className='flex gap-1 items-center px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>
-                <FaRegEdit className='text-white'/>
-                <span>Edit</span>
-              </button> 
-            </Link>
+          <div className='flex flex-col lg:flex-row justify-between items-center'>
+            <div className='mt-5'>
+              <Link to={'/faculty/student/list'}>
+                <button className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>View Exam Results</button>
+              </Link>
+            </div>
+            <div className='flex gap-4 mt-5'>
+              <button onClick={publishExam} className={`px-5 py-2 rounded-lg text-white ${isPublished === true ? 'bg-yellow-500' : 'bg-[#7CBE83]'} `}>
+                {isPublished === true ? 'Unpublish' : 'Publish'}
+              </button>
+              <button onClick={() => setPreviewQuestions(!previewQuestions)} className='px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>Preview</button>
+              <Link to={`/faculty/exams/${props.pos}/edit`} state={{ id: props.id }}>
+                <button type='button' className='flex gap-1 items-center px-5 py-2 bg-[#7B9EBE] text-white rounded-lg'>
+                  <FaRegEdit className='text-white'/>
+                  <span>Edit</span>
+                </button> 
+              </Link>
+            </div>
           </div>
         </div>
          {/* //* Merging questions directly from exam and from pulling questions from bank */}
