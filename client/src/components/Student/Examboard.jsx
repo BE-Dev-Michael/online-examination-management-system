@@ -83,7 +83,7 @@ const Examboard = () => {
                         </div> :
                         <div className="flex text-lg font-lato h-96 items-center justify-center dark:text-[#e2dddd]">
                             <p className='text-center'>There are no exams to display. <br />
-                                Enter the exam code to get an exam.</p>
+                                Enter exam code to get an exam.</p>
                         </div>
                     }
                 </div>
