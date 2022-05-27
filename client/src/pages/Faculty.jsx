@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import './bg.css'
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../components/Faculty/Dashboard'
+import Profile from '../components/Faculty/Profile';
 import QuestionBanks from '../components/Faculty/QuestionBanks'
 import Questions from '../components/Faculty/Questions'
 import UpdateQuestionForm from '../components/Faculty/UpdateQuestionForm'
@@ -51,6 +52,7 @@ function Faculty() {
             <Routes>
               {/* //* Child routes of /faculty */}
               <Route path="dashboard" element={<Dashboard/>} />
+              <Route path="profile/*" element={<Profile />} />
               <Route path="banks" element={<QuestionBanks/>} /> 
               <Route path="banks/:id" element={<Questions/>} />
               <Route path="question/edit/:id" element={<UpdateQuestionForm/>} />
