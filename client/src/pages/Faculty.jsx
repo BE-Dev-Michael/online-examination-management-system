@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './bg.css'
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from '../components/Faculty/Dashboard'
@@ -19,6 +19,7 @@ import Header from '../components/Faculty/Header'
 import { useRecoilValue } from 'recoil'
 import sidebarState from '../components/Faculty/sidebarAtom'
 import { useNavigate  } from 'react-router-dom'
+import getUserData from '../components/Auth/authService';
 
 function Content({children}) {
   return(
@@ -30,6 +31,7 @@ function Content({children}) {
 function Faculty() {
   const isSidebarVisible = useRecoilValue(sidebarState)
   const navigate = useNavigate()
+  const [isFaculty, setIsFaculty] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -37,11 +39,22 @@ function Faculty() {
     if (!token) {
       navigate('/')
     }
+
+    const getUserRole = async () => {
+      const { role } = await getUserData()
+      if(role === 'Student') {
+        setIsFaculty(false)
+        navigate('/student')
+      } else {
+        setIsFaculty(true)
+      } 
+    }
+    getUserRole()
   }, [])
   
   return (
     <>
-    {localStorage.getItem('token') &&
+    {localStorage.getItem('token') && isFaculty &&
       <Background>
         <Sidebar/>
         <main className={`flex flex-col gap-4 main-container sm:w-[100vw] h-auto ${isSidebarVisible ? 'w-[100vw]' : 'w-[100vw]'}`}>
