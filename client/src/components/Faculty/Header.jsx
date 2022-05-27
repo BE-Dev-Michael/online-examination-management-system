@@ -5,7 +5,7 @@ import { atom, useRecoilState } from 'recoil'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { CgLogOut } from 'react-icons/cg'
 import getUserData from '../Auth/authService'
-import { useNavigate  } from 'react-router-dom'
+import { useNavigate, Link  } from 'react-router-dom'
 
 const profileMenuState = atom({
   key: 'profileMenuState',
@@ -25,10 +25,10 @@ function ProfileMenu(props) {
       <div ref={props.menuRef} class="absolute right-12 -bottom-24 z-10 bg-white divide-y divide-gray-100 shadow-lg w-44 ring-2 ring-black ring-opacity-10">
           <ul class="py-1 text-md text-gray-700 list-none" aria-labelledby="dropdownDividerButton">
             <li>
-              <a href="#" class="flex items-center block px-4 py-2 hover:bg-gray-100 font-semibold">
+              <Link to={'/faculty/profile'} className="flex items-center block px-4 py-2 hover:bg-gray-100 font-semibold">
                 <span className='mr-4'><FaRegUserCircle/></span>
                 Profile
-              </a>
+              </Link>
             </li>
           </ul>
           <div class="py-1">
@@ -45,13 +45,15 @@ function Header() {
   const [showSidebar, setShowSidebar] = useRecoilState(sidebarState)
   const [isDropdownVisible, setIsDropdownVisible] = useRecoilState(profileMenuState)
   const [email, setEmail] = useState(null)
+  const [picture, setPicture] = useState(null)
   const profileRef = useRef(null)
   const menuRef = useRef(null)
   
   useEffect(() => {
       const setUserEmail = async () =>{
-         const { email } = await getUserData()
+         const { email, picture } = await getUserData()
          setEmail(email)
+         setPicture(picture)
       }
       setUserEmail()
   }, [])
@@ -82,7 +84,7 @@ function Header() {
         <div className='flex gap-4 items-center'>
           <h1 className='font-semibold text-md text-white'>{email}</h1>
           <a ref={profileRef} onClick={() => setIsDropdownVisible(!isDropdownVisible)} className="block relative cursor-pointer">
-            <img alt="profil" src="https://avatarfiles.alphacoders.com/275/275525.jpg" className="mr-0 md:mr-7 object-cover rounded-full h-10 w-10 "/>
+            <img alt="profil" src={`/profile-picture/${picture}`} className="mr-0 md:mr-7 object-cover rounded-full h-10 w-10 "/>
           </a>
         </div>
       </div>
