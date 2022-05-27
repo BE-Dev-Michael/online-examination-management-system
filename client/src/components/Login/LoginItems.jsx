@@ -38,7 +38,7 @@ function LoginItems() {
       localStorage.setItem("token", response.data.token);
 
       if (response.data.user.role === 'Faculty') {
-        navigate('/faculty')
+        navigate('/faculty/dashboard')
       } else {
         navigate('/student')
       }
