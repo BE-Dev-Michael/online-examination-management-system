@@ -14,18 +14,20 @@ const profileMenuState = atom({
 
 function ProfileMenu(props) {
   const navigate = useNavigate()
+  const [isDropdownVisible, setIsDropdownVisible] = useRecoilState(profileMenuState)
 
   const logout = () => {
+     setIsDropdownVisible(!isDropdownVisible)
      localStorage.removeItem('token')
      navigate('/')
   }
 
   return(
     <>
-      <div ref={props.menuRef} class="absolute right-12 -bottom-24 z-10 bg-white divide-y divide-gray-100 shadow-lg w-44 ring-2 ring-black ring-opacity-10">
+      <div class="absolute right-12 -bottom-24 z-10 bg-white divide-y divide-gray-100 shadow-lg w-44 ring-2 ring-black ring-opacity-10">
           <ul class="py-1 text-md text-gray-700 list-none" aria-labelledby="dropdownDividerButton">
             <li>
-              <Link to={'/faculty/profile'} className="flex items-center block px-4 py-2 hover:bg-gray-100 font-semibold">
+              <Link onClick={() => setIsDropdownVisible(!isDropdownVisible)} to={'/faculty/profile'} className="flex items-center block px-4 py-2 hover:bg-gray-100 font-semibold">
                 <span className='mr-4'><FaRegUserCircle/></span>
                 Profile
               </Link>
@@ -47,7 +49,8 @@ function Header() {
   const [email, setEmail] = useState(null)
   const [picture, setPicture] = useState(null)
   const profileRef = useRef(null)
-  const menuRef = useRef(null)
+  const profileLinkRef = useRef(null)
+  const logoutLinkRef = useRef(null)
   
   useEffect(() => {
       const setUserEmail = async () =>{
@@ -60,7 +63,7 @@ function Header() {
   
 
   const outsideClick = (e) => {
-    if (profileRef.current.contains(e.target) || menuRef.current.contains(e.target)) {
+    if (profileRef.current.contains(e.target) || profileLinkRef.current.contains(e.target) || logoutLinkRef.current.contains(e.target)) {
        return
     }
 
@@ -68,8 +71,10 @@ function Header() {
  }
 
  useEffect(() => {
-     document.addEventListener('mousedown', outsideClick)
-     console.log('mousedown')
+    if (isDropdownVisible) {
+        document.addEventListener('mousedown', outsideClick)
+    }
+     
      return () => {
        document.removeEventListener('mousedown', outsideClick);
      }
@@ -91,7 +96,7 @@ function Header() {
       {isDropdownVisible ? 
         <div className='absolute z-20 right-14 w-0 h-0 border-l-[10px] border-l-transparent border-r-transparent border-r-[10px] border-b-[15px] border-b-[#ffffff]'></div>
       : ''}
-      {isDropdownVisible ? <ProfileMenu menuRef={menuRef}/> : ''}
+      {isDropdownVisible ? <ProfileMenu/> : ''}
     </div>
     )
 }
