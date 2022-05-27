@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import DataTable from 'react-data-table-component';
+import DataTableExtensions from 'react-data-table-component-extensions';
+import 'react-data-table-component-extensions/dist/index.css';
 import { atom, useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import axios from 'axios'
 import './Reports.css'
@@ -37,7 +39,7 @@ const customStyles = {
 
 
 function ReportsDataTable() {
-  const examData = useRecoilValue(examAndQuestionsState)
+  const data = useRecoilValue(examAndQuestionsState)
   const [reportDetails, setReportDetails] = useRecoilState(reportDetailsState)
   const resetReportDetails = useResetRecoilState(reportDetailsState)
   const componentRef = useRef()
@@ -79,21 +81,31 @@ function ReportsDataTable() {
   const generateExam = (title, questions) => {
     setReportDetails({...reportDetails, title: title, questions: questions})
   }
+
+
+  const tableData = {
+    columns,
+    data,
+    print: false,
+    export: false
+  };
   
   return(
-    <>
-      <DataTable  
-        columns={columns}
-        data={examData}
-        direction="ltr"
-        customStyles={customStyles}
-        pagination
-        responsive
-      />
+    <div className='bg-white'>
+      <DataTableExtensions {...tableData}>
+        <DataTable  
+          columns={columns}
+          data={data}
+          direction="ltr"
+          customStyles={customStyles}
+          pagination
+          responsive
+        />
+      </DataTableExtensions>
       <div style={{ display: "none" }}>
         <ReportTemplate details={reportDetails} ref={componentRef}/>
       </div>
-    </>
+    </div>
   )
 }
 function Reports() {
