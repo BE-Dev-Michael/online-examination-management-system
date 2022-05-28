@@ -18,12 +18,13 @@ const getAllExamResult = async (req, res) => {
 //* HTTP Method => POST
 //* Route endpoint => /api/result
 const setExamResult = async (req, res) => {
-    const { score, remark, timeSpent, completedDate, answers, correctAnswers, examId, userId } = req.body
+    const { score, remark, percentage, timeSpent, completedDate, answers, correctAnswers, examId, userId } = req.body
 
     try {
         const resultData = await Result.create({
             score: score,
             remark: remark,
+            percentage: percentage,
             timeSpent: timeSpent,
             completedDate: completedDate,
             answers: answers,

@@ -188,6 +188,10 @@ const QuestionForm = ({ exam }) => {
     }
   }
 
+  const getPercentage = (score, totalPoints) => {
+      return (score / totalPoints) * 100
+  }
+
   const getCompletedDate = () => {
     return new Date().toLocaleString('en-US', dateFormat)
   }
@@ -243,6 +247,9 @@ const QuestionForm = ({ exam }) => {
     //* Get the remark. Passing score is greater than or equal to half of total points
     const remark = getRemark(score, totalPoints)
 
+    //* Get the equivalent percentage of student's score
+    const percentage = getPercentage(score, totalPoints)
+
     //* Get the time spent by the student
     const timeSpent = getElapsedTime()
 
@@ -258,6 +265,7 @@ const QuestionForm = ({ exam }) => {
     return {
       score: score,
       remark: remark,
+      percentage: percentage,
       timeSpent: timeSpent,
       completedDate: completedDate,
       answers: newStudentAnswer,
@@ -266,13 +274,14 @@ const QuestionForm = ({ exam }) => {
   }
 
   const sendExamResult = async (obj) => {
-    const { score, remark, timeSpent, completedDate, answers, correctAnswers } = obj
+    const { score, remark, percentage, timeSpent, completedDate, answers, correctAnswers } = obj
 
     try {
       const { _id } = await getUserData()
       const resultData = await axios.post(RESULT_URL, {
         score: score,
         remark: remark,
+        percentage: percentage,
         timeSpent: String(timeSpent),
         completedDate: completedDate,
         answers: answers,
@@ -381,7 +390,6 @@ function Timer({ hoursMinSecs }) {
     else if (mins === 0 && secs === 0) {
       setTime([hrs - 1, 59, 59]);
     } else if (secs === 0) {
-      setTime([hrs, mins - 1, 59]);
       const getElapsedMinutes = localStorage.getItem('elapsed')
       if (!getElapsedMinutes) {
         localStorage.setItem('elapsed', JSON.stringify(0))
@@ -391,7 +399,7 @@ function Timer({ hoursMinSecs }) {
         ++elapsedMins
         localStorage.setItem('elapsed', JSON.stringify(elapsedMins))
       }
-      
+      setTime([hrs, mins - 1, 59]);
     } else {
       setTime([hrs, mins, secs - 1]);
     }
