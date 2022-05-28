@@ -60,6 +60,11 @@ function StudentDataTable() {
       selector: row => row.remark,
       sortable: true,
     },
+    {
+      name: 'Equivalent %',
+      selector: row => `${row.percentage}%`,
+      sortable: true,
+    },
   ];
 
   const tableData = {

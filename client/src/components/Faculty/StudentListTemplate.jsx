@@ -21,6 +21,7 @@ export const StudentListTemplate = React.forwardRef((props, ref) => {
                   <th>Completed Date</th>
                   <th>Score</th>
                   <th>Remark</th>
+                  <th>Equivalent %</th>
                 </tr>
                 {props.details.map(data => {
                   return  <tr>
@@ -32,6 +33,7 @@ export const StudentListTemplate = React.forwardRef((props, ref) => {
                             <td>{data.completedDate}</td>
                             <td>{data.score}</td>
                             <td>{data.remark}</td>
+                            <td>{`${data.percentage}%`}</td>
                           </tr>
                 })}
                 
