@@ -391,16 +391,16 @@ function Timer({ hoursMinSecs }) {
       setTime([hrs - 1, 59, 59]);
     } else if (secs === 0) {
       const getElapsedMinutes = localStorage.getItem('elapsed')
-      if (!getElapsedMinutes) {
-        localStorage.setItem('elapsed', JSON.stringify(0))
-      } else {
-        const getElapsedMinutes = localStorage.getItem('elapsed')
-        let elapsedMins = JSON.parse(getElapsedMinutes)
-        ++elapsedMins
-        localStorage.setItem('elapsed', JSON.stringify(elapsedMins))
-      }
+      let elapsedMins = JSON.parse(getElapsedMinutes)
+      ++elapsedMins
+      localStorage.setItem('elapsed', JSON.stringify(elapsedMins))
+      
       setTime([hrs, mins - 1, 59]);
     } else {
+      const getElapsedMinutes = localStorage.getItem('elapsed')
+      if (!getElapsedMinutes) {
+        localStorage.setItem('elapsed', JSON.stringify(0))
+      }
       setTime([hrs, mins, secs - 1]);
     }
   };
