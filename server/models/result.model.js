@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const examResultSchema = mongoose.Schema({
     score: Number,
     remark: String,
+    percentage: Number,
     timeSpent: String,
     completedDate: String,
     answers: [],
