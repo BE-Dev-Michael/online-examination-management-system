@@ -36,7 +36,7 @@ function StudentDataTable() {
   const columns = [
     {
       name: 'Student',
-      cell: (row) => <Link to={'/faculty/result/view'} state={{result: row}} className='text-[#6590E5] underline underline-offset-2'>{row.student.username}</Link>,
+      cell: (row) => <Link to={'/faculty/result/view'} state={{result: row}} className='text-[#6590E5] underline underline-offset-2'>{row.student.fullName}</Link>,
       sortable: true,
     },
     {

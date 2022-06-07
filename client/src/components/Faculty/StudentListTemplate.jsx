@@ -17,20 +17,20 @@ export const StudentListTemplate = React.forwardRef((props, ref) => {
               <table width='100%'>
                 <tr>
                   <th>Student</th>
-                  <th>Time Spent</th>
-                  <th>Completed Date</th>
+                  {/* <th>Time Spent</th>
+                  <th>Completed Date</th> */}
                   <th>Score</th>
                   <th>Remark</th>
                   <th>Equivalent %</th>
                 </tr>
                 {props.details.map(data => {
-                  return  <tr>
-                            <td>{data.student.username}</td>
-                            <td>
+                  return  <tr className={data.remark === 'Passed' ? 'bg-green-400' : 'bg-red-400'}>
+                            <td>{data.student.fullName}</td>
+                            {/* <td>
                               {parseInt(data.timeSpent) < 1 ? 'less than 1 minute' : 
                               parseInt(data.timeSpent) === 1 ? `${data.timeSpent} minute` : `${data.timeSpent} minutes`}
                             </td>
-                            <td>{data.completedDate}</td>
+                            <td>{data.completedDate}</td> */}
                             <td>{data.score}</td>
                             <td>{data.remark}</td>
                             <td>{`${data.percentage}%`}</td>
