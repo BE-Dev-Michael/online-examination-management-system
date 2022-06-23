@@ -1,4 +1,4 @@
-# Online Examination Management System
+# Online Examination Management System (MERN)
 
 ### Clone repository
 
