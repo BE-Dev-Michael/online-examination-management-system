@@ -14,10 +14,3 @@ npm install
 # Server dependencies
 npm install
 ```
-
-### Run Client (React)
-
-```
-Make sure you are on client folder and hit:
-npm start
-```
